@@ -1,0 +1,75 @@
+        <div class="tab specialeffects" data-tab="specialeffects" style="overflow:scroll">
+            {{#if isArea}}
+            <h3 class="form-header">Template Removal</h3>
+
+                    <div class="form-group">
+                        <label>
+                            Ignore Spell Duration (Remove Immediately)				
+                        </label>
+                        <input type="checkbox" style="float:right;" name="siftoolkit.template.removal" {{#if ignoreDuration}}checked{{/if}} {{#unless isEditable}}disabled{{/unless}}>
+                    </div>
+                    <h3 class="form-header">Animations</h3>
+
+                    <div class="form-group">
+                        <label>
+                        Use Spell Texture				
+                        </label>
+                        <input type="checkbox" style="float:right;" name="siftoolkit.template.useTexture" {{#if useTexture}}checked{{/if}} {{#unless isEditable}}disabled{{/unless}}>
+                    </div>
+                    <div class="form-group">
+                        <label class="textureSelect" style="float:left;">Texture <input type="text" size="10" style="width: 65%;" name="siftoolkit.template.texture.text" {{#unless isEditable}}disabled="disabled"{{/unless}} value={{texture}}   >
+                            <input type="button" name="siftoolkit.template.texture.bttn" value="Select" style="float:right;width: 20%; text-align: center;" {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                        Alpha (Opacity)%				
+                        </label>
+                        <input type="number" style="float:right;" name="siftoolkit.template.alpha" min="10" max="100" value="{{alpha}}" {{#unless isEditable}}disabled="disabled"{{/unless}} >
+                    </div>
+                    <div class="form-group">
+                        <label>
+                        Loop animations				
+                        </label>
+                        <input type="checkbox" style="float:right;" name="siftoolkit.template.loop.animations" {{#if loopAnimations}}checked{{/if}} {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                        Cone texture Origin				
+                        </label><select name="siftoolkit.template.cone.origin" style="font-size: 12px;height: 24px;" {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                            <option value="Center" {{#if (eq coneOrigin 0)}}selected{{/if}}>Center</option>
+                            <option value="Left" {{#if (eq coneOrigin 1)}}selected{{/if}}>Left</option>
+                            <option value="Right" {{#if (eq coneOrigin 2)}}selected{{/if}}>Right</option>
+                            <option value="Top" {{#if (eq coneOrigin 3)}}selected{{/if}}>Top</option>
+                            <option value="Bottom" {{#if (eq coneOrigin 4)}}selected{{/if}}>Bottom</option>
+                        </select>
+                    </div>
+                {{/if}}
+                <h3 class="form-header">Audio</h3>
+                    
+                    <div class="form-group">
+                        <label>
+                        Play audio on damage rolls				
+                        </label>
+                        <input type="checkbox" style="float:right;" name="siftoolkit.audio.playDamageAudio" {{#if playDamageAudio}}checked{{/if}} {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                    </div>
+                    {{#if isArea}}
+                    <div class="form-group">
+                        <label>
+                        Play audio on template set				
+                        </label>
+                        <input type="checkbox" style="float:right;" name="siftoolkit.audio.playTemplateAudio" {{#if playTemplateAudio}}checked{{/if}} {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                    </div>
+                    {{/if}}
+                    <div class="form-group">
+                        <label class="audioSelect" style="float:left;">Clip <input type="text" size="10" style="width: 65%;" name="siftoolkit.audio.clip.text" {{#unless isEditable}}disabled="disabled"{{/unless}} value={{clip}}   >
+                            <input type="button" name="siftoolkit.audio.clip.bttn" value="Select" style="float:right;width: 20%; text-align: center;" {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                        Volume%				
+                        </label>
+                        <input type="number" style="float:right;" name="siftoolkit.audio.volume" min="10" max="200" value="{{volume}}" {{#unless isEditable}}disabled="disabled"{{/unless}} >
+                    </div>
+                </div>

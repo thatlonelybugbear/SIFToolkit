@@ -17,7 +17,7 @@
 	"esmodules": [
 		"scripts/SIFToolkit.js"
 	],
-	"system": ["dnd5e"],
+	"system": ["dnd5e","pf2e"],
 	"languages": [
     		{
 			"lang": "en",
