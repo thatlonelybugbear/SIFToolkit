@@ -39,6 +39,8 @@ export function setHooks(){
     });
 
     Hooks.once('ready', async function () {
+
+
         if (game.settings.get("SIFToolkit","displaySplash")) {
             let d = new Dialog({
                 title: "SIFToolkit",
@@ -118,7 +120,7 @@ export function setHooks(){
 
     Hooks.on("updateMeasuredTemplate",async (e)=> {
         console.debug("SIFT | updating template",e);
-        if(e.data.flags.SIFToolkit.displayData.useTexture){
+        if(e.data.flags.SIFToolkit.displayData?.useTexture){
             let placeable = SIFT.utils.getPlaceableTemplate(e.id);
             SIFT.textures.reapplyTexture(placeable);		
         }

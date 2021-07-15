@@ -12,6 +12,7 @@ class SIFToolkit {
 	static textures = undefined;
 	static SIFData = {};
 	static soundHold = true;
+	static version = "0.0.1";
 }
 CONFIG.debug.hooks=true;
 globalThis.SIFT = SIFToolkit;
@@ -21,8 +22,9 @@ loadUtils();
 loadUI();
 loadTextures();
 
+
 SIFToolkit.Status.running = true;
-setTimeout(()=>{SIFT.soundHold = false;5},5000);
+setTimeout(()=>{SIFT.soundHold = false;},5000);
 
 
 

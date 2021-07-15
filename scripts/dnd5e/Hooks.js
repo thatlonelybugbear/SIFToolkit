@@ -45,7 +45,7 @@ export function setHooks(){
         let hijackFlag = args[0].getFlag("SIFToolkit","Hijacked");
         if(args[0].data.content.includes('button data-action="placeTemplate"')){
             let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);    
-            let SIFData = SIFObj.flags.SIFToolkit?.SIFData
+            let SIFData = SIFObj?.flags?.SIFToolkit?.SIFData
             
             if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);

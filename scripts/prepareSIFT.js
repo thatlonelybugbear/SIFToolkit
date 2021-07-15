@@ -38,33 +38,11 @@ export function prepareSIFT(){
         sharedUIPatchHooks.setHooks();
         systemUIPatchHooks.setHooks();
 
-
-
-
-    });
-
-
-    
-
-
-
-
-
-    /*
-
-    
-    Hooks.on("preCreateChatMessage",(...args) => {
-        if(spellTemplateManager.currentSettings.system == "pf2e"){
-            stmUtils.parseChatMessage2(args);
+        let previousVersion = game.settings.get("SIFToolkit","SIFTVersion");
+        if(previousVersion != SIFT.version){
+            game.settings.set("SIFToolkit","displaySplash",true);
+            let migrate = await import('./shared/migrate.js');
+            migrate.migrate();
         }
     });
-    
-    
-    
-
-    
-
-    
-    */
 }
-
