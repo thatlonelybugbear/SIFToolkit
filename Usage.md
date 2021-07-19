@@ -19,7 +19,32 @@ SIFToolkit is compatible with Simple Calendar.  If the "Time Processor" option i
 ### Manual Template Duration Adjustment
 Template durations can be adjusted by double-clicking on the template's control icon when the measured template tools are selected.  This will bring up the standard Measured Template configuration dialog.  SIFToolkit adds a new field to this dialog, "Duration".  The duration field will be initially populated with the current duration at the time that the dialog is opened.  The field will accept any number of seconds.  Upon changing the value, the template's duration will be instantly updated to the new value, and does not wait for the "Save Template" button to be clicked.  
 
-### Options
+## Template Information ToolTip
+![image](https://user-images.githubusercontent.com/70086485/126091792-03917050-90e1-48ef-a9be-98c7aff06472.png)
+The Template Information ToolTip is automatic and does not need to be enabled.  To use, select the Measured Template control set.  Hovering the mouse over any available template control icon will provide a pop-up temlate to indicate the originator of the template, the spell/item/feature that was used to generate it, and any remaining duration that it may have.  
+
+## Animations
+Animations are currently only provided for "Area of Effect" spells/items/features, which require a template.  Additional special effects are planned.  To add these effects, open the spell/item/feature from a compendium, imported item, or actor sheet.  A new tab "Special Effects" is added to the sheet to provide a place for managing all special effects.  In order to add an animation, the "Use Texture" option must be enabled, and a valid image/video file must be supplied. Reference the below image for options.
+![image](https://user-images.githubusercontent.com/70086485/126092764-73a27456-7f06-4930-a8b4-1e93a97bfef8.png)
+| Option | Description |
+| ----------- | ----------- |
+| **Use Texture** | This option specifies whether or not the supplied texture file should be used. |
+| **Texture** | This field is a path to the desired image/video clip to be used.  Optionally, a select button is present to browse for such files. |
+| **Alpha (Opacity)%** | This option provides a mechanism for determining how opaque/transparent the supplied texture should appear.  By default this is set at 50.  Any value between 0 and 100 is accepted. | 
+| **Loop Animations** | This option, if selected, will cause video files to loop.  If not selected, such files will play through once and stop on the final frame.  |
+| **Cone texture Origin** | This option allows you to specify, for templates with a cone shape, where the origin (Source) of the cone is located in the supplied image/video.  By default, the left edge of the image/video file will be utilized; however, depending on the supplied file, it may be more appropriate to select a different option. |
+
+## Audio
+Audio is currently provided for all spells/items/features.  Currently, all spells/items/features support the option to play audio on "damage" rolls, which includes healing type rolls.  Additionally, spells/items/features that allow for a template to be placed also support having audio play when the template is added to the canvas.  To add these effects, open the spell/item/feature from a compendium, imported item, or actor sheet.  A new tab "Special Effects" is added to the sheet to provide a place for managing all special effects.  In order to add an animation, the appropriate "Play audio" option must be enabled, and a valid sound file must be supplied. Reference the below image for options.
+![image](https://user-images.githubusercontent.com/70086485/126093525-eca9c3ba-c3aa-4a8f-bbf7-991c51d3b1b0.png)
+| Option | Description |
+| ----------- | ----------- |
+| **Play audio on template set** | This option specifies that the supplied audio clip should be played when a template is added to the canvas. |
+| **Play audio on damage rolls** | This option specifies that the supplied audio clip should be played when a "damage" roll is made.  In this instance, damage includes any form of HP adjusting roll, including healing rolls. |
+| **Clip** | This field is a path to the desired audio clip to be used.  Optionally, a select button is present to browse for such files. | 
+| **Volume%** | This option defines the percentage of the original volume in the audio clip that should be utilized when played.  A minimum value of 10, and a maximum value of 200 are allowed.  |
+
+## Options
 ![image](https://user-images.githubusercontent.com/70086485/126088978-1ec942d0-7e61-4711-946d-50afbf0c0461.png)
 | Option | Description |
 | ----------- | ----------- |
@@ -35,11 +60,5 @@ Template durations can be adjusted by double-clicking on the template's control 
 | **Message History Count** | This option tells SIFToolkit how many previous actionable chat cards, for which special effects options should be remembered.  If a chat message falls outside of this range, the buttons can still be used, but special effects options such as textures and audio will not be applied.  |
 
 
-## Template Information ToolTip
 
-## Animations
-
-### Cone Templates
-
-## Audio
 
