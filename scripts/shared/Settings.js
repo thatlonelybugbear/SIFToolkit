@@ -2,7 +2,7 @@ export function registerSettings(){
 	let SIFSettings = {};
 
     game.settings.register(
-		"SIFToolkit", "SIFTVersion", {
+		"siftoolkit", "SIFTVersion", {
   			name: "SIFTVersion",
 			hint: "SIFTVersion",
 			scope: "client",
@@ -14,7 +14,7 @@ export function registerSettings(){
 	);
 
 	game.settings.register(
-		"SIFToolkit", "displaySplash", {
+		"siftoolkit", "displaySplash", {
   			name: "displaySplash",
 			hint: "displaySplash",
 			scope: "client",
@@ -25,63 +25,63 @@ export function registerSettings(){
 		}
 	);
 	
-	new window.Ardittristan.ColorSetting("SIFToolkit", "standardTemplateColor", {
-		name: game.i18n.localize("SIFToolkit.standardTemplateColor.name"),
-		hint: game.i18n.localize("SIFToolkit.standardTemplateColor.hint"),
+	new window.Ardittristan.ColorSetting("siftoolkit", "standardTemplateColor", {
+		name: game.i18n.localize("siftoolkit.standardTemplateColor.name"),
+		hint: game.i18n.localize("siftoolkit.standardTemplateColor.hint"),
 		label: "Click to select color",
 		restricted: true,
 		defaultColor: "#000000ff",
 		scope: "world",
 		onChange: () => { SIFT.Settings.standardTemplateColor = value; }
 	});
-	SIFSettings.standardTemplateColor = ("#"+(game.settings.get('SIFToolkit', 'standardTemplateColor')).substring(1,7));
+	SIFSettings.standardTemplateColor = ("#"+(game.settings.get('siftoolkit', 'standardTemplateColor')).substring(1,7));
 
 
-    new window.Ardittristan.ColorSetting("SIFToolkit", "enduringTemplateColor", {
-		name: game.i18n.localize("SIFToolkit.enduringTemplateColor.name"),
-		hint: game.i18n.localize("SIFToolkit.enduringTemplateColor.hint"),
+    new window.Ardittristan.ColorSetting("siftoolkit", "enduringTemplateColor", {
+		name: game.i18n.localize("siftoolkit.enduringTemplateColor.name"),
+		hint: game.i18n.localize("siftoolkit.enduringTemplateColor.hint"),
 		label: "Click to select color",
 		restricted: true,
 		defaultColor: "#00ff00ff",
 		scope: "world",
 		onChange: () => { SIFT.Settings.enduringTemplateColor = value; }
 	});
-	SIFSettings.enduringTemplateColor = ("#"+(game.settings.get('SIFToolkit', 'enduringTemplateColor')).substring(1,7));
+	SIFSettings.enduringTemplateColor = ("#"+(game.settings.get('siftoolkit', 'enduringTemplateColor')).substring(1,7));
 
-	new window.Ardittristan.ColorSetting("SIFToolkit", "specialTemplateColor", {
-		name: game.i18n.localize("SIFToolkit.specialTemplateColor.name"),
-		hint: game.i18n.localize("SIFToolkit.specialTemplateColor.hint"),
+	new window.Ardittristan.ColorSetting("siftoolkit", "specialTemplateColor", {
+		name: game.i18n.localize("siftoolkit.specialTemplateColor.name"),
+		hint: game.i18n.localize("siftoolkit.specialTemplateColor.hint"),
 		label: "Click to select color",
 		restricted: true,
 		defaultColor: "#ffffffff",
 		scope: "world",
 		onChange: () => { SIFT.Settings.specialTemplateColor = value; }
 	});
-	SIFSettings.specialTemplateColor = ("#"+(game.settings.get('SIFToolkit', 'specialTemplateColor')).substring(1,7));
+	SIFSettings.specialTemplateColor = ("#"+(game.settings.get('siftoolkit', 'specialTemplateColor')).substring(1,7));
 
 	game.settings.register(
-		"SIFToolkit", "unmanagedTemplateAction", {
-  			name: game.i18n.localize("SIFToolkit.unmanagedTemplateAction.name"),
-			hint: game.i18n.localize("SIFToolkit.unmanagedTemplateAction.hint"),
+		"siftoolkit", "unmanagedTemplateAction", {
+  			name: game.i18n.localize("siftoolkit.unmanagedTemplateAction.name"),
+			hint: game.i18n.localize("siftoolkit.unmanagedTemplateAction.hint"),
 			scope: "client",
 			config: true,
 			type: String,
 			choices: {
-				"prompt": game.i18n.localize("SIFToolkit.unmanagedTemplateAction.prompt"),
-				"skip": game.i18n.localize("SIFToolkit.unmanagedTemplateAction.skip"),
-				"delete": game.i18n.localize("SIFToolkit.unmanagedTemplateAction.delete"),
-				"claim": game.i18n.localize("SIFToolkit.unmanagedTemplateAction.claim")
+				"prompt": game.i18n.localize("siftoolkit.unmanagedTemplateAction.prompt"),
+				"skip": game.i18n.localize("siftoolkit.unmanagedTemplateAction.skip"),
+				"delete": game.i18n.localize("siftoolkit.unmanagedTemplateAction.delete"),
+				"claim": game.i18n.localize("siftoolkit.unmanagedTemplateAction.claim")
 			},
 			default: "prompt",
 			onChange: (value) => { SIFT.Settings.unmanagedTemplateAction = value; }
 		}
 	);
-	SIFSettings.unmanagedTemplateAction = game.settings.get("SIFToolkit","unmanagedTemplateAction");
+	SIFSettings.unmanagedTemplateAction = game.settings.get("siftoolkit","unmanagedTemplateAction");
 
 	game.settings.register(
-		"SIFToolkit", "instantaneousSpellFade", {
-			name: game.i18n.localize("SIFToolkit.instantaneousSpellFade.name"),
-			hint: game.i18n.localize("SIFToolkit.instantaneousSpellFade.hint"),
+		"siftoolkit", "instantaneousSpellFade", {
+			name: game.i18n.localize("siftoolkit.instantaneousSpellFade.name"),
+			hint: game.i18n.localize("siftoolkit.instantaneousSpellFade.hint"),
 			scope: "world",
 			config: true,
 			type: Number,
@@ -94,12 +94,12 @@ export function registerSettings(){
 			onChange: (value) => { SIFT.Settings.instantaneousSpellFade = value; }
 		}
 	);
-	SIFSettings.instantaneousSpellFade = game.settings.get("SIFToolkit","instantaneousSpellFade");
+	SIFSettings.instantaneousSpellFade = game.settings.get("siftoolkit","instantaneousSpellFade");
 
 	game.settings.register(
-		"SIFToolkit","enforceConcentration", {
-			name: game.i18n.localize("SIFToolkit.enforceConcentration.name"),
-			hint: game.i18n.localize("SIFToolkit.enforceConcentration.hint"),
+		"siftoolkit","enforceConcentration", {
+			name: game.i18n.localize("siftoolkit.enforceConcentration.name"),
+			hint: game.i18n.localize("siftoolkit.enforceConcentration.hint"),
 			type: Boolean,
 			default: true,
 			config: true,
@@ -107,12 +107,12 @@ export function registerSettings(){
 			onChange: (value) => { SIFT.Settings.enforceConcentration = value; }
 		}
 	);
-	SIFSettings.enforceConcentration = game.settings.get("SIFToolkit","enforceConcentration");
+	SIFSettings.enforceConcentration = game.settings.get("siftoolkit","enforceConcentration");
 
 	game.settings.register(
-		"SIFToolkit","worldConcentration", {
-               		name: game.i18n.localize("SIFToolkit.worldConcentration.name"),
-			        hint: game.i18n.localize("SIFToolkit.worldConcentration.hint"),
+		"siftoolkit","worldConcentration", {
+               		name: game.i18n.localize("siftoolkit.worldConcentration.name"),
+			        hint: game.i18n.localize("siftoolkit.worldConcentration.hint"),
                     type: Boolean,
                     default: true,
                     config: true,
@@ -120,23 +120,23 @@ export function registerSettings(){
                        onChange: (value) => { SIFT.Settings.worldConcentration = value; }
                     }
 	);
-	SIFSettings.worldConcentration = game.settings.get("SIFToolkit","worldConcentration");
+	SIFSettings.worldConcentration = game.settings.get("siftoolkit","worldConcentration");
 
 
 	game.settings.register(
-		"SIFToolkit", "timeProcessor", {
-  			name: game.i18n.localize("SIFToolkit.timeProcessor.name"),
-			hint: game.i18n.localize("SIFToolkit.timeProcessor.hint"),
+		"siftoolkit", "timeProcessor", {
+  			name: game.i18n.localize("siftoolkit.timeProcessor.name"),
+			hint: game.i18n.localize("siftoolkit.timeProcessor.hint"),
 			scope: "world",
 			config: true,
 			type: String,
 			choices: {
-				"SIFT": game.i18n.localize("SIFToolkit.timeProcessor.SIFT"),
-				"SimpleCalendar": game.i18n.localize("SIFToolkit.timeProcessor.SimpleCalendar")
+				"SIFT": game.i18n.localize("siftoolkit.timeProcessor.SIFT"),
+				"SimpleCalendar": game.i18n.localize("siftoolkit.timeProcessor.SimpleCalendar")
 			},
 			default: "SIFT",
 			onChange: (value) => { 
-				let TPChoice = game.settings.get("SIFToolkit","timeProcessor");
+				let TPChoice = game.settings.get("siftoolkit","timeProcessor");
 				
 				let SCInstalled = false;
 				let SCEnabled = false;
@@ -148,7 +148,7 @@ export function registerSettings(){
 		}
 	);
 	
-	let TPChoice = game.settings.get("SIFToolkit","timeProcessor");
+	let TPChoice = game.settings.get("siftoolkit","timeProcessor");
 	
 	let SCInstalled = false;
 	let SCEnabled = false;
@@ -160,9 +160,9 @@ export function registerSettings(){
 	SIFSettings.roundSeconds = CONFIG.time.roundTime??6;
 
     game.settings.register(
-		"SIFToolkit","messageHistory", {
-            name: game.i18n.localize("SIFToolkit.messageHistory.name"),
-            hint: game.i18n.localize("SIFToolkit.messageHistory.hint"),
+		"siftoolkit","messageHistory", {
+            name: game.i18n.localize("siftoolkit.messageHistory.name"),
+            hint: game.i18n.localize("siftoolkit.messageHistory.hint"),
 			scope: "world",
 			config: true,
 			type: Number,
@@ -175,10 +175,10 @@ export function registerSettings(){
 			onChange: (value) => { SIFT.Settings.messageHistory = value; }
         }
 	);
-	SIFSettings.messageHistory = game.settings.get("SIFToolkit","messageHistory");
+	SIFSettings.messageHistory = game.settings.get("siftoolkit","messageHistory");
 
 	game.settings.register(
-		"SIFToolkit","reloadSpecialEffects", {
+		"siftoolkit","reloadSpecialEffects", {
 			name: "reloadSpecialEffects",
 			hint: "reloadSpecialEffects",
 			type: Boolean,
@@ -188,7 +188,7 @@ export function registerSettings(){
 			onChange: (value) => {}
 		}
 	);
-	game.settings.set("SIFToolkit","reloadSpecialEffects",false);
+	game.settings.set("siftoolkit","reloadSpecialEffects",false);
 
 
     return SIFSettings;	

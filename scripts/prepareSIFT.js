@@ -9,7 +9,7 @@ export function prepareSIFT(){
         sharedUIPatchHooks = await import('./shared/UIPatchHooks.js');
 
         if(!game.system.id == "dnd5e"){
-            ui.notifications.notify('SIFToolkit is only compatible with the DnD5E game system.', "error");
+            ui.notifications.notify('SIFtoolkit is only compatible with the DnD5E game system.', "error");
             return;
         }	
 
@@ -38,9 +38,9 @@ export function prepareSIFT(){
         sharedUIPatchHooks.setHooks();
         systemUIPatchHooks.setHooks();
 
-        let previousVersion = game.settings.get("SIFToolkit","SIFTVersion");
+        let previousVersion = game.settings.get("siftoolkit","SIFTVersion");
         if(previousVersion != SIFT.version){
-            game.settings.set("SIFToolkit","displaySplash",true);
+            game.settings.set("siftoolkit","displaySplash",true);
             let migrate = await import('./shared/migrate.js');
             migrate.migrate();
         }

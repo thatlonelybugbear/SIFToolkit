@@ -15,7 +15,7 @@ export function setHooks(){
                     clearInterval(mysi);
                     console.debug("SIFT | Applying textures post-reload")
                     for(let i = 0; i < placeables.length; i++){
-                        if(placeables[i].data.flags.SIFToolkit != undefined){
+                        if(placeables[i].data.flags.siftoolkit != undefined){
                             SIFT.textures.reapplyTexture(placeables[i]);		
                         }
                     }
@@ -30,7 +30,7 @@ export function setHooks(){
     async function newHover(wrapped, ...args) {
         return true;
     }
-    libWrapper.register("SIFToolkit", "CONFIG.MeasuredTemplate.objectClass.prototype._canHover", newHover);
+    libWrapper.register("siftoolkit", "CONFIG.MeasuredTemplate.objectClass.prototype._canHover", newHover);
     
     Hooks.on('ready', () => {
         try{window.Ardittristan.ColorSetting.tester} catch {
@@ -41,7 +41,7 @@ export function setHooks(){
     Hooks.once('ready', async function () {
 
 
-        if (game.settings.get("SIFToolkit","displaySplash")) {
+        if (game.settings.get("siftoolkit","displaySplash")) {
             let d = new Dialog({
                 title: "SIFToolkit",
                 content: `<div style="text-align: justify;"><h2>Welcome to SIFToolkit</h2><p>
@@ -58,7 +58,7 @@ export function setHooks(){
                     two: {
                         icon: '<i class="fas fa-clipboard-check"></i>',
                         label: "Hide until next version",
-                        callback: () => game.settings.set("SIFToolkit", "displaySplash", false)                     
+                        callback: () => game.settings.set("siftoolkit", "displaySplash", false)                     
                     },               
                 },
                       
@@ -85,11 +85,11 @@ export function setHooks(){
         let my = e.y;
         mx += 30;
         my -= 30;
-        let ttplayer = game.actors.get(sourceTemplate.data.flags.SIFToolkit?.actor)?.name??(game.users.get(sourceTemplate.data.user)?.name??"Unknown");
-        let ttspell = sourceTemplate.data.flags.SIFToolkit?.sif??"???"
+        let ttplayer = game.actors.get(sourceTemplate.data.flags.siftoolkit?.actor)?.name??(game.users.get(sourceTemplate.data.user)?.name??"Unknown");
+        let ttspell = sourceTemplate.data.flags.siftoolkit?.sif??"???"
         let ttduration = "";
         
-        ttduration = '<span style="font-weight:500;">Remaining: </span>' + ((sourceTemplate.data.flags.SIFToolkit?.duration)??"Unknown") + " seconds";
+        ttduration = '<span style="font-weight:500;">Remaining: </span>' + ((sourceTemplate.data.flags.siftoolkit?.duration)??"Unknown") + " seconds";
         
         let scale = document.getElementById("hud").style.transform.substring(6,document.getElementById("hud").style.transform.length-1);
         if(e._hover){
@@ -120,7 +120,7 @@ export function setHooks(){
 
     Hooks.on("updateMeasuredTemplate",async (e)=> {
         console.debug("SIFT | updating template",e);
-        if(e.data.flags.SIFToolkit.displayData?.useTexture){
+        if(e.data.flags.siftoolkit.displayData?.useTexture){
             let placeable = SIFT.utils.getPlaceableTemplate(e.id);
             SIFT.textures.reapplyTexture(placeable);		
         }
@@ -129,7 +129,7 @@ export function setHooks(){
     Hooks.on("createMeasuredTemplate", (...args) => {
         let template = args[0];
         let userId = args[2];
-        let SIFData = game.user.getFlag("SIFToolkit","chatData")[game.user.getFlag("SIFToolkit","chatData").length-1].SIFData;
+        let SIFData = game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
 
         if(game.userId == userId){
             SIFT.utils.updateTemplate(template);

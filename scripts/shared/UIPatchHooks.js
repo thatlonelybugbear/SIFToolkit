@@ -5,7 +5,7 @@ export function setHooks(){
         let currentHeight = html.height();
         html[0].style.height=`${addHeight+currentHeight}px`;
         let template = app.object;
-        let duration = template.getFlag("SIFToolkit","duration")??"";
+        let duration = template.getFlag("siftoolkit","duration")??"";
         html.find('button[type="submit"]')[0].insertAdjacentHTML('beforebegin', `<div class="form-group"><label>Duration (Seconds)</label><input type="number" style="float:right;" name="siftoolkit.template.duration" min="1" value="${duration}"></div>`);
         
         $('input[name="siftoolkit.template.duration"]')[0].onchange = (event) => {

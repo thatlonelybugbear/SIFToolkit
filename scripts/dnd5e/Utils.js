@@ -5,11 +5,11 @@ export function loadUtils(){
                 let filtertemplates = scene.data.templates;
                 filtertemplates = filtertemplates.filter(i => {
                     scene = i.parent; 
-                    return (i.data.flags.SIFToolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
+                    return (i.data.flags.siftoolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
                 });
                 filtertemplates = filtertemplates.filter(i => {
                         scene = i.parent;					
-                        return i.data.flags.SIFToolkit?.concentration??false;
+                        return i.data.flags.siftoolkit?.concentration??false;
                     }
                 );
                 if(filtertemplates !== undefined) {
@@ -66,26 +66,26 @@ export function loadUtils(){
         
         hijackTemplateButton: function (...args){
             let chatId = args[0].id;
-            if(game.messages.get(chatId).getFlag("SIFToolkit","Hijacked")!=game.settings.get("SIFToolkit","startupId")){
+            if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
                 console.debug("SIFT | Hijacking button: ",chatId);
                 let ancestor = $('ol[id="chat-log"]');
                 ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='emplate']", function(event){
                     SIFT.utils.pushButtonHandlerTemplate(event);
                 });
-                game.messages.get(chatId).setFlag("SIFToolkit","Hijacked",game.settings.get("SIFToolkit","startupId"));
+                game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
             }
             SIFT.utils.pushChatData(args[0].id);
         },
 
         hijackDamageButton: function (...args){
             let chatId = args[0].id;
-            if(game.messages.get(chatId).getFlag("SIFToolkit","Hijacked")!=game.settings.get("SIFToolkit","startupId")){
+            if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
                 console.debug("SIFT | Hijacking button: ",chatId);
                 let ancestor = $('ol[id="chat-log"]');
                 ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='damage']", function(event){
                     SIFT.utils.pushButtonHandlerDamage(event);
                 });
-                game.messages.get(chatId).setFlag("SIFToolkit","Hijacked",game.settings.get("SIFToolkit","startupId"));
+                game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
             }
             SIFT.utils.pushChatData(args[0].id);
         },
@@ -101,7 +101,7 @@ export function loadUtils(){
                 player : game.userId,
                 sif : itemObj.name,
                 type : itemObj.type,
-                ignoreDuration : itemObj.data.flags.SIFToolkit?.SIFData?.ignoreDuration??false,
+                ignoreDuration : itemObj.data.flags.siftoolkit?.SIFData?.ignoreDuration??false,
                 duration: (itemObj !== undefined)?utils.getDuration(itemObj):0,
                 isConcentration : isConcentration,
                 isSpecial : isSpecial,
@@ -113,8 +113,8 @@ export function loadUtils(){
 
         updateTemplate: function (template,index=0,duration=undefined){
             console.debug("SIFT | Updating Template");
-            let currentSIFData = template.data.flags.SIFToolkit;
-            currentSIFData = currentSIFData??game.user.getFlag("SIFToolkit","chatData")[game.user.getFlag("SIFToolkit","chatData").length-1].SIFData;
+            let currentSIFData = template.data.flags.siftoolkit;
+            currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
             let scene = game.scenes.get(currentSIFData.scene);  
             if(scene && index < 10){
                 if(scene.data.templates.filter(i => i.id === template.id).length > 0){
@@ -124,7 +124,7 @@ export function loadUtils(){
                     }
                     
                     let update =  {_id: template.id, flags: {
-                        "SIFToolkit":{
+                        "siftoolkit":{
                             concentration: currentSIFData.isConcentration, 
                             player: currentSIFData.player,
                             actor: currentSIFData.actor, 

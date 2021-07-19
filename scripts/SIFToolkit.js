@@ -3,7 +3,7 @@ import {loadUtils} from './loadUtils.js';
 import {loadUI} from './loadUI.js';
 import {loadTextures} from './loadTextures.js';
 
-class SIFToolkit {
+class  {
 	static SIFTTT = undefined;
 	static Status = { running : false };
 	static Settings = {};
@@ -15,7 +15,7 @@ class SIFToolkit {
 	static version = "0.0.1";
 }
 CONFIG.debug.hooks=true;
-globalThis.SIFT = SIFToolkit;
+globalThis.SIFT = ;
 
 prepareSIFT();
 loadUtils();
@@ -23,7 +23,7 @@ loadUI();
 loadTextures();
 
 
-SIFToolkit.Status.running = true;
+.Status.running = true;
 setTimeout(()=>{SIFT.soundHold = false;},5000);
 
 

@@ -1,5 +1,5 @@
 export function migrate(){
-    let currentVersion = game.settings.get("SIFToolkit","SIFTVersion");
+    let currentVersion = game.settings.get("siftoolkit","SIFTVersion");
 
     switch (currentVersion){
         case "0":
@@ -10,17 +10,17 @@ export function migrate(){
                 let templates = i.templates;
                 templates.forEach( j =>{
                     if(j.data.flags.spellTemplateManager != undefined){
-                        j.setFlag("SIFToolkit","concentration", j.data.flags.spellTemplateManager.concentration??false);
+                        j.setFlag("siftoolkit","concentration", j.data.flags.spellTemplateManager.concentration??false);
 
-                        j.setFlag("SIFToolkit","player", j.data.flags.spellTemplateManager.player??undefined);
-                        j.setFlag("SIFToolkit","actor", j.data.flags.spellTemplateManager.actor??undefined);
-                        j.setFlag("SIFToolkit","duration", j.data.flags.spellTemplateManager.duration??0);
-                        j.setFlag("SIFToolkit","scene", j.data.flags.spellTemplateManager.scene??j.id);
-                        j.setFlag("SIFToolkit","birthday", j.data.flags.spellTemplateManager.birthday??undefined);
-                        j.setFlag("SIFToolkit","sif", j.data.flags.spellTemplateManager.spell??"Unknown");
-                        j.setFlag("SIFToolkit","item", j.data.flags.spellTemplateManager.item??undefined);
+                        j.setFlag("siftoolkit","player", j.data.flags.spellTemplateManager.player??undefined);
+                        j.setFlag("siftoolkit","actor", j.data.flags.spellTemplateManager.actor??undefined);
+                        j.setFlag("siftoolkit","duration", j.data.flags.spellTemplateManager.duration??0);
+                        j.setFlag("siftoolkit","scene", j.data.flags.spellTemplateManager.scene??j.id);
+                        j.setFlag("siftoolkit","birthday", j.data.flags.spellTemplateManager.birthday??undefined);
+                        j.setFlag("siftoolkit","sif", j.data.flags.spellTemplateManager.spell??"Unknown");
+                        j.setFlag("siftoolkit","item", j.data.flags.spellTemplateManager.item??undefined);
                     
-                        j.setFlag("SIFToolkit","displayData", {
+                        j.setFlag("siftoolkit","displayData", {
                             "texture": j.data.flags.spellTemplateManager.stmData?.spellTexture??"",
                             "useTexture": j.data.flags.spellTemplateManager.stmData?.useTexture??false,
                             "alpha": j.data.flags.spellTemplateManager.stmData?.alpha??50,
@@ -28,7 +28,7 @@ export function migrate(){
                             "loopAnimations": j.data.flags.spellTemplateManager.stmData?.loopAnimations??true,
                             "ignoreDuration": j.data.flags.spellTemplateManager.stmData?.ignoreDuration??false,
                         });
-                        j.setFlag("SIFToolkit","audioData", {
+                        j.setFlag("siftoolkit","audioData", {
                             "clip": "",
                             "playTemplateAudio": false,
                             "playDamageAudio": false,
@@ -43,7 +43,7 @@ export function migrate(){
             game.actors.forEach( i => {
                 i.items.forEach( j => {
                     if(j.data.flags.spellTemplateManager != undefined){
-                        j.setFlag("SIFToolkit","SIFData",{
+                        j.setFlag("siftoolkit","SIFData",{
                             alpha: j.data.flags.spellTemplateManager.stmData?.alpha??50,
                             coneOrigin: j.data.flags.spellTemplateManager.stmData?.coneOrigin??1,
                             ignoreDuration: j.data.flags.spellTemplateManager.stmData?.ignoreDuration??false,
@@ -56,7 +56,7 @@ export function migrate(){
             });
 
         default:
-            game.settings.set("SIFToolkit","SIFTVersion","0.0.1");            
+            game.settings.set("siftoolkit","SIFTVersion","0.1.0");            
             ui.notifications.info("SIFToolkit upgrade complete.");
     }
 }

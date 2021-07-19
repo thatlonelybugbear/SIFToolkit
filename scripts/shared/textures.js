@@ -4,7 +4,7 @@ export function loadTextures(){
 
 
 applyTexture: async function (args,mysi){
-    if(args[0].data.flags.SIFToolkit != undefined){
+    if(args[0].data.flags.siftoolkit != undefined){
         let placeable = SIFT.utils.getPlaceableTemplate(args[0].id);
         if(placeable != undefined){
             try{
@@ -13,12 +13,12 @@ applyTexture: async function (args,mysi){
             
             let originalActor,originalItem,originalDisplayData;
             
-            if(placeable.data.flags.SIFToolkit?.displayData == undefined){
-                originalActor = game.actors.get(args[0].data.flags.SIFToolkit?.actor);
-                originalItem = args[0].data.flags.SIFToolkit.item;
+            if(placeable.data.flags.siftoolkit?.displayData == undefined){
+                originalActor = game.actors.get(args[0].data.flags.siftoolkit?.actor);
+                originalItem = args[0].data.flags.siftoolkit.item;
                 originalDisplayData = SIFT.utils.generateDisplayData(originalActor,originalItem);
             }else{
-                originalDisplayData = placeable.data.flags.SIFToolkit.displayData;
+                originalDisplayData = placeable.data.flags.siftoolkit.displayData;
             }
             SIFT.textures.writeTexture(placeable,originalDisplayData);        
 
@@ -296,7 +296,7 @@ reapplyTexture: async function (placeable){
         placeable.removeChild(child);
         child = placeable.children[0];
     }
-    let originalDisplayData = placeable.data.flags.SIFToolkit?.displayData;
+    let originalDisplayData = placeable.data.flags.siftoolkit?.displayData;
     if(("" != (originalDisplayData?.useTexture??"")) && "" != (originalDisplayData?.texture??"")){
         SIFT.textures.writeTexture(placeable,originalDisplayData);
     }        

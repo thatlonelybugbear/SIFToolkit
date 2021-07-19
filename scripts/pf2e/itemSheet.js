@@ -4,7 +4,7 @@ export function loadUtils(){
             let app = args[0];
             let html = args[1];
 
-            let itemData = app.object.getFlag("SIFToolkit","SIFData");
+            let itemData = app.object.getFlag("siftoolkit","SIFData");
             
             let ignoreDuration = itemData?.ignoreDuration??false;
             let texture = itemData?.texture??"";
@@ -32,7 +32,7 @@ export function loadUtils(){
             tabs.append(element);
 
             Handlebars.registerHelper({eq: (v1, v2) => v1 === v2});
-            let renderedTemplate = await renderTemplate("./modules/SIFToolkit/templates/ItemSheet.handlebars",
+            let renderedTemplate = await renderTemplate("./modules/siftoolkit/templates/ItemSheet.handlebars",
                 {
                     isArea:isArea,
                     isCone:isCone,
@@ -52,7 +52,7 @@ export function loadUtils(){
 
             html.find("section.sheet-body").append(renderedTemplate);
             
-            if(game.settings.get("SIFToolkit","reloadSpecialEffects")){
+            if(game.settings.get("siftoolkit","reloadSpecialEffects")){
                 element.click();
             }
 
@@ -73,7 +73,7 @@ export function loadUtils(){
                     volume:100
                 }
                 if(app.isEditable){
-                    app.object.setFlag("SIFToolkit","SIFData",tempData);                    
+                    app.object.setFlag("siftoolkit","SIFData",tempData);                    
                 }
                 itemData = tempData;                    
             }
@@ -81,39 +81,39 @@ export function loadUtils(){
             if(isArea){
                 $('input[name="siftoolkit.template.removal"]')[0].onchange = (event) => {
                     ignoreDuration = event.target.checked ? true : false;
-                    app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{ignoreDuration:ignoreDuration}});
-                    game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                    app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{ignoreDuration:ignoreDuration}});
+                    game.settings.set("siftoolkit","reloadSpecialEffects",true);
                 }
                 
                 $('input[name="siftoolkit.template.useTexture"]')[0].onchange = (event) => {
                     useTexture = event.target.checked ? true : false;
-                    app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{useTexture:useTexture}});
-                    game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                    app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{useTexture:useTexture}});
+                    game.settings.set("siftoolkit","reloadSpecialEffects",true);
                 }
             
                 $('input[name="siftoolkit.template.alpha"]')[0].onchange = (event) => {
                     alpha = (0+event.target.valueAsNumber);
                     if(typeof alpha == 'number' && isFinite(alpha)){
                         if(alpha <= 100 && alpha >= 0){
-                            app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{alpha:alpha}});
-                            game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                            app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{alpha:alpha}});
+                            game.settings.set("siftoolkit","reloadSpecialEffects",true);
                         }
                     }
                 }
             
                 $('input[name="siftoolkit.template.texture.text"]')[0].onchange = (event) => {
                     texture = event.target.value;
-                    app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{texture:texture}});
-                    game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                    app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{texture:texture}});
+                    game.settings.set("siftoolkit","reloadSpecialEffects",true);
                 }		
             
                 let mfpoptions = {
                     type:"imagevideo",
                     current:texture, 
                     callback: async (...args)=>{
-                        app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{texture:args[0]}});
+                        app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{texture:args[0]}});
                         $('input[name="siftoolkit.template.texture.text"]')[0].value=args[0];
-                        game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                        game.settings.set("siftoolkit","reloadSpecialEffects",true);
                     },
                     allowUpload:true
                 };
@@ -126,15 +126,15 @@ export function loadUtils(){
                 if(app.object.data.data?.area?.areaType == "cone" || app.object.data.spellInfo?.area?.areaType == "cone"){
                     $('select[name="siftoolkit.template.cone.origin"]')[0].onchange = (event) => {
                         coneOrigin = event.target.selectedIndex;
-                        app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{coneOrigin:coneOrigin}});
-                        game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                        app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{coneOrigin:coneOrigin}});
+                        game.settings.set("siftoolkit","reloadSpecialEffects",true);
                     }
                 }
             
                 $('input[name="siftoolkit.template.loop.animations"]')[0].onchange = (event) => {
                     loopAnimations = event.target.checked ? true : false;
-                    app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{loopAnimations:loopAnimations}});
-                    game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                    app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{loopAnimations:loopAnimations}});
+                    game.settings.set("siftoolkit","reloadSpecialEffects",true);
                 }
 
             }
@@ -142,39 +142,39 @@ export function loadUtils(){
 
             $('input[name="siftoolkit.audio.playTemplateAudio"]')[0].onchange = (event) => {
                 playTemplateAudio = event.target.checked ? true : false;
-                app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{playTemplateAudio:playTemplateAudio}});
-                game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{playTemplateAudio:playTemplateAudio}});
+                game.settings.set("siftoolkit","reloadSpecialEffects",true);
             }
             
             $('input[name="siftoolkit.audio.playDamageAudio"]')[0].onchange = (event) => {
                 playDamageAudio = event.target.checked ? true : false;
-                app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{playDamageAudio:playDamageAudio}});
-                game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{playDamageAudio:playDamageAudio}});
+                game.settings.set("siftoolkit","reloadSpecialEffects",true);
             }
         
             $('input[name="siftoolkit.audio.volume"]')[0].onchange = (event) => {
                 volume = (0+event.target.valueAsNumber);
                 if(typeof volume == 'number' && isFinite(volume)){
                     if(volume <= 100 && volume >= 0){
-                        app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{volume:volume}});
+                        app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{volume:volume}});
                     }
                 }
-                game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                game.settings.set("siftoolkit","reloadSpecialEffects",true);
             }
         
             $('input[name="siftoolkit.audio.clip.text"]')[0].onchange = (event) => {
                 clip = event.target.value;
-                app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{clip:clip}});
-                game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{clip:clip}});
+                game.settings.set("siftoolkit","reloadSpecialEffects",true);
             }		
         
             let mfpAudioOptions = {
                 type:"audio",
                 current:clip, 
                 callback: async (...args)=>{
-                    app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{clip:args[0]}});
+                    app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{clip:args[0]}});
                     $('input[name="siftoolkit.audio.clip.text"]')[0].value=args[0];
-                    game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                    game.settings.set("siftoolkit","reloadSpecialEffects",true);
                 },
                 allowUpload:true
             };
