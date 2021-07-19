@@ -188,7 +188,6 @@ export function loadUtils(){
                     }else{
                         type = flavor.substring(typeIndex+3);
                     }
-                    console.log("SIFT | Roll Type: ",type);
                     return type;
                 }else{
                     return undefined;

@@ -126,27 +126,6 @@ export function setHooks(){
         }
     });
 
-    Hooks.on("ready",e=> {
-        let placeables = game.canvas.templates.placeables;
-        let mysi = setInterval(
-        function(){
-            placeables = game.canvas.templates.placeables;
-            try{
-                if(placeables){
-                    clearInterval(mysi);
-                    console.debug("SIFT | Applying textures post-reload")
-                    for(let i = 0; i < placeables.length; i++){
-                        if(placeables[i].data.flags.SIFToolkit != undefined){
-                            SIFT.textures.reapplyTexture(placeables[i]);		
-                        }
-                    }
-                }else{
-                    console.debug("SIFT | Placeables not ready!");
-                }
-            }catch (e){}
-        },300);
-    });
-
     Hooks.on("createMeasuredTemplate", (...args) => {
         let template = args[0];
         let userId = args[2];

@@ -1,8 +1,6 @@
 export function loadUtils(){
     let utils = {
         patchItemSheet: async function (args){
-            console.log("patch item sheet",args);
-
             let app = args[0];
             let html = args[1];
 

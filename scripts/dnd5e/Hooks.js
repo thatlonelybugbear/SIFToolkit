@@ -32,7 +32,6 @@ export function setHooks(){
 
     
     async function newRoll(item){
-        console.log("SIFT | Roll Item: ",item);
         SIFT.utils.extractSIFData(item);
     }
     libWrapper.register('SIFToolkit', 'CONFIG.Item.documentClass.prototype.roll', async function (wrapped, ...args) {
