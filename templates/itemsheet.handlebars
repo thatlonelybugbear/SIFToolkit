@@ -33,6 +33,7 @@
                         </label>
                         <input type="checkbox" style="float:right;" name="siftoolkit.template.loop.animations" {{#if loopAnimations}}checked{{/if}} {{#unless isEditable}}disabled="disabled"{{/unless}}>
                     </div>
+                    {{#if isCone}}
                     <div class="form-group">
                         <label>
                         Cone texture Origin				
@@ -44,6 +45,7 @@
                             <option value="Bottom" {{#if (eq coneOrigin 4)}}selected{{/if}}>Bottom</option>
                         </select>
                     </div>
+                    {{/if}}
                 {{/if}}
                 <h3 class="form-header">Audio</h3>
                     

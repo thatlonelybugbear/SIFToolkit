@@ -1,6 +1,7 @@
 export function loadUtils(){
     let utils = {
         patchItemSheet: async function (args){
+            console.log("patch item sheet",args);
 
             let app = args[0];
             let html = args[1];
@@ -20,6 +21,7 @@ export function loadUtils(){
             let volume = itemData?.volume??100;
 
             let isArea = app.object.hasAreaTarget;
+            let isCone = app.object.data.data?.target?.type == "cone";
         
             const template_types = ["cone", "circle", "rect", "ray"];
             let add = ".tab.details";
@@ -37,6 +39,7 @@ export function loadUtils(){
             let renderedTemplate = await renderTemplate("./modules/SIFToolkit/templates/ItemSheet.handlebars",
                 {
                     isArea:isArea,
+                    isCone:isCone,
                     ignoreDuration:ignoreDuration,
                     texture:texture,
                     useTexture:useTexture,

@@ -1,7 +1,7 @@
 export function loadUtils(){
     let utils = {
         patchItemSheet: async function (args){
-
+            console.log("Patch Item Sheet", args);
             let app = args[0];
             let html = args[1];
 
@@ -20,9 +20,8 @@ export function loadUtils(){
             let volume = itemData?.volume??100;
 
             let isArea = (app.object.data?.data?.area?.areaType != "");
+            let isCone = app.object.data.data?.area?.areaType == "cone";
         
-            const template_types = ["cone", "circle", "rect", "ray"];
-            let add = ".tab.details";
             if(!["spell","feat","consumable"].includes(app.object.type)) return;
 
             let tabs = $('h4[class^="sheet-tabs"]');
@@ -37,6 +36,7 @@ export function loadUtils(){
             let renderedTemplate = await renderTemplate("./modules/SIFToolkit/templates/ItemSheet.handlebars",
                 {
                     isArea:isArea,
+                    isCone:isCone,
                     ignoreDuration:ignoreDuration,
                     texture:texture,
                     useTexture:useTexture,
@@ -124,7 +124,7 @@ export function loadUtils(){
                     mfp.render();
                 }
             
-                if(app.object.data.data?.target?.type == "cone" || app.object.data.spellInfo?.area?.areaType == "cone"){
+                if(app.object.data.data?.area?.areaType == "cone" || app.object.data.spellInfo?.area?.areaType == "cone"){
                     $('select[name="siftoolkit.template.cone.origin"]')[0].onchange = (event) => {
                         coneOrigin = event.target.selectedIndex;
                         app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{coneOrigin:coneOrigin}});
