@@ -93,10 +93,11 @@ export function loadUtils(){
         extractSIFData: function (itemObj){
             let isConcentration = itemObj.data.data.components?itemObj.data.data.components.concentration:false;
             let isSpecial = (itemObj.data.data.duration.units == "unti" || itemObj.data.data.duration.units == "spec");
+            console.log(itemObj);
             let SIFData = {
                 item : itemObj.id,
                 actor : itemObj.actor.id,
-                token : itemObj.actor.token.id,
+                token : itemObj.actor.token?.id,
                 scene : game.scenes.viewed.id,
                 player : game.userId,
                 sif : itemObj.name,
@@ -105,8 +106,8 @@ export function loadUtils(){
                 duration: (itemObj !== undefined)?utils.getDuration(itemObj):0,
                 isConcentration : isConcentration,
                 isSpecial : isSpecial,
-                displayData : SIFT.utils.generateDisplayData(itemObj.actor.id, itemObj.actor.token.id, itemObj.id),
-                audioData : SIFT.utils.generateAudioData(itemObj.actor.id, itemObj.actor.token.id, itemObj.id)
+                displayData : SIFT.utils.generateDisplayData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id),
+                audioData : SIFT.utils.generateAudioData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id)
             };
             SIFT.SIFData = SIFData;
         },

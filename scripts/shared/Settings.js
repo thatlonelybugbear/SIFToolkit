@@ -6,7 +6,7 @@ export function registerSettings(){
   			name: "SIFTVersion",
 			hint: "SIFTVersion",
 			scope: "client",
-			config: true,
+			config: false,
 			type: String,
 			default: "0",
 			onChange: (value) => {}
@@ -18,7 +18,7 @@ export function registerSettings(){
   			name: "displaySplash",
 			hint: "displaySplash",
 			scope: "client",
-			config: true,
+			config: false,
 			type: Boolean,
 			default: true,
 			onChange: (value) => {}

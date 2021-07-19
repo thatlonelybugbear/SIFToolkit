@@ -140,13 +140,13 @@ export function loadUtils(){
 
             }
             //////////////////audio
-
-            $('input[name="siftoolkit.audio.playTemplateAudio"]')[0].onchange = (event) => {
-                playTemplateAudio = event.target.checked ? true : false;
-                app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{playTemplateAudio:playTemplateAudio}});
-                game.settings.set("SIFToolkit","reloadSpecialEffects",true);
-            }
-            
+            if(isArea){
+                $('input[name="siftoolkit.audio.playTemplateAudio"]')[0].onchange = (event) => {
+                    playTemplateAudio = event.target.checked ? true : false;
+                    app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{playTemplateAudio:playTemplateAudio}});
+                    game.settings.set("SIFToolkit","reloadSpecialEffects",true);
+                }
+            }            
             $('input[name="siftoolkit.audio.playDamageAudio"]')[0].onchange = (event) => {
                 playDamageAudio = event.target.checked ? true : false;
                 app.object.setFlag("SIFToolkit", "SIFData", {...app.object.getFlag("SIFToolkit","SIFData"),...{playDamageAudio:playDamageAudio}});
