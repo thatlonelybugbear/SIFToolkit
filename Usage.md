@@ -6,6 +6,9 @@ Template Management is automatic, and does not need to be enabled.  Once SIFTool
 
 ### Template Aging and Expiration
 Templates age as combat progresses.  Specifically, all templates on the canvas will age up by 6 seconds (standard round duration) when a new combat round is ended/begun.  Templates will not age mid-round; however, at the end of each actor's turn in combat, all templates owned by that actor will be evaluated to determine if they should expire during that turn.  They will be removed if the current duration will be less than 1 at the end of the round. Moving backward through combat will allow time to be re-added to a template's duration; however, once a template is removed from the canvas, this action is permanent and the template will not be re-added to the canvas as time progresses in reverse.  
+
+### Ignore Template Duration
+Template durations can be ignored completely so that such templates, while utilized, can be removed immediately.  This option can be set by opening the Spell/Item/Feature and opening the "Special Effects" tab.  The first option, "Ignore Spell Duration (Remove Immediately)", will provide this functionality.  This is useful for spells such as sleep, whereby it is useful to place the template in order to identify affected individuals, but for which continued display of the template may not be helpful. 
   
 ### Concentration (DND5E)
 DND5E utilizes the concentration concept, which requires that only one concentration spell can be maintained by any single actor at any given time.  SIFToolkit incorporates this feature into two options, each of which can be found in the module settings of Foundry VTT.  The first option "Enforce Concentration", if enabled, will remove any previously placed concentration spell templates early, if a new concentration spell template is added.  The second option "Maintain concentration across scenes" will apply this same concept across all scenes at the same time.  With this option enabled, if a new concentration spell template is added to ANY scene, ALL previously placed concentration spell templates will be removed.  
@@ -20,10 +23,16 @@ Template durations can be adjusted by double-clicking on the template's control 
 ![image](https://user-images.githubusercontent.com/70086485/126088978-1ec942d0-7e61-4711-946d-50afbf0c0461.png)
 | Option | Description |
 | ----------- | ----------- |
-| Standard Spell Template Border Color | This is the border color for all templates that do not match any other category. |
-| Enduring Spell Template Border Color | This border color will be applied to all templates that have a duration greater than 0 (Instantaneous), but that do not require concentration. |
-| Special Spell Template Border Color | This border color will be applied to all templates that have a non-zero duration that utilizes logic outside of simple time.  This usually involves a trigger of some sort.  Templates of this type will need to be removed manually. | 
-
+| **Standard Spell Template Border Color** | This is the border color for all templates that do not match any other category. |
+| **Enduring Spell Template Border Color** | This border color will be applied to all templates that have a duration greater than 0 (Instantaneous), but that do not require concentration. |
+| **Special Spell Template Border Color** | This border color will be applied to all templates that have a non-zero duration that utilizes logic outside of simple time.  This usually involves a trigger of some sort.  Templates of this type will need to be removed manually. | 
+| **Concentration Spell Template Border Color** | This border color will be applied to all templates that require concentration, regardless of their duration.  This option only appears in DND5E system. | 
+| **Unmanaged Template Action** | This option will determine what action SIFToolkit will take at the end of an actor's turn, if a template is identified that has not yet been categorized/flagged by SIFToolkit.  Options include "Prompt me every time", "Skip - leave in place", "Delete", and "Claim them".  |
+| **Instantaneous Spell Fade Duration** | This option specifies an additional number of rounds to keep an otherwise instantaneous spell on the canvas.  A settings of 0 indicates that no additional rounds should be added and that such templates should be removed immediately.  Any other value will add that number of rounds to the duration of the template. |
+| **Enforce Concentration** | This option, if enabled, will cause SIFToolkit to remove previous concentration spell templates from the current scene, if a new one is placed.  This option only appears in the DND5E system. |
+| **Maintain concentration across scenes** | This option, if enabled, will cause SIFToolkit to remove previous concentration spell templates from ALL scenes if a new concentration temlate is added to ANY scene.  This option requires **Enforce Concentration** to be enabled in order to function.  | 
+| **Time Processor** | This option designates the module responsible for managing template times.  The default is SIFToolkit, which does not provide real-time aging of templates outside of combat.  The Simple Calendar option will provide this benefit, if installed.  |
+| **Message History Count** | This option tells SIFToolkit how many previous actionable chat cards, for which special effects options should be remembered.  If a chat message falls outside of this range, the buttons can still be used, but special effects options such as textures and audio will not be applied.  |
 
 
 ## Template Information ToolTip
