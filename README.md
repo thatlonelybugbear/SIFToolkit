@@ -1,6 +1,14 @@
 # SIFToolkit
 **Spells, Items, and Features Toolkit Module for Foundry VTT**
 
+## Patreon
+Your support helps make this module continue to improve.  Consider contributing https://www.patreon.com/SIFToolkit
+
+## Youtube Channel
+Introduction, how-to, and update videos will all be made available on my Youtube channel: https://www.youtube.com/channel/UC6YPR7wQE3vQ4FkFdRVwu0A.
+
+## Introduction
+
 SIFToolkit is a module developed in JavaScript to extend the capabilities of the DnD5E and PF2E systems of Foundry VTT. After enabling the module, SIFToolkit (SIFT) will take over multiple aspects of managing measured templates as they are deployed to a scene.
 
 **Template Automatic Cleanup**
