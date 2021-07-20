@@ -1,4 +1,4 @@
-v0.1.1  **TBD
+v0.1.2  **TBD
 
 * Initial release
 * Code Restructuring
