@@ -36,7 +36,7 @@ export function setHooks(){
             SIFT.utils.extractSIFData(SIFObj);  
             let SIFData = SIFObj.data.flags.siftoolkit?.SIFData
             
-            if((SIFData.playTemplateAudio || SIFData.playDamageAudio) && (SIFData.clip != "")){
+            if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);
             }
             if(!(hijackFlag==game.settings.get("siftoolkit","startupId"))){
@@ -54,9 +54,9 @@ export function setHooks(){
             }            
         }else if(rollType && ['healing','damage'].includes(rollType.toLowerCase())){
             let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);    
-            let SIFData = SIFObj.data.flags.siftoolkit.SIFData
+            let SIFData = SIFObj.data.flags.siftoolkit?.SIFData
             
-            if(!SIFT.soundHold && SIFData.playDamageAudio && (SIFData.clip != "")){
+            if(!SIFT.soundHold && SIFData?.playDamageAudio && (SIFData?.clip != "")){
                 SIFT.soundHold = true;
                 AudioHelper.play({
                     src: SIFData.clip,
