@@ -1,4 +1,4 @@
-v0.1.2  **TBD
+v0.1.2  07/20/2021
 
 * Initial release
 * Code Restructuring
