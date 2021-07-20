@@ -38,34 +38,7 @@ export function setHooks(){
         }
     });
 
-    Hooks.once('ready', async function () {
 
-
-        if (game.settings.get("siftoolkit","displaySplash")) {
-            let d = new Dialog({
-                title: "SIFToolkit",
-                content: `<div style="text-align: justify;"><h2>Welcome to SIFToolkit</h2><p>
-                        <p>Your support helps make this project possible.  Check out my patreon page <a href="https://www.patreon.com/SIFToolkit">here</a>.</p>
-                        <p>SIFToolkit is compatible with most animation and sound files.  You can pickup animations using the free JB2A module through Foundry OR grab the JB2A Patreon package <a href="https://www.patreon.com/JB2A">here</a>.  You can also use animations from the free Animated Spell Effects module, or bring your own.</p>
-                        <p>Please see SIFToolkit usage instructions on <a href="https://github.com/bitkiller0/SIFToolkit/blob/main/Usage.md">GitHub</a> to see how this module works, or check out my introduction YouTube video <a href="https://youtu.be/r9GwqaGCQo8">here</a>.</p>
-                        <p>The SIFToolkit <a href="https://github.com/bitkiller0/SIFToolkit/blob/main/changelog.md">changelog</a> is available on GitHub.</p>
-                        <p>If you have any questions, please reach out to bitkiller0#0515 on discord or log an issue on the GitHub page.</p>`,
-                buttons: {
-                    one: {
-                        icon: '<i class="fas fa-clipboard-list"></i>',
-                        label: "OK",                    
-                    },
-                    two: {
-                        icon: '<i class="fas fa-clipboard-check"></i>',
-                        label: "Hide until next version",
-                        callback: () => game.settings.set("siftoolkit", "displaySplash", false)                     
-                    },               
-                },
-                      
-            });
-            d.render(true);
-        }
-    })
 
     Hooks.on('updateWorldTime', (...args) => {
         if(SIFT.Settings.timeProcessor == "SimpleCalendar"){
