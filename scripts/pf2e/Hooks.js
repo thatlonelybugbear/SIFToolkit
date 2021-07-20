@@ -33,8 +33,10 @@ export function setHooks(){
             let rollType = SIFT.utils.getFlavorTypeFromChat(args[0]);
         if(args[0].data.content.includes('button data-action="template"')){
             let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);  
-            SIFT.utils.extractSIFData(SIFObj);  
-            let SIFData = SIFObj.data.flags.siftoolkit?.SIFData
+            let actor = args[0].data.speaker.actor;
+            let token = args[0].data.speaker.token;
+            SIFT.utils.extractSIFData(SIFObj,actor,token);  
+            let SIFData = (SIFObj.data.flags)?SIFObj.data.flags.siftoolkit?.SIFData:SIFObj.flags?.siftoolkit?.SIFData;
             
             if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);

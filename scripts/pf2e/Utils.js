@@ -51,8 +51,9 @@ export function loadUtils(){
         getDuration: function (SIF){
             let duration = 0;
             let value,units;
-            if(SIF.data.data.duration == undefined) return 0;
-            let durationArray = SIF.data.data.duration.value.toLowerCase().split(" ");
+            let SIFData = SIF.data.data?SIF.data.data:SIF.data;
+            if(SIFData.duration == undefined) return 0;
+            let durationArray = SIFData.duration.value.toLowerCase().split(" ");
             if(durationArray.length > 1){
                 value = durationArray[durationArray.length-2];
                 units = durationArray[durationArray.length-1];
@@ -154,23 +155,25 @@ export function loadUtils(){
             SIFT.utils.pushChatData(args[0].id);
         },
         
-        extractSIFData: function (itemObj){
-            let isConcentration = itemObj.data.data.components?itemObj.data.data.components.concentration:false;
-            let isSpecial = (itemObj.data.data.duration?.units == "unti" || itemObj.data.data.duration?.units == "spec")??false;
+        extractSIFData: function (itemObj,actor=undefined,token=undefined){
+            console.log(itemObj);
+            let isConcentration = false;
+            let duration = SIFT.utils.getDuration(itemObj);
+            let isSpecial = (duration==-1);
             let SIFData = {
-                item : itemObj.id,
-                actor : itemObj.actor.id,
-                token : itemObj.actor.token?.id,
+                item : itemObj.id??itemObj._id,
+                actor : actor??itemObj.actor.id,
+                token : token??itemObj.actor.token?.id,
                 scene : game.scenes.viewed.id,
                 player : game.userId,
                 sif : itemObj.name,
                 type : itemObj.type,
-                ignoreDuration : itemObj.data.flags.siftoolkit?.SIFData?.ignoreDuration??false,
+                ignoreDuration : itemObj.flags?.siftoolkit?.SIFData?.ignoreDuration??itemObj.data.flags?.siftoolkit?.SIFData?.ignoreDuration??false,
                 duration: (itemObj !== undefined)?SIFT.utils.getDuration(itemObj):0,
                 isConcentration : isConcentration,
                 isSpecial : isSpecial,
-                displayData : SIFT.utils.generateDisplayData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id),
-                audioData : SIFT.utils.generateAudioData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id)
+                displayData : SIFT.utils.generateDisplayData(actor??itemObj.actor.id, token??itemObj.actor.token?.id, itemObj.id??itemObj._id),
+                audioData : SIFT.utils.generateAudioData(actor??itemObj.actor.id, token??itemObj.actor.token?.id, itemObj.id??itemObj._id)
             };
             SIFT.SIFData = SIFData;
         },
