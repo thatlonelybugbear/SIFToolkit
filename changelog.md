@@ -13,3 +13,7 @@ v0.1.3 07/20/2021
 v0.1.5 07/21/2021
 
 * removed debug code.
+
+v0.1.6 07/21/2021
+
+* added error checking for SIFData missing from objects.
