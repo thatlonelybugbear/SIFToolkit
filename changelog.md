@@ -17,3 +17,7 @@ v0.1.5 07/21/2021
 v0.1.8 07/21/2021
 
 * added error checking for SIFData missing from objects.
+
+v0.1.10 07/21/2021
+
+* fixed bugs in migration script and renderChatMessage null object checking.
