@@ -9,7 +9,7 @@ export function migrate(){
             game.scenes.forEach( i => {
                 let templates = i.templates;
                 templates.forEach( j =>{
-                    if(j.data.flags.spellTemplateManager != undefined){
+                    if(j.data.flags.spellTemplateManager != undefined && j.permission == 3){
                         j.setFlag("siftoolkit","concentration", j.data.flags.spellTemplateManager.concentration??false);
 
                         j.setFlag("siftoolkit","player", j.data.flags.spellTemplateManager.player??undefined);
@@ -42,7 +42,7 @@ export function migrate(){
             //migrate all existing items
             game.actors.forEach( i => {
                 i.items.forEach( j => {
-                    if(j.data.flags.spellTemplateManager != undefined){
+                    if(j.data.flags.spellTemplateManager != undefined && j.permission == 3){
                         j.setFlag("siftoolkit","SIFData",{
                             alpha: j.data.flags.spellTemplateManager.stmData?.alpha??50,
                             coneOrigin: j.data.flags.spellTemplateManager.stmData?.coneOrigin??1,
