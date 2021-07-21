@@ -67,7 +67,7 @@ export function loadUtils(){
         hijackTemplateButton: function (...args){
             let chatId = args[0].id;
             if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
-                if(game.messages.get(chatID).permission == 3){
+                if(game.messages.get(chatId).permission == 3){
                     console.debug("SIFT | Hijacking button: ",chatId);
                     let ancestor = $('ol[id="chat-log"]');
                     ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='emplate']", function(event){
