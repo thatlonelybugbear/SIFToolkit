@@ -14,7 +14,6 @@ class  siftoolkit{
 	static soundHold = true;
 	static version = "0.1.3";
 }
-CONFIG.debug.hooks=true;
 globalThis.SIFT = siftoolkit;
 
 prepareSIFT();
