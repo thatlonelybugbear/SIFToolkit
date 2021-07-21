@@ -9,3 +9,7 @@ v0.1.2  07/20/2021
 v0.1.3 07/20/2021
 
 * Updated manifest URL.
+
+v0.1.5 07/21/2021
+
+* removed debug code.

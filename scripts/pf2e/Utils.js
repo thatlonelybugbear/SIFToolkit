@@ -156,7 +156,6 @@ export function loadUtils(){
         },
         
         extractSIFData: function (itemObj,actor=undefined,token=undefined){
-            console.log(itemObj);
             let isConcentration = false;
             let duration = SIFT.utils.getDuration(itemObj);
             let isSpecial = (duration==-1);
