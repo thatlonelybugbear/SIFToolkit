@@ -12,7 +12,7 @@ class  siftoolkit{
 	static textures = undefined;
 	static SIFData = {};
 	static soundHold = true;
-	static version = "0.1.13";
+	static version = "0.1.12";
 	static openItems = {};
 }
 globalThis.SIFT = siftoolkit;
