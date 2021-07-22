@@ -26,3 +26,9 @@ v0.1.11 07/21/2021
 
 * fixed error checking entry on template button hijack for dnd5e
 * added some additional error checks
+
+v0.1.12 07/22/2021
+
+* corrected bugs affecting Special Effects tab rendering on wrong itemSheet
+* corrected bugs affecting changes to one itemSheet causing all other itemSheets to update with the same value.
+* corrected bug on itemSheet causing scroll position to reset on itemSheet during re-render.
