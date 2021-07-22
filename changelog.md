@@ -32,3 +32,7 @@ v0.1.12 07/22/2021
 * corrected bugs affecting Special Effects tab rendering on wrong itemSheet
 * corrected bugs affecting changes to one itemSheet causing all other itemSheets to update with the same value.
 * corrected bug on itemSheet causing scroll position to reset on itemSheet during re-render.
+
+v0.1.13 07/22/2021
+
+* updated version number
