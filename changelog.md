@@ -36,3 +36,7 @@ v0.1.12 07/22/2021
 v0.1.13 07/22/2021
 
 * updated version number
+
+v0.1.14 07/22/2021
+
+* updates due to bad commit.  
