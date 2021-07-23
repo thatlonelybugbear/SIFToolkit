@@ -40,3 +40,7 @@ v0.1.13 07/22/2021
 v0.1.14 07/22/2021
 
 * updates due to bad commit.  
+
+v0.1.15 07/23/2021
+
+* updated item sheet template URL to be case specific.  
