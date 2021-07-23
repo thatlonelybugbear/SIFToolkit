@@ -43,7 +43,7 @@ export function loadUtils(){
             tabs.append(element);
 
             Handlebars.registerHelper({eq: (v1, v2) => v1 === v2});
-            let renderedTemplate = await renderTemplate("./modules/siftoolkit/templates/ItemSheet.handlebars",
+            let renderedTemplate = await renderTemplate("./modules/siftoolkit/templates/itemSheet.handlebars",
                 {
                     isArea:isArea,
                     isCone:isCone,
