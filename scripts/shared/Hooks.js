@@ -93,7 +93,7 @@ export function setHooks(){
 
     Hooks.on("updateMeasuredTemplate",async (e)=> {
         console.debug("SIFT | updating template",e);
-        if(e.data.flags.siftoolkit.displayData?.useTexture){
+        if(e.data.flags.siftoolkit?.displayData?.useTexture){
             let placeable = SIFT.utils.getPlaceableTemplate(e.id);
             SIFT.textures.reapplyTexture(placeable);		
         }
