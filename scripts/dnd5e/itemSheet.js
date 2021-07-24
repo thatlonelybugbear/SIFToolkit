@@ -32,7 +32,7 @@ export function loadUtils(){
             }
 
             let closeButton = $("div[id$='" + app.object.id + "'] a[class^='header-button']");
-            closeButton.on("click",function(){delete SIFT.openItems[app.object.id];console.log("closing");});
+            closeButton.on("click",function(){delete SIFT.openItems[app.object.id];});
 
 
             let element = document.createElement("a");
