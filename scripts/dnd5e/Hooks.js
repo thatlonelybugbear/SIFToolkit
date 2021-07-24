@@ -18,7 +18,8 @@ export function setHooks(){
 
     game.settings.set("siftoolkit","startupId",randomID());
 
-    try{var MessageArray = Array.from(game.messages.values());}catch{}
+    let MessageArray;
+    try{MessageArray = Array.from(game.messages.values());}catch{MessageArray = [];}
     console.debug("SIFT | Processing Chat Messages");
     for(let i = 1; i < (SIFT.Settings.messageHistory+1) && i <= MessageArray.length; i++){
         if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="placeTemplate"')){
