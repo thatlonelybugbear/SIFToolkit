@@ -56,3 +56,4 @@ v0.1.17 07/23/2021
 v0.1.18 TBD
 
 * corrected background error in updateMeasuredTemplate hook that would occur when updating a measured template with no SIFT data attached.  
+* removed some debug code.
