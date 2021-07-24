@@ -44,3 +44,7 @@ v0.1.14 07/22/2021
 v0.1.15 07/23/2021
 
 * updated item sheet template URL to be case specific.  
+
+v0.1.16 07/23/2021
+
+* fixed bug in dnd5e hooks that would under some circumstances prevent hooks from loading.
