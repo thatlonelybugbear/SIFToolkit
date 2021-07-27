@@ -56,4 +56,5 @@ v0.1.17 07/23/2021
 v0.1.18 TBD
 
 * corrected background error in updateMeasuredTemplate hook that would occur when updating a measured template with no SIFT data attached.  
+* corrected error in Hooks.js for PF2E that could cause some Hooks to not be loaded.  
 * removed some debug code.
