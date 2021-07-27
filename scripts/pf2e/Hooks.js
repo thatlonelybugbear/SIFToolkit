@@ -27,7 +27,7 @@ export function setHooks(){
                 j++;
             }
         }
-        SIFT.utils.clearTemplateData();
+        let attempts =0, intervalId = setInterval(()=>{if(game.user&&attempts < 30){SIFT.utils.clearTemplateData();clearInterval(intervalId);}else{attempts++}},100);
 
     Hooks.on("renderChatMessage",(...args) =>{
         let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
