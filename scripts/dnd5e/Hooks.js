@@ -29,7 +29,7 @@ export function setHooks(){
         }   
     }
     
-    SIFT.utils.clearTemplateData();
+    let attempts = 0, intervalId = setInterval(()=>{if(game.user&&attempts < 30){SIFT.utils.clearTemplateData();clearInterval(intervalId);}else{attempts++}},100);
 
     
     async function newRoll(item){
