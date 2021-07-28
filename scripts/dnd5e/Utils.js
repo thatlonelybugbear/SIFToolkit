@@ -1,6 +1,6 @@
 export function loadUtils(){
     let utils = {
-        clearConcentrationSpells: function (){
+        clearConcentrationSpells: function (actor = undefined){
             game.scenes.forEach(scene => {
                 let filtertemplates = scene.data.templates;
                 filtertemplates = filtertemplates.filter(i => {
@@ -12,6 +12,11 @@ export function loadUtils(){
                         return i.data.flags.siftoolkit?.concentration??false;
                     }
                 );
+                filtertemplates = filtertemplates.filter(i => {
+                    return ((i.data.flags.siftoolkit.actor == actor) && 
+                    (i.data.flags.siftoolkit.player == game.userId ||
+                    (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
+                });
                 if(filtertemplates !== undefined) {
                     let deletions = filtertemplates.map(i => i.id);
                     scene.deleteEmbeddedDocuments("MeasuredTemplate",deletions);
@@ -119,7 +124,7 @@ export function loadUtils(){
             console.debug("SIFT | Updating Template");
             let currentSIFData = template.data.flags.siftoolkit;
             currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
-            if(currentSIFData = undefined){
+            if(currentSIFData == undefined){
                 currentSIFData ={
                     concentration: false, 
                     player: game.userId,
@@ -139,7 +144,7 @@ export function loadUtils(){
                 if(scene.data.templates.filter(i => i.id === template.id).length > 0){
 
                     if(currentSIFData.isConcentration){
-                        SIFT.utils.clearConcentrationSpells();
+                        SIFT.utils.clearConcentrationSpells(currentSIFData.actor);
                     }
                     
                     let update =  {_id: template.id, flags: {

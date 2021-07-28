@@ -50,7 +50,7 @@ export function setHooks(){
             if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);
             }
-            if(!(hijackFlag==game.settings.get("siftoolkit","startupId"))){
+            if(args[0].testUserPermission(game.user,3) && !(hijackFlag==game.settings.get("siftoolkit","startupId"))){
                 SIFT.utils.hijackTemplateButton(args[0]);
             }
         }else if(args[0].data.content.includes('button data-action="damage"')){
@@ -60,7 +60,7 @@ export function setHooks(){
             if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);
             }
-            if(!(hijackFlag==game.settings.get("siftoolkit","startupId"))){
+            if(args[0].testUserPermission(game.user,3) && !(hijackFlag==game.settings.get("siftoolkit","startupId"))){
                 SIFT.utils.hijackDamageButton(args[0]);
             }            
         }else if(args[0]._roll?.constructor.name == "DamageRoll"){
