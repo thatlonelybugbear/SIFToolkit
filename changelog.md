@@ -53,8 +53,12 @@ v0.1.17 07/23/2021
 
 * updated item sheet template filename to match script request.  
 
-v0.1.18 TBD
+v0.1.18 7/27/2021
 
 * corrected background error in updateMeasuredTemplate hook that would occur when updating a measured template with no SIFT data attached.  
 * corrected error in Hooks.js that could cause some Hooks to not be loaded.  
 * removed some debug code.
+
+v0.1.19 7/28/2021
+
+* Added check for missing SIFData in updateTemplate code.  
