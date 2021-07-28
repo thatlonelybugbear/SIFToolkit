@@ -119,7 +119,7 @@ export function loadUtils(){
             console.debug("SIFT | Updating Template");
             let currentSIFData = template.data.flags.siftoolkit;
             currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
-            let scene = game.scenes.get(currentSIFData.scene);  
+            let scene = game.scenes.get(currentSIFData.scene)??game.scenes.active;  
             if(scene && index < 10){
                 if(scene.data.templates.filter(i => i.id === template.id).length > 0){
 
