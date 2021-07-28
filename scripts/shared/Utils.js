@@ -282,7 +282,22 @@ export function loadUtils(){
             console.debug("SIFT | Updating Template");
             let currentSIFData = template.data.flags.siftoolkit;
             currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
-            let scene = game.scenes.get(currentSIFData.scene)??game.scenes.active;  
+            if(currentSIFData = undefined){
+                currentSIFData ={
+                    concentration: false, 
+                    player: game.userId,
+                    actor: "", 
+                    duration: 0,
+                    special: false,
+                    scene: game.scenes.active,
+                    birthday: game.time.worldTime,
+                    sif: "",
+                    item: "",
+                    displayData: undefined,
+                    audioData: undefined
+                }
+            }
+            let scene = game.scenes.get(currentSIFData.scene);  
             if(scene && index < 10){
                 
                 if(scene.data.templates.filter(i => i.id === template.id).length > 0){
