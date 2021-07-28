@@ -62,3 +62,7 @@ v0.1.18 7/27/2021
 v0.1.19 7/28/2021
 
 * Added check for missing SIFData in updateTemplate code.  
+
+v0.1.20 7/28/2021
+
+* corrected typo preventing PF2E hooks from loading.
