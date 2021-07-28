@@ -66,3 +66,9 @@ v0.1.19 7/28/2021
 v0.1.20 7/28/2021
 
 * corrected typo preventing PF2E hooks from loading.
+
+v0.1.21 7/28/2021
+
+* corrected bug causing no SIF data to be appended to templates: this prevented hover information from displaying correctly.
+* corrected multiple bugs in template processing that would /not allow selective deletion of templates by GM/players.  Errors would cause templates to display incorrectly
+* corrected bug causing errors to be thrown when the primary user (not GM) rendered a chat message with hijackable button.
