@@ -402,6 +402,7 @@ export function loadUtils(){
         cleanupTemplates: function (actor=undefined, sceneId=undefined){
             console.debug("SIFT | Cleaning Templates.");
             game.scenes.forEach( j => {
+                console.log(j.name);
                 let sceneFilter = j.data.templates.filter(i => sceneId==undefined?true:j.id==sceneId);
                 let managed = sceneFilter.filter(i => i.data.flags.siftoolkit !== undefined);
                 let turnActorOwned = managed.filter(i => actor==undefined?true:i.data.flags.siftoolkit.actor == actor);
@@ -409,7 +410,8 @@ export function loadUtils(){
                     function(i){
                         return (
                             ((i.isOwner || !(game.user.isGM && game.users.get(i.data.flags.siftoolkit.player).active))) && //controlled by user or user is logged out and GM will handle
-                            ((i.data.flags.siftoolkit.duration - SIFT.Settings.roundSeconds) < 1 || i.data.flags.siftoolkit?.duration === undefined) && //expired or unassigned duration
+                            ((i.data.flags.siftoolkit.duration - SIFT.Settings.roundSeconds) < 1 || i.data.flags.siftoolkit?.duration === undefined || //expired or unassigned duration
+                            ( i.data.flags.siftoolkit?.displayData?.ignoreDuration && (i.data.flags.siftoolkit?.birthday + SIFT.Settings.roundSeconds * SIFT.Settings.instantaneousSpellFade) < game.time.worldTime) ) && 
                             (!i.data.flags.siftoolkit.special || i.data.flags.siftoolkit.special === undefined)  //not special
                         );
                     }
