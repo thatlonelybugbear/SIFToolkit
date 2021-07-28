@@ -408,7 +408,7 @@ export function loadUtils(){
                 let templates = turnActorOwned.filter(
                     function(i){
                         return (
-                            (i.isOwner && i.data.flags.siftoolkit != undefined) && //controlled by user & managed by siftoolkit
+                            ((i.isOwner || !(game.user.isGM && game.users.get(i.data.flags.siftoolkit.player).active))) && //controlled by user or user is logged out and GM will handle
                             ((i.data.flags.siftoolkit.duration - SIFT.Settings.roundSeconds) < 1 || i.data.flags.siftoolkit?.duration === undefined) && //expired or unassigned duration
                             (!i.data.flags.siftoolkit.special || i.data.flags.siftoolkit.special === undefined)  //not special
                         );
