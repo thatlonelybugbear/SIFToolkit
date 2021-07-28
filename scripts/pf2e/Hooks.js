@@ -18,7 +18,7 @@ export function setHooks(){
     //Load in message history
     
 	let MessageArray;
-        try{MessageArray = Array.from(game.messages.values());}catch{console.debug("SIFT | Could not clear chat-action history.");MessageArracy=[];}
+        try{MessageArray = Array.from(game.messages.values());}catch{console.debug("SIFT | Could not clear chat-action history.");MessageArray=[];}
         console.debug("SIFT | Processing Chat Messages");
         for(let i = 1,j=0; j < (SIFT.Settings.messageHistory+1) && i <= MessageArray.length; i++){
             let rollType = SIFT.utils.getFlavorTypeFromChat(MessageArray[i]);
