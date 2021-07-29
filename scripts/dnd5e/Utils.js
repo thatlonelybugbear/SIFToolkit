@@ -27,8 +27,8 @@ export function loadUtils(){
         },
 
         getDuration: function (SIF){
-            let value = SIF.data.data.duration.value;
-            let units = SIF.data.data.duration.units;
+            let value = SIF.data.data.duration?.value;
+            let units = SIF.data.data.duration?.units;
             let duration = 0;
             switch(units?.toLowerCase()) {
                 case "day":
@@ -101,7 +101,7 @@ export function loadUtils(){
 
         extractSIFData: function (itemObj){
             let isConcentration = itemObj.data.data.components?itemObj.data.data.components.concentration:false;
-            let isSpecial = (itemObj.data.data.duration.units == "unti" || itemObj.data.data.duration.units == "spec");
+            let isSpecial = (itemObj.data.data.duration?.units == "unti" || itemObj.data.data.duration?.units == "spec");
             let SIFData = {
                 item : itemObj.id,
                 actor : itemObj.actor.id,
