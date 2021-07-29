@@ -247,8 +247,8 @@ writeTexture: async function (placeable,animationData){
                 workingWidth =  placeable.ray._distance;
                 sprite = new PIXI.Sprite(SIFtexture)
                 sprite.anchor.set(0,0)
-                sprite.width=Math.floor((placeable.shape.width)/35)*35;
-                sprite.height=Math.floor((placeable.shape.height)/35)*35;
+                sprite.width=Math.floor((placeable.shape.width)/(game.canvas.grid.size/2))*(game.canvas.grid.size/2);
+                sprite.height=Math.floor((placeable.shape.height)/(game.canvas.grid.size/2))*(game.canvas.grid.size/2);
                 sprite.alpha = animationData.alpha/100;
                 icon = await placeable.addChild(sprite)
                 await icon.position.set(
@@ -267,8 +267,8 @@ writeTexture: async function (placeable,animationData){
                     SIFtexture = await loadTexture(animationData.texture+"?id="+placeable.id);
                 }
                 sprite = new PIXI.Sprite(SIFtexture)
-                sprite.height=placeable.data.width*game.canvas.grid.size/5;
-                sprite.width=placeable.data.distance*game.canvas.grid.size/5;
+                sprite.height=placeable.data.width*game.canvas.grid.size/placeable.scene.dimensions.distance;
+                sprite.width=placeable.data.distance*game.canvas.grid.size/placeable.scene.dimensions.distance;
                 sprite.y=0;
                 sprite.anchor.set(0,0.5);
                 sprite.rotation=placeable.ray.normAngle;
