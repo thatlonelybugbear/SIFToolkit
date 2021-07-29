@@ -76,3 +76,7 @@ v0.1.21 7/28/2021
 v0.1.22 7/28/2021
 
 * added missing logic to remove templates for which ignoreDuration is checked early if appropriate, but not before spellFadeDuration has been reached.
+
+v0.1.23 07/28/2021
+
+* adjusted Ray animation code to allow for non-5-foot squares
