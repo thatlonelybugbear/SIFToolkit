@@ -80,3 +80,7 @@ v0.1.22 7/28/2021
 v0.1.23 07/28/2021
 
 * adjusted Ray animation code to allow for non-5-foot squares
+
+v0.1.24 07/30/2021 
+
+* corrected bug in PF2E preventing SIF data from being passed to templates.
