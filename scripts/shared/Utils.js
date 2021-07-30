@@ -282,7 +282,7 @@ export function loadUtils(){
             console.debug("SIFT | Updating Template");
             let currentSIFData = template.data.flags.siftoolkit;
             currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
-            if(currentSIFData = undefined){
+            if(currentSIFData == undefined){
                 currentSIFData ={
                     concentration: false, 
                     player: game.userId,
