@@ -92,14 +92,14 @@ export function loadUtils(){
             })});
         },
 
-        manageUnmanaged: async function (Combat=game.combats.active,GM){
-            if(!Combat==undefined){
+        manageUnmanaged: async function (Combat=game.combats.active){
+            if(!(Combat==undefined)){
                 console.debug("SIFT | Looking for Unmanaged Templates");
                 let scene=Combat.scene;
                 let turnActor = Combat.combatant?.actor??game.userId;
                 if(!turnActor) return;
             
-                let managing = scene.data.templates.filter(i => i.data.flags.siftoolkit === undefined && (GM || i.data.user === game.userId));
+                let managing = scene.data.templates.filter(i => i.data.flags.siftoolkit === undefined && ((game.user.isGM && !game.users.get(i.data.user).active) || i.isOwner));
                 for(let i = 0; i < managing.length; i++){
                     let action = SIFT.Settings.unmanagedTemplateAction;			
                     let response = null;
@@ -402,7 +402,7 @@ export function loadUtils(){
         cleanupTemplates: function (actor=undefined, sceneId=undefined){
             console.debug("SIFT | Cleaning Templates.");
             game.scenes.forEach( j => {
-                console.log(j.name);
+                console.debug("SIFT | cleaning scene: ",j.name);
                 let sceneFilter = j.data.templates.filter(i => sceneId==undefined?true:j.id==sceneId);
                 let managed = sceneFilter.filter(i => i.data.flags.siftoolkit !== undefined);
                 let turnActorOwned = managed.filter(i => actor==undefined?true:i.data.flags.siftoolkit.actor == actor);
