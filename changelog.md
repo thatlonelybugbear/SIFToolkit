@@ -92,3 +92,7 @@ v0.1.25 07/31/2021
 v0.1.26 07/31/2021
 
 * added changes to account further for some SIFs that are missing SIFT information.  
+
+0.1.27 07/31/2021
+
+* Reapplied code from 0.1.25 which was inadvertantly removed in 0.1.26 due to a bad merge.
