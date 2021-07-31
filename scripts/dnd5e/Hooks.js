@@ -81,6 +81,7 @@ export function setHooks(){
        let advanceTime = args[2].advanceTime;
         if(advanceTime != 0 && !(SIFT.Settings.timeProcessor=="SimpleCalendar")) SIFT.utils.ageTemplates(advanceTime);
         SIFT.utils.cleanupTemplates(args[0].combatant.actor.id);
+	SIFT.utils.manageUnmanaged();
     });   
         
 }
