@@ -88,3 +88,7 @@ v0.1.24 07/30/2021
 v0.1.25 07/31/2021
 
 * re-introduced code to allow management of unmanaged templates
+
+v0.1.26 07/31/2021
+
+* added changes to account further for some SIFs that are missing SIFT information.  
