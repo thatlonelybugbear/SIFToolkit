@@ -84,3 +84,7 @@ v0.1.23 07/28/2021
 v0.1.24 07/30/2021 
 
 * corrected bug in PF2E preventing SIF data from being passed to templates.
+
+v0.1.25 07/31/2021
+
+* re-introduced code to allow management of unmanaged templates
