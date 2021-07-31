@@ -30,7 +30,7 @@ export function setHooks(){
     async function newHover(wrapped, ...args) {
         return true;
     }
-    libWrapper.register("siftoolkit", "CONFIG.MeasuredTemplate.objectClass.prototype._canHover", newHover);
+    libWrapper.register("siftoolkit", "CONFIG.MeasuredTemplate.objectClass.prototype._canHover", newHover,'OVERRIDE');
     
     Hooks.on('ready', () => {
         try{window.Ardittristan.ColorSetting.tester} catch {
