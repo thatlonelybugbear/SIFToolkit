@@ -74,25 +74,7 @@ export function setHooks(){
                 }, false);
                 setTimeout(()=>{SIFT.soundHold = false;5},500); 
             }   
-        }else{
-            let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);
-            
-            if (
-                SIFObj.data.data.duration?.units
-                && SIFObj.data.data.target?.value
-                && SIFObj.data.data.target?.units
-                && SIFObj.data.data.target?.type
-            ) {
-                let SIFData = SIFObj?.flags?.siftoolkit?.SIFData
-    
-                if ((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")) {
-                    AudioHelper.preloadSound(SIFData.clip);
-                }
-                
-                SIFT.utils.pushChatData(args[0].id);
-            }
         }
-
     });       
 
     Hooks.on("preUpdateCombat",(...args) => {
