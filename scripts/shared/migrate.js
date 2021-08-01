@@ -56,7 +56,7 @@ export function migrate(){
             });
 
         default:
-            game.settings.set("siftoolkit","SIFTVersion","0.1.27");            
+            game.settings.set("siftoolkit","SIFTVersion",SIFT.version);            
             ui.notifications.info("SIFToolkit upgrade complete.");
     }
 }
