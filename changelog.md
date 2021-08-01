@@ -96,3 +96,7 @@ v0.1.26 07/31/2021
 0.1.27 07/31/2021
 
 * Reapplied code from 0.1.25 which was inadvertantly removed in 0.1.26 due to a bad merge.
+
+0.1.28 08/01/2021
+
+* fixed bug preventing propper attribution of S/I/F details to templates when used by non-GM users. 
