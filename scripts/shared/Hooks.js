@@ -119,12 +119,27 @@ export function setHooks(){
                 });
             }
         }
-        //todo: check item to determine if to play
         if(SIFData.audioData?.playTemplateAudio && SIFData.audioData?.clip != ""){
             SIFT.utils.playAudio(template);
         }
 
-        SIFT.utils.clearTemplateData();
+        //SIFT.utils.clearTemplateData();
+    });
+
+    Hooks.on("getSceneControlButtons", (controls) => {
+        let measure = controls.filter(control => {return control.name=="measure"})[0];
+        measure.tools.push(
+            {
+                name: "Clear Effects Data",
+                title: "Clear Effects Data",
+                icon: "fas fa-video-slash",
+                onClick: () => {
+                    SIFT.utils.clearTemplateData();
+                    SIFT.SIFData = null;
+                },
+                button: true
+            }
+        );
     });
     
 }

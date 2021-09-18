@@ -44,7 +44,7 @@ export function prepareSIFT(){
             let migrate = await import('./shared/migrate.js');
             migrate.migrate();
         }
-        if (game.settings.get("siftoolkit","displaySplash")) {
+        if (game.settings.get("siftoolkit","displaySplash") && game.user.isGM) {
             let d = new Dialog({
                 title: "SIFToolkit",
                 content: `<div style="text-align: justify;"><h2>Welcome to SIFToolkit</h2><p>

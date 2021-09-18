@@ -44,6 +44,9 @@ Audio is currently provided for all spells/items/features.  Currently, all spell
 | **Clip** | This field is a path to the desired audio clip to be used.  Optionally, a select button is present to browse for such files. | 
 | **Volume%** | This option defines the percentage of the original volume in the audio clip that should be utilized when played.  A minimum value of 10, and a maximum value of 200 are allowed.  |
 
+## Clear Special Effects
+If Special Effects are enabled for a spell/item/feature, and that feature is used.  SIFT will automatically allow for the re-use of that data for future manually created templates.  This allows for customization of template size/shape/orientation when needed, allows for use of SIFToolkit on systems that do not supply a "Place Template" button or equivalent, and allows for placement of multiple templates from the same spell, if desired.  In some situations this may be undesireable, so a new Measurement Controls tool has been added.  To stop the reuse of special effects data, open the Measurement Controls and select the "Clear Effects Data" tool/button (Represented by a video camer with a slash through it).  Clicking the button one time will remove any unwanted special effects data from being added to future templates until a new Spell/Item/Feature using special effects data is triggered.
+
 ## Options
 ![image](https://user-images.githubusercontent.com/70086485/126088978-1ec942d0-7e61-4711-946d-50afbf0c0461.png)
 | Option | Description |

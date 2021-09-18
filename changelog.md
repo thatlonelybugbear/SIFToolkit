@@ -100,3 +100,8 @@ v0.1.26 07/31/2021
 0.1.28 08/01/2021
 
 * fixed bug preventing propper attribution of S/I/F details to templates when used by non-GM users. 
+
+0.1.29 09/18/2021
+
+* Added button to Measurement Controls to allow freeing of special effects data
+* prevented version pop-up for non-GM players
