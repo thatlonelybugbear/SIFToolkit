@@ -1,6 +1,14 @@
+        <style type="text/css">
+            h3 {
+                color: var(--primary-font);
+                border-top: 1px solid var(--header-border);
+                border-bottom: 1px solid var(--header-border);
+                background-color: var(--header-background);
+            }
+        </style>
         <div class="tab specialeffects" data-tab="specialeffects" style="overflow:scroll">
             {{#if isArea}}
-            <h3 class="form-header">Template Removal</h3>
+            <h3 class="form-header.tidy5eDark.tidy5e">Template Removal</h3>
 
                     <div class="form-group">
                         <label>
@@ -8,7 +16,7 @@
                         </label>
                         <input type="checkbox" style="float:right;" name="siftoolkit.template.removal" {{#if ignoreDuration}}checked{{/if}} {{#unless isEditable}}disabled{{/unless}}>
                     </div>
-                    <h3 class="form-header">Animations</h3>
+                    <h3 class="form-header.tidy5eDark.tidy5e">Animations</h3>
 
                     <div class="form-group">
                         <label>
@@ -47,7 +55,7 @@
                     </div>
                     {{/if}}
                 {{/if}}
-                <h3 class="form-header">Audio</h3>
+                <h3 class="form-header.tidy5eDark.tidy5e">Audio</h3>
                     
                     <div class="form-group">
                         <label>
