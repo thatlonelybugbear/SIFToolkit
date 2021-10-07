@@ -171,7 +171,7 @@ export function loadUtils(){
                 }
             }
             let originalSpellTexture = foundSIF?.flags?.siftoolkit?.SIFData.texture;//check token for non-linked token compatibility
-            originalSpellTexture = originalSpellTexture??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.texture;//check actor for linked token compatibility
+            originalSpellTexture = originalSpellTexture??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.texture;//check actor for linked token compatibility
             originalSpellTexture = originalSpellTexture??""//default
            
             let useTexture = foundSIF?.flags?.siftoolkit?.SIFData.useTexture;
