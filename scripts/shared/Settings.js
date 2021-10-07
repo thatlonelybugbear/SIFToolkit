@@ -192,8 +192,8 @@ export function registerSettings(){
 
 	game.settings.register(
 		"siftoolkit","parseUnknownMessages", {
-			name: "Parse Unknown Messages",
-			hint: "Will cause unkown messages to be parsed, utilizing message history but increasing compatibility with some modules.  ",
+			name: game.i18n.localize("siftoolkit.parseUnknownMessages.name"),
+			hint: game.i18n.localize("siftoolkit.parseUnknownMessages.hint"),
 			type: Boolean,
 			default: true,
 			config: true,
