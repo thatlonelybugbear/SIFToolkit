@@ -26,5 +26,7 @@
     "siftoolkit.timeProcessor.SimpleCalendar": "Simple Calendar",
     "siftoolkit.timeProcessor.SIFT": "SIFToolkit",
     "siftoolkit.messageHistory.name": "Message History Count",
-    "siftoolkit.messageHistory.hint": "Select the number of actionable chat messages that SIFToolkit will keep track of"
+    "siftoolkit.messageHistory.hint": "Select the number of actionable chat messages that SIFToolkit will keep track of",
+    "siftoolkit.parseUnknownMessages.name": "Parse Unknown Messages",
+    "siftoolkit.parseUnknownMessages.hint": "Will cause unkown messages to be parsed, utilizing message history but increasing compatibility with some modules"
 }

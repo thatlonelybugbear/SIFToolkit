@@ -26,5 +26,7 @@
     "siftoolkit.timeProcessor.SimpleCalendar": "Simple Calendar",
     "siftoolkit.timeProcessor.SIFT": "SIFToolkit",
     "siftoolkit.messageHistory.name": "Recuento del historial de mensajes",
-    "siftoolkit.messageHistory.hint": "Seleccione la cantidad de mensajes de chat procesables de los que SIFToolkit realizará un seguimiento"
+    "siftoolkit.messageHistory.hint": "Seleccione la cantidad de mensajes de chat procesables de los que SIFToolkit realizará un seguimiento",
+    "siftoolkit.parseUnknownMessages.name": "Analizar mensajes desconocidos",
+    "siftoolkit.parseUnknownMessages.hint": "Esto hará que se analicen los mensajes desconocidos, utilizando el historial de mensajes pero aumentando la compatibilidad con algunos módulos"
 }
