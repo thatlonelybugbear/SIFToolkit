@@ -114,3 +114,7 @@ v0.1.26 07/31/2021
 0.1.31 10/7/2021
 
 * Added Support for Tidy5e dark theme
+
+0.1.32 10/7/2021
+
+* Bug fix for issue #24 generating error when placing templates for linked actors without SIFData attached.
