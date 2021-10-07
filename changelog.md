@@ -110,3 +110,7 @@ v0.1.26 07/31/2021
 
 * Bug Fixes
 * Added Support for Better Rolls for DND5E
+
+0.1.31 10/7/2021
+
+* Added Support for Tidy5e dark theme
