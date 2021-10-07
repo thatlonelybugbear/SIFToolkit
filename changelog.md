@@ -105,3 +105,8 @@ v0.1.26 07/31/2021
 
 * Added button to Measurement Controls to allow freeing of special effects data
 * prevented version pop-up for non-GM players
+
+0.1.30 10/7/2021
+
+* Bug Fixes
+* Added Support for Better Rolls for DND5E

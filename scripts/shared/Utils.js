@@ -355,6 +355,7 @@ export function loadUtils(){
         pushChatData(chatId){
             let pushData = game.messages.get(chatId).getFlag("siftoolkit","SIFData");
             if(pushData == undefined){
+                SIFT.utils.extractSIFData(SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)));
                 pushData = SIFT.SIFData;                
             }
             
