@@ -122,3 +122,7 @@ v0.1.26 07/31/2021
 0.1.33 10/7/2021
 
 * Additional bug fixes for issue #24 and fixes for errors generated on chat messages that do not include SIFs
+
+0.1.34 10/7/2021
+
+* Removed debug code.

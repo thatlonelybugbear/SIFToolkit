@@ -68,7 +68,6 @@ export function loadUtils(){
         }, 
 
         pushButtonHandlerUnknownSound(event){
-            console.debug("SIFT | PBHUS Event:",event);
             let chatId = event.data;
             SIFT.utils.pushChatData(chatId);
             let SIFObj = SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)); 
@@ -85,12 +84,8 @@ export function loadUtils(){
 
         pushButtonHandlerUnknownSilent(event){
             let chatId = event.data;
-            
-
-
             setTimeout(
                     ()=>{
-                        console.debug("SIFT | Push Button: ", chatId);
                         SIFT.utils.pushChatData(chatId);
                     },
                     500
@@ -143,19 +138,14 @@ export function loadUtils(){
             if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
                 if(game.messages.get(chatId).permission == 3){
                     console.debug("SIFT | Hijacking unknown chat message: ",chatId);
-                    console.debug(args[0]);
-                    console.debug(SIFObj);
-                    console.debug(SIFData);
                     let ancestor = $('ol[id="chat-log"]');
                     //check Better Rolls for DND5E Buttons 
                     //Save Button
                     ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='card-buttons']",args[0].id, function(...args){
-                        console.debug("Testing Unkown");
                         SIFT.utils.pushButtonHandlerUnknownSound(args[0]);
                     });
                     //Repeat Button
                     ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='die-result-overlay-br']",args[0].id, function(...args){
-                        console.debug("Testing Unkown");
                         SIFT.utils.pushButtonHandlerUnknownSilent(args[0]);
                     });                    
                     game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
@@ -190,7 +180,6 @@ export function loadUtils(){
         updateTemplate: function (template,index=0,duration=undefined){
             console.debug("SIFT | Updating Template");
             let currentSIFData = template.data.flags.siftoolkit;
-            console.debug("SIFT Template:",template);
             currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData??SIFT.SIFData;
             if(currentSIFData == undefined){
                 currentSIFData ={
