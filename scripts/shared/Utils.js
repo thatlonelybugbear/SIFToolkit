@@ -175,23 +175,23 @@ export function loadUtils(){
             originalSpellTexture = originalSpellTexture??""//default
            
             let useTexture = foundSIF?.flags?.siftoolkit?.SIFData.useTexture;
-            useTexture = useTexture??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.useTexture;
+            useTexture = useTexture??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.useTexture;
             useTexture = useTexture??false;
         
             let alpha = foundSIF?.flags?.siftoolkit?.SIFData.alpha;
-            alpha = alpha??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.alpha;
+            alpha = alpha??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.alpha;
             alpha = alpha??50;
         
             let coneOrigin = foundSIF?.flags?.siftoolkit?.SIFData.coneOrigin;
-            coneOrigin = coneOrigin??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.coneOrigin;
+            coneOrigin = coneOrigin??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.coneOrigin;
             coneOrigin = coneOrigin??1;
         
             let loopAnimations = foundSIF?.flags?.siftoolkit?.SIFData.loopAnimations;
-            loopAnimations = loopAnimations??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.loopAnimations;
+            loopAnimations = loopAnimations??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.loopAnimations;
             loopAnimations = loopAnimations??true;
         
             let ignoreDuration = foundSIF?.flags?.siftoolkit?.SIFData.ignoreDuration;
-            ignoreDuration = ignoreDuration??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.ignoreDuration;
+            ignoreDuration = ignoreDuration??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.ignoreDuration;
             ignoreDuration = ignoreDuration??false;
         
             let SIFData = {
@@ -352,7 +352,7 @@ export function loadUtils(){
             }
         },
 
-        pushChatData(chatId){
+        pushChatData: function (chatId){
             let pushData = game.messages.get(chatId).getFlag("siftoolkit","SIFData");
             if(pushData == undefined){
                 SIFT.utils.extractSIFData(SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)));

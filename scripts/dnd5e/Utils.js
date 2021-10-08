@@ -166,6 +166,7 @@ export function loadUtils(){
         },
 
         extractSIFData: function (itemObj){
+            if (!itemObj) return undefined;
             let isConcentration = (itemObj?.data?.data?.components)?itemObj.data.data.components.concentration:false;
             let isSpecial = (itemObj.data.data.duration?.units == "unti" || itemObj.data.data.duration?.units == "spec");
             let SIFData = {
