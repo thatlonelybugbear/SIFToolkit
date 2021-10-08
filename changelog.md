@@ -126,3 +126,8 @@ v0.1.26 07/31/2021
 0.1.34 10/7/2021
 
 * Removed debug code.
+
+0.1.35 10/8/2021
+
+* Additional bug fixes related to generation of default sound data.  
+* Added additional error checking.
