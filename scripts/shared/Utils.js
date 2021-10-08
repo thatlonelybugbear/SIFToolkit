@@ -220,15 +220,15 @@ export function loadUtils(){
                 }
             }
             let originalClip = foundSIF?.flags?.siftoolkit?.SIFData.clip;//check token for non-linked token compatibility
-            originalClip = originalClip??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.clip;//check actor for linked token compatibility
+            originalClip = originalClip??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.clip;//check actor for linked token compatibility
             originalClip = originalClip??""//default
            
             let playTemplateAudio = foundSIF?.flags?.siftoolkit?.SIFData.playTemplateAudio;
-            playTemplateAudio = playTemplateAudio??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.playTemplateAudio;
+            playTemplateAudio = playTemplateAudio??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.playTemplateAudio;
             playTemplateAudio = playTemplateAudio??false;
 
             let playDamageAudio = foundSIF?.flags?.siftoolkit?.SIFData.playDamageAudio;
-            playDamageAudio = playDamageAudio??originalActor.items.get(itemId).data.flags.siftoolkit?.SIFData?.playDamageAudio;
+            playDamageAudio = playDamageAudio??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.playDamageAudio;
             playDamageAudio = playDamageAudio??false;
         
             let volume = foundSIF?.flags?.siftoolkit?.SIFData.volume;

@@ -131,9 +131,6 @@ export function loadUtils(){
                 AudioHelper.preloadSound(SIFData.clip);
             }
 
-//            SIFT.utils.pushChatData(args[0].id);
-
-
             let chatId = args[0].id;
             if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
                 if(game.messages.get(chatId).permission == 3){
@@ -156,7 +153,7 @@ export function loadUtils(){
         },
 
         extractSIFData: function (itemObj){
-            if (!itemObj) return undefined;
+            if(!itemObj) return undefined;
             let isConcentration = (itemObj?.data?.data?.components)?itemObj.data.data.components.concentration:false;
             let isSpecial = (itemObj.data.data.duration?.units == "unti" || itemObj.data.data.duration?.units == "spec");
             let SIFData = {
