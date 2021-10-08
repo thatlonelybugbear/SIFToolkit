@@ -118,3 +118,7 @@ v0.1.26 07/31/2021
 0.1.32 10/7/2021
 
 * Bug fix for issue #24 generating error when placing templates for linked actors without SIFData attached.
+
+0.1.33 10/7/2021
+
+* Additional bug fixes for issue #24 and fixes for errors generated on chat messages that do not include SIFs
