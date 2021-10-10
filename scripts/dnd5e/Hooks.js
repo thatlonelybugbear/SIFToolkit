@@ -77,7 +77,9 @@ export function setHooks(){
                 setTimeout(()=>{SIFT.soundHold = false;5},500); 
             }   
         } else if(SIFT.Settings.parseUnknownMessages){
-            SIFT.utils.parseUnknownMessage(args[0]);
+            if(args[0].testUserPermission(game.user,3) && !(hijackFlag==game.settings.get("siftoolkit","startupId"))){
+                SIFT.utils.parseUnknownMessage(args[0]);
+            }
         }
     });       
 

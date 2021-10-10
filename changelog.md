@@ -131,3 +131,7 @@ v0.1.26 07/31/2021
 
 * Additional bug fixes related to generation of default sound data.  
 * Added additional error checking.
+
+0.1.36 10/10/2021
+
+* Bug fix to prevent error message when messages appear that the user does not have permission to modify
