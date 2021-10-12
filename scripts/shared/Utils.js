@@ -403,7 +403,6 @@ export function loadUtils(){
         cleanupTemplates: function (actor=undefined, sceneId=undefined){
             console.debug("SIFT | Cleaning Templates.");
             game.scenes.forEach( j => {
-                console.debug("SIFT | cleaning scene: ",j.name);
                 let sceneFilter = j.data.templates.filter(i => sceneId==undefined?true:j.id==sceneId);
                 let managed = sceneFilter.filter(i => i.data.flags.siftoolkit !== undefined);
                 let turnActorOwned = managed.filter(i => actor==undefined?true:i.data.flags.siftoolkit.actor == actor);
@@ -418,7 +417,10 @@ export function loadUtils(){
                     }
                 );
                 let deletions = templates.map(i => i.id);
-                j.deleteEmbeddedDocuments("MeasuredTemplate",deletions);
+                if(deletions.length > 0){
+                    console.debug("SIFT | cleaning scene: ",j.name);
+                    j.deleteEmbeddedDocuments("MeasuredTemplate",deletions);
+                }
             });
         },
 

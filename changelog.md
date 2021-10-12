@@ -140,3 +140,9 @@ v0.1.26 07/31/2021
 
 * Corrected bug preventing loading of some functions on Forge-VTT
 * updated logic to better identify the correct S/I/F in use.
+
+0.1.38 10/12/2021
+
+* Updated Template Cleanup code to only LOG messages regarding scene cleanups when SIFT takes an action against a scene, rather than simply evaluating the scene for cleanup.
+* removed debug code
+* Fixed Broken unknown message parsing

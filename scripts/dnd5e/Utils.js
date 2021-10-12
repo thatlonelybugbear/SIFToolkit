@@ -68,6 +68,7 @@ export function loadUtils(){
         },
 
         pushButtonHandlerUnknownSound(event){
+            console.debug("SIFT | Event Data:",event);
             let chatId = event.data;
             SIFT.utils.pushChatData(chatId);
             let SIFObj = SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)); 
@@ -83,6 +84,7 @@ export function loadUtils(){
         }, 
 
         pushButtonHandlerUnknownSilent(event){
+            console.debug("SIFT | Event Data:",event);
             let chatId = event.data;
             setTimeout(
                     ()=>{
@@ -139,7 +141,6 @@ export function loadUtils(){
             let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);
             let SIFData = SIFObj?.flags?.siftoolkit?.SIFData;
             //SIFT.SIFData = SIFData;
-            console.debug("SIFT PUM SIFDATA:",SIFData);
             if ((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")) {
                 AudioHelper.preloadSound(SIFData.clip);
             }
@@ -157,13 +158,11 @@ export function loadUtils(){
                     let ancestor = $('ol[id="chat-log"]');
                     //check Better Rolls for DND5E Buttons 
                     //Save Button
-                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='card-buttons'] button[data-action='save']",args[0].id, function(...args){
-                        console.debug("SIFT | it worked 1!");
+                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='card-buttons']",args[0].id, function(...args){
                         SIFT.utils.pushButtonHandlerUnknownSound(args[0]);
                     });
                     //Repeat Button
-                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div div[class^='die-result-overlay-br'] button",args[0].id, function(...args){
-                        console.debug("SIFT | it worked 2!");
+                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='die-result-overlay-br']",args[0].id, function(...args){
                         SIFT.utils.pushButtonHandlerUnknownSilent(args[0]);
                     });                    
                     game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
@@ -174,7 +173,6 @@ export function loadUtils(){
 
         extractSIFData: function (itemObj){
             if(!itemObj) return undefined;
-            console.debug("SIFT | Extract obj:",itemObj);
             let isConcentration = (itemObj?.data?.data?.components)?itemObj.data.data.components.concentration:false;
             let isSpecial = (itemObj.data.data.duration?.units == "unti" || itemObj.data.data.duration?.units == "spec");
             let SIFData = {

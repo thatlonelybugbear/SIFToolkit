@@ -20,7 +20,6 @@ export function setHooks(){
 
     let MessageArray;
     try{MessageArray = Array.from(game.messages.values());}catch{MessageArray = [];}
-    console.debug("SIFT | Processing Chat Messages");
     for(let i = 1; i < (SIFT.Settings.messageHistory+1) && i <= MessageArray.length; i++){
         if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="placeTemplate"')){
             SIFT.utils.hijackTemplateButton(MessageArray[MessageArray.length - i]);                
@@ -44,7 +43,6 @@ export function setHooks(){
     }, 'MIXED' ); // optional, since this is the default type    
 
     Hooks.on("renderChatMessage",(...args) =>{
-        console.debug("SIFT | Chat Message Rendered!");
         let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);    
         if(!SIFObj) return undefined;
         let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData
@@ -52,7 +50,6 @@ export function setHooks(){
         //let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
         let identified = false;
         if(args[0].data.content.includes('button data-action="placeTemplate"')){
-            console.debug("SIFT | Template button Found");
             if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);
             }
