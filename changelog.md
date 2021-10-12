@@ -146,3 +146,8 @@ v0.1.26 07/31/2021
 * Updated Template Cleanup code to only LOG messages regarding scene cleanups when SIFT takes an action against a scene, rather than simply evaluating the scene for cleanup.
 * removed debug code
 * Fixed Broken unknown message parsing
+
+0.1.39 10/??/2021
+
+* Improved chat log parsing on reload
+* Removed debug code

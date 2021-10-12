@@ -20,15 +20,31 @@ export function setHooks(){
 
     let MessageArray;
     try{MessageArray = Array.from(game.messages.values());}catch{MessageArray = [];}
-    for(let i = 1; i < (SIFT.Settings.messageHistory+1) && i <= MessageArray.length; i++){
-        if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="placeTemplate"')){
-            SIFT.utils.hijackTemplateButton(MessageArray[MessageArray.length - i]);                
-        }else if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="damage"')){
-            SIFT.utils.hijackDamageButton(MessageArray[MessageArray.length - i]);                
-        } else if(SIFT.Settings.parseUnknownMessages){
-            SIFT.utils.parseUnknownMessage(MessageArray[MessageArray.length-i]);
-        }
-    }
+    let parseAttempts = 0, messageParseIntervalId = setInterval( () => {
+        if(game.user && parseAttempts < 30){
+            clearInterval(messageParseIntervalId);
+            game.user.setFlag("siftoolkit","chatData",[]).then( ()=>{
+                for(let i = 1, j = 0; j < (SIFT.Settings.messageHistory) && i <= MessageArray.length; i++){
+                    if(MessageArray[MessageArray.length - i].isAuthor || game.user?.isGM){
+                        let identified = false;
+                        if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="placeTemplate"')){
+                            SIFT.utils.hijackTemplateButton(MessageArray[MessageArray.length - i]);                
+                            identified = true;
+                        }
+                        if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="damage"')){
+                            SIFT.utils.hijackDamageButton(MessageArray[MessageArray.length - i]);                
+                            identified = true;
+                        }
+                        if(SIFT.Settings.parseUnknownMessages && !identified){
+                            SIFT.utils.parseUnknownMessage(MessageArray[MessageArray.length-i]);
+                        }
+                        j++;
+                    }
+                }
+                clearInterval(messageParseIntervalId);
+            });
+        }else{parseAttempts++;}
+    },100);
     
     let attempts = 0, intervalId = setInterval(()=>{if(game.user&&attempts < 30){SIFT.utils.clearTemplateData();clearInterval(intervalId);}else{attempts++}},100);
 

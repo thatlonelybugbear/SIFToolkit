@@ -67,32 +67,27 @@ export function loadUtils(){
             SIFT.utils.pushChatData(chatId);
         },
 
-        pushButtonHandlerUnknownSound(event){
-            console.debug("SIFT | Event Data:",event);
-            let chatId = event.data;
-            SIFT.utils.pushChatData(chatId);
-            let SIFObj = SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)); 
-            let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
-            if (SIFData?.playDamageAudio && (SIFData?.clip != "")) {
-                SIFT.soundHold = true;
-                AudioHelper.play({
-                    src: SIFData.clip,
-                    volume: ((SIFData.volume??100)/100)
-                }, false);
-                setTimeout(()=>{SIFT.soundHold = false},500); 
+        pushButtonHandlerUnknown(event){
+            //BetterRolls5e Repeat Button
+            if(event.currentTarget.childNodes[1]?.outerHTML?.includes('<button data-action="repeat"')){
+                let chatId = event.data;
+                SIFT.utils.pushChatData(chatId);
             }
-        }, 
-
-        pushButtonHandlerUnknownSilent(event){
-            console.debug("SIFT | Event Data:",event);
-            let chatId = event.data;
-            setTimeout(
-                    ()=>{
-                        SIFT.utils.pushChatData(chatId);
-                    },
-                    500
-            );
-            
+            //BetterRolls5e Save Button
+            if(event.currentTarget.childNodes[1]?.outerHTML?.includes('<button data-action="save"')){
+                let chatId = event.data;
+                SIFT.utils.pushChatData(chatId);
+                let SIFObj = SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)); 
+                let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
+                if (SIFData?.playDamageAudio && (SIFData?.clip != "")) {
+                    SIFT.soundHold = true;
+                    AudioHelper.play({
+                        src: SIFData.clip,
+                        volume: ((SIFData.volume??100)/100)
+                    }, false);
+                    setTimeout(()=>{SIFT.soundHold = false},500); 
+                }
+            }            
         }, 
 
         hijackTemplateButton: function (...args){
@@ -140,7 +135,7 @@ export function loadUtils(){
         parseUnknownMessage: function (...args){
             let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);
             let SIFData = SIFObj?.flags?.siftoolkit?.SIFData;
-            //SIFT.SIFData = SIFData;
+            
             if ((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")) {
                 AudioHelper.preloadSound(SIFData.clip);
             }
@@ -152,20 +147,18 @@ export function loadUtils(){
                     found = true;
                 }
             }
-            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+            if(game.messages.get(chatId).isAuthor || game.user?.isGM){
                 if(!found){
                     console.debug("SIFT | Hijacking unknown chat message: ",chatId);
                     let ancestor = $('ol[id="chat-log"]');
-                    //check Better Rolls for DND5E Buttons 
-                    //Save Button
+                    //capture card-buttons buttons
                     ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='card-buttons']",args[0].id, function(...args){
-                        SIFT.utils.pushButtonHandlerUnknownSound(args[0]);
+                        SIFT.utils.pushButtonHandlerUnknown(args[0]);
                     });
-                    //Repeat Button
+                    //capture die-result-overlay-br buttons
                     ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='die-result-overlay-br']",args[0].id, function(...args){
-                        SIFT.utils.pushButtonHandlerUnknownSilent(args[0]);
-                    });                    
-                    game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
+                        SIFT.utils.pushButtonHandlerUnknown(args[0]);
+                    });
                 }
                 SIFT.utils.pushChatData(args[0].id); 
             }

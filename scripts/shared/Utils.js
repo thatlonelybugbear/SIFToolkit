@@ -353,15 +353,11 @@ export function loadUtils(){
         },
 
         pushChatData: function (chatId){
-            let pushData = game.messages.get(chatId).getFlag("siftoolkit","SIFData");
-            if(pushData == undefined){
-                SIFT.utils.extractSIFData(SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)));
-                pushData = SIFT.SIFData;                
-            }
+            SIFT.utils.extractSIFData(SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)));
+            let pushData = SIFT.SIFData;                
             
             if(pushData!=undefined && pushData.item != undefined){
                 SIFT.utils.pushItemData({chatId:chatId,SIFData:pushData});
-                game.messages.get(chatId).setFlag("siftoolkit","SIFData",pushData);
             }
         },
 
