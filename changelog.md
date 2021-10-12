@@ -147,7 +147,7 @@ v0.1.26 07/31/2021
 * removed debug code
 * Fixed Broken unknown message parsing
 
-0.1.39 10/??/2021
+0.1.39 10/12/2021
 
 * Improved chat log parsing on reload
 * Removed debug code
