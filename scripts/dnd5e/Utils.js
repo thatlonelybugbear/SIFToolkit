@@ -65,7 +65,7 @@ export function loadUtils(){
         pushButtonHandlerDamage(event){
             let chatId = event.currentTarget.parentElement.parentElement.parentElement.parentElement.getAttribute('data-message-id');
             SIFT.utils.pushChatData(chatId);
-        }, 
+        },
 
         pushButtonHandlerUnknownSound(event){
             let chatId = event.data;
@@ -95,65 +95,86 @@ export function loadUtils(){
 
         hijackTemplateButton: function (...args){
             let chatId = args[0].id;
-            if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
-                if(game.messages.get(chatId).permission == 3){
+            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+                let found = false;
+                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                        found = true;
+                    }
+                }
+                if(!found){
                     console.debug("SIFT | Hijacking button: ",chatId);
                     let ancestor = $('ol[id="chat-log"]');
                     ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='emplate']", function(event){
                         SIFT.utils.pushButtonHandlerTemplate(event);
                     });
-                    game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
                 }
+                SIFT.utils.pushChatData(args[0].id);
             }
-            SIFT.utils.pushChatData(args[0].id);
+            
         },
 
         hijackDamageButton: function (...args){
             let chatId = args[0].id;
-            if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
-                if(game.messages.get(chatId).permission == 3){
+            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+                let found = false;
+                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                        found = true;
+                    }
+                }
+                if(!found){
                     console.debug("SIFT | Hijacking button: ",chatId);
                     let ancestor = $('ol[id="chat-log"]');
                     ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='damage']", function(event){
                         SIFT.utils.pushButtonHandlerDamage(event);
-                    });
-                    game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
+                    });                    
                 }
+                SIFT.utils.pushChatData(args[0].id);
             }
-            SIFT.utils.pushChatData(args[0].id);
+            
         },
 
         parseUnknownMessage: function (...args){
             let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);
-            let SIFData = SIFObj?.flags?.siftoolkit?.SIFData
-
+            let SIFData = SIFObj?.flags?.siftoolkit?.SIFData;
+            //SIFT.SIFData = SIFData;
+            console.debug("SIFT PUM SIFDATA:",SIFData);
             if ((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")) {
                 AudioHelper.preloadSound(SIFData.clip);
             }
 
             let chatId = args[0].id;
-            if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
-                if(game.messages.get(chatId).permission == 3){
+            let found = false;
+            for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                    found = true;
+                }
+            }
+            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+                if(!found){
                     console.debug("SIFT | Hijacking unknown chat message: ",chatId);
                     let ancestor = $('ol[id="chat-log"]');
                     //check Better Rolls for DND5E Buttons 
                     //Save Button
-                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='card-buttons']",args[0].id, function(...args){
+                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='card-buttons'] button[data-action='save']",args[0].id, function(...args){
+                        console.debug("SIFT | it worked 1!");
                         SIFT.utils.pushButtonHandlerUnknownSound(args[0]);
                     });
                     //Repeat Button
-                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='die-result-overlay-br']",args[0].id, function(...args){
+                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div div[class^='die-result-overlay-br'] button",args[0].id, function(...args){
+                        console.debug("SIFT | it worked 2!");
                         SIFT.utils.pushButtonHandlerUnknownSilent(args[0]);
                     });                    
                     game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
                 }
+                SIFT.utils.pushChatData(args[0].id); 
             }
-            SIFT.utils.pushChatData(args[0].id);            
-
         },
 
         extractSIFData: function (itemObj){
             if(!itemObj) return undefined;
+            console.debug("SIFT | Extract obj:",itemObj);
             let isConcentration = (itemObj?.data?.data?.components)?itemObj.data.data.components.concentration:false;
             let isSpecial = (itemObj.data.data.duration?.units == "unti" || itemObj.data.data.duration?.units == "spec");
             let SIFData = {

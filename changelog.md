@@ -135,3 +135,8 @@ v0.1.26 07/31/2021
 0.1.36 10/10/2021
 
 * Bug fix to prevent error message when messages appear that the user does not have permission to modify
+
+0.1.37 10/12/2021
+
+* Corrected bug preventing loading of some functions on Forge-VTT
+* updated logic to better identify the correct S/I/F in use.

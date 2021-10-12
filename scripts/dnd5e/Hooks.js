@@ -44,30 +44,29 @@ export function setHooks(){
     }, 'MIXED' ); // optional, since this is the default type    
 
     Hooks.on("renderChatMessage",(...args) =>{
-        let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
+        console.debug("SIFT | Chat Message Rendered!");
+        let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);    
+        if(!SIFObj) return undefined;
+        let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData
+        SIFT.SIFData = SIFData;
+        //let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
+        let identified = false;
         if(args[0].data.content.includes('button data-action="placeTemplate"')){
-            let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);    
-            let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData
-            
+            console.debug("SIFT | Template button Found");
             if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);
             }
-            if(args[0].testUserPermission(game.user,3) && !(hijackFlag==game.settings.get("siftoolkit","startupId"))){
-                SIFT.utils.hijackTemplateButton(args[0]);
-            }
-        }else if(args[0].data.content.includes('button data-action="damage"')){
-            let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);    
-            let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData
-            
+            SIFT.utils.hijackTemplateButton(args[0]);
+            identified = true;
+        }
+        if(args[0].data.content.includes('button data-action="damage"')){
             if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
                 AudioHelper.preloadSound(SIFData.clip);
             }
-            if(args[0].testUserPermission(game.user,3) && !(hijackFlag==game.settings.get("siftoolkit","startupId"))){
-                SIFT.utils.hijackDamageButton(args[0]);
-            }            
-        }else if(args[0]._roll?.constructor.name == "DamageRoll"){
-            let SIFObj = SIFT.utils.getItemFromActorToken(args[0].data.speaker.actor,args[0].data.speaker.token,args[0].data.flags.dnd5e.roll.itemId)
-            let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
+            SIFT.utils.hijackDamageButton(args[0]);
+            identified = true;
+        }
+        if(args[0]._roll?.constructor.name == "DamageRoll"){
             if(!SIFT.soundHold && SIFData?.playDamageAudio && (SIFData?.clip != "")){
                 SIFT.soundHold = true;
                 AudioHelper.play({
@@ -75,11 +74,11 @@ export function setHooks(){
                     volume: ((SIFData.volume??100)/100)
                 }, false);
                 setTimeout(()=>{SIFT.soundHold = false;5},500); 
-            }   
-        } else if(SIFT.Settings.parseUnknownMessages){
-            if(args[0].testUserPermission(game.user,3) && !(hijackFlag==game.settings.get("siftoolkit","startupId"))){
-                SIFT.utils.parseUnknownMessage(args[0]);
-            }
+            } 
+            identified = true;  
+        } 
+        if(SIFT.Settings.parseUnknownMessages && !identified){
+            SIFT.utils.parseUnknownMessage(args[0]);            
         }
     });       
 

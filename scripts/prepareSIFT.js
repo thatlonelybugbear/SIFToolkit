@@ -44,6 +44,9 @@ export function prepareSIFT(){
             let migrate = await import('./shared/migrate.js');
             migrate.migrate();
         }
+
+        setTimeout( async() =>{
+
         if (game.settings.get("siftoolkit","displaySplash") && game.user.isGM) {
             let d = new Dialog({
                 title: "SIFToolkit",
@@ -68,5 +71,6 @@ export function prepareSIFT(){
             });
             d.render(true);
         }
+        },5000);
     });
 }
