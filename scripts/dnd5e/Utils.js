@@ -67,6 +67,11 @@ export function loadUtils(){
             SIFT.utils.pushChatData(chatId);
         },
 
+        pushButtonHandlerSave(event){
+            let chatId = event.currentTarget.parentElement.parentElement.parentElement.parentElement.getAttribute('data-message-id');
+            SIFT.utils.pushChatData(chatId);
+        },
+
         pushButtonHandlerUnknown(event){
             //BetterRolls5e Repeat Button
             if(event.currentTarget.childNodes[1]?.outerHTML?.includes('<button data-action="repeat"')){
@@ -79,7 +84,7 @@ export function loadUtils(){
                 SIFT.utils.pushChatData(chatId);
                 let SIFObj = SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)); 
                 let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
-                if (SIFData?.playDamageAudio && (SIFData?.clip != "")) {
+                if (SIFData?.playSaveAudio && (SIFData?.clip != "")) {
                     SIFT.soundHold = true;
                     AudioHelper.play({
                         src: SIFData.clip,
@@ -125,6 +130,27 @@ export function loadUtils(){
                     let ancestor = $('ol[id="chat-log"]');
                     ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='damage']", function(event){
                         SIFT.utils.pushButtonHandlerDamage(event);
+                    });                    
+                }
+                SIFT.utils.pushChatData(args[0].id);
+            }
+            
+        },
+
+        hijackSaveButton: function (...args){
+            let chatId = args[0].id;
+            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+                let found = false;
+                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                        found = true;
+                    }
+                }
+                if(!found){
+                    console.debug("SIFT | Hijacking button: ",chatId);
+                    let ancestor = $('ol[id="chat-log"]');
+                    ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='save']", function(event){
+                        SIFT.utils.pushButtonHandlerSave(event);
                     });                    
                 }
                 SIFT.utils.pushChatData(args[0].id);
@@ -184,6 +210,7 @@ export function loadUtils(){
                 audioData : SIFT.utils.generateAudioData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id)
             };
             SIFT.SIFData = SIFData;
+            SIFT.mostRecentSifData = SIFData;
         },
 
         updateTemplate: function (template,index=0,duration=undefined){

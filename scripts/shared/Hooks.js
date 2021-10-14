@@ -122,8 +122,6 @@ export function setHooks(){
         if(SIFData.audioData?.playTemplateAudio && SIFData.audioData?.clip != ""){
             SIFT.utils.playAudio(template);
         }
-
-        //SIFT.utils.clearTemplateData();
     });
 
     Hooks.on("getSceneControlButtons", (controls) => {

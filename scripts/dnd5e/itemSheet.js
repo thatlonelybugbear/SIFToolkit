@@ -15,13 +15,14 @@ export function loadUtils(){
 
             let playTemplateAudio = itemData?.playTemplateAudio??false;
             let playDamageAudio = itemData?.playDamageAudio??false;
+            let playSaveAudio = itemData?.playSaveAudio??false;
             let clip = itemData?.clip??"";
             let volume = itemData?.volume??100;
 
             let isArea = app.object.hasAreaTarget;
             let isCone = app.object.data.data?.target?.type == "cone";
         
-            if(!["spell","feat","consumable"].includes(app.object.type)) return;
+            if(!["spell","feat","consumable","weapon"].includes(app.object.type)) return;
 
             let tabs = $("div[id$='" + app.object.id + "'] nav[class^='sheet-navigation']");
 
@@ -55,6 +56,7 @@ export function loadUtils(){
                     loopAnimations:loopAnimations,
                     playTemplateAudio:playTemplateAudio,
                     playDamageAudio:playDamageAudio,
+                    playSaveAudio:playSaveAudio,
                     clip:clip,
                     volume:volume,
                     isEditable:app.isEditable??false
@@ -81,6 +83,7 @@ export function loadUtils(){
                     loopAnimations:true,
                     playTemplateAudio:false,
                     playDamageAudio:false,
+                    playSaveAudio:false,
                     clip:"",
                     volume:100
                 }
@@ -162,6 +165,12 @@ export function loadUtils(){
             $("div[id$='" + app.object.id + "'] input[name='siftoolkit.audio.playDamageAudio']")[0].onchange = (event) => {
                 playDamageAudio = event.target.checked ? true : false;
                 app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{playDamageAudio:playDamageAudio}});
+                SIFT.openItems[app.object.id] = dataTab.scrollTop();
+            }
+
+            $("div[id$='" + app.object.id + "'] input[name='siftoolkit.audio.playSaveAudio']")[0].onchange = (event) => {
+                playSaveAudio = event.target.checked ? true : false;
+                app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{playSaveAudio:playSaveAudio}});
                 SIFT.openItems[app.object.id] = dataTab.scrollTop();
             }
         

@@ -2,7 +2,7 @@ export function registerSettings(){
     let SIFSettings = {};
 
     new window.Ardittristan.ColorSetting("siftoolkit", "concentrationTemplateColor", {
-        name: game.i18n.localize(".concentrationTemplateColor.name"),
+        name: game.i18n.localize("siftoolkit.concentrationTemplateColor.name"),
         hint: game.i18n.localize("siftoolkit.concentrationTemplateColor.hint"),
         label: "Click to select color",
         restricted: true,

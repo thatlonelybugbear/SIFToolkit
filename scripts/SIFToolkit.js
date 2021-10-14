@@ -11,6 +11,7 @@ class  siftoolkit{
 	static UI = undefined;
 	static textures = undefined;
 	static SIFData = {};
+	static mostRecentSIFData = {};
 	static soundHold = true;
 	static version = "0.1.39";
 	static openItems = {};

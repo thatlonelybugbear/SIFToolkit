@@ -32,6 +32,7 @@ export function migrate(){
                             "clip": "",
                             "playTemplateAudio": false,
                             "playDamageAudio": false,
+                            "playSaveAudio": false,
                             "volume": 100
                         });
                     }

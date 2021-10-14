@@ -1,210 +1,302 @@
 export function loadUtils(){
     let utils = {
-
-        getSIFObjFromChat: function (chatMessage){
-            if(SIFT.Status.running){
-                let content = chatMessage.data.content;
-                let itemID = ""
-                let itemIndex = 0;
-                let token = game.scenes.active.tokens.get(chatMessage.data.speaker.token);
-                let actor = game.actors.get(chatMessage.data.speaker.actor);
-                    
-                if(chatMessage._roll){
-                    
-                    itemIndex = chatMessage.data.flags.pf2e.origin.uuid.indexOf('Item.');
-                    itemID = chatMessage.data.flags.pf2e.origin.uuid.substring(itemIndex+5);
-
-                    let tokenItems = token?.data?.actorData?.items;
-                    if(tokenItems != undefined){
-                        for(let i = 0; i < tokenItems.length; i++){
-                            if(tokenItems[i]._id == itemID) return tokenItems[i];
-                        }
+        clearConcentrationSpells: function (actor = undefined){
+            game.scenes.forEach(scene => {
+                let filtertemplates = scene.data.templates;
+                filtertemplates = filtertemplates.filter(i => {
+                    scene = i.parent; 
+                    return (i.data.flags.siftoolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
+                });
+                filtertemplates = filtertemplates.filter(i => {
+                        scene = i.parent;					
+                        return i.data.flags.siftoolkit?.concentration??false;
                     }
-                    
-                    if(actor != undefined){
-                        return actor.data.items.get(itemID);                    
-                    }else{
-                        return undefined;
-                    }                
+                );
+                filtertemplates = filtertemplates.filter(i => {
+                    return ((i.data.flags.siftoolkit.actor == actor) && 
+                    (i.data.flags.siftoolkit.player == game.userId ||
+                    (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
+                });
+                if(filtertemplates !== undefined) {
+                    let deletions = filtertemplates.map(i => i.id);
+                    scene.deleteEmbeddedDocuments("MeasuredTemplate",deletions);
                 }else{
-
-                    
-                    itemIndex = content.indexOf('data-item-id=');
-                    itemID = content.substring(itemIndex+14,itemIndex+14+16);
-
-                    let tokenItems = token?.data?.actorData?.items;
-                    if(tokenItems != undefined){
-                        for(let i = 0; i < tokenItems.length; i++){
-                            if(tokenItems[i]._id == itemID) return tokenItems[i];
-                        }
-                    }
-                    
-                    if(actor != undefined){
-                        return actor.data.items.get(itemID);                    
-                    }else{
-                        return undefined;
-                    }                
-                }
-            }
+                    console.log("SIFT | Nothing to delete!");
+                }				
+            });
         },
 
         getDuration: function (SIF){
+            let value = SIF.data.data.duration?.value;
+            let units = SIF.data.data.duration?.units;
             let duration = 0;
-            let value,units;
-            let SIFData = SIF.data.data?SIF.data.data:SIF.data;
-            if(SIFData.duration == undefined) return 0;
-            let durationArray = SIFData.duration.value.toLowerCase().split(" ");
-            if(durationArray.length > 1){
-                value = durationArray[durationArray.length-2];
-                units = durationArray[durationArray.length-1];
-            }else{
-                value = 1;
-                units = durationArray[0];
-            }
-            if(value == "next") value = 1;	
-            if(value == "current") value = 0;
-            if(String(value).indexOf("d")>-1) value = value.substring(value.indexOf("d")+1,value.length);					
-            switch(units) {
-                case "year":
-                case "years":
-                    duration = value * 10 * 60 * 24 * 365 * SIFT.Settings.roundSeconds;
-                    break;
-                case "week":
-                case "weeks":
-                    duration = value * 10 * 60 * 24 * 7 * SIFT.Settings.roundSeconds;
-                    break;
+            switch(units?.toLowerCase()) {
                 case "day":
-                case "days":
                     duration = value * 10 * 60 * 24 * SIFT.Settings.roundSeconds;
                     break;
                 case "hour":
-                case "hours":
-                    duration  = value * 10 * 60 * SIFT.Settings.roundSeconds;
+                    duration = value * 10 * 60 * SIFT.Settings.roundSeconds;
                     break;
                 case "inst":
-                case "":
-                    duration  = SIFT.Settings.instantaneousSpellFade * SIFT.Settings.roundSeconds;
+                    duration = SIFT.Settings.instantaneousSpellFade * SIFT.Settings.roundSeconds;
                     break;
                 case "minute":
                 case "minutes":
-                case "minue":
-                    duration  = value * 10 * SIFT.Settings.roundSeconds;
+                    duration = value * 10 * SIFT.Settings.roundSeconds;
                     break;
                 case "round":
-                case "rounds":
-                case "turn":
-                case "turns":
-                    duration  = value * SIFT.Settings.roundSeconds;
+                    duration = value * SIFT.Settings.roundSeconds;
                     break;
                 case "spec":
                 case "unti":
-                case "until":
-                case "varies":
-                case "sustained":
-                case "unlimited":
-                case "preparations":
-                case "text":
-                case "below)":
-                case "longer)":
-                case "stance":
-                case "dismissed":
-                    duration  = -1;
+                    duration = -1;
                     break;
                 default:
                     duration = 0;
             }
-
             return duration;
         },
 
         pushButtonHandlerTemplate(event){
-            let chatId = event.currentTarget.parentElement.parentElement.parentElement.getAttribute('data-message-id');
+            let chatId = event.currentTarget.parentElement.parentElement.parentElement.parentElement.getAttribute('data-message-id');
             SIFT.utils.pushChatData(chatId);
         },
 
         pushButtonHandlerDamage(event){
-            let chatId = event.currentTarget.parentElement.parentElement.parentElement.getAttribute('data-message-id');
+            let chatId = event.currentTarget.parentElement.parentElement.parentElement.parentElement.getAttribute('data-message-id');
             SIFT.utils.pushChatData(chatId);
-        }, 
-        
+        },
 
-        
+        pushButtonHandlerSave(event){
+            let chatId = event.currentTarget.parentElement.parentElement.parentElement.parentElement.getAttribute('data-message-id');
+            SIFT.utils.pushChatData(chatId);
+        },
+
+        pushButtonHandlerUnknown(event){
+            //BetterRolls5e Repeat Button
+            if(event.currentTarget.childNodes[1]?.outerHTML?.includes('<button data-action="repeat"')){
+                let chatId = event.data;
+                SIFT.utils.pushChatData(chatId);
+            }
+            //BetterRolls5e Save Button
+            if(event.currentTarget.childNodes[1]?.outerHTML?.includes('<button data-action="save"')){
+                let chatId = event.data;
+                SIFT.utils.pushChatData(chatId);
+                let SIFObj = SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)); 
+                let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
+                if (SIFData?.playSaveAudio && (SIFData?.clip != "")) {
+                    SIFT.soundHold = true;
+                    AudioHelper.play({
+                        src: SIFData.clip,
+                        volume: ((SIFData.volume??100)/100)
+                    }, false);
+                    setTimeout(()=>{SIFT.soundHold = false},500); 
+                }
+            }            
+        }, 
+
         hijackTemplateButton: function (...args){
             let chatId = args[0].id;
-            if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
-                if(game.messages.get(chatId).permission == 3){
+            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+                let found = false;
+                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                        found = true;
+                    }
+                }
+                if(!found){
                     console.debug("SIFT | Hijacking button: ",chatId);
                     let ancestor = $('ol[id="chat-log"]');
                     ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='emplate']", function(event){
                         SIFT.utils.pushButtonHandlerTemplate(event);
                     });
-                    game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
                 }
+                SIFT.utils.pushChatData(args[0].id);
             }
-            SIFT.utils.pushChatData(args[0].id);
+            
         },
 
         hijackDamageButton: function (...args){
             let chatId = args[0].id;
-            if(game.messages.get(chatId).getFlag("siftoolkit","Hijacked")!=game.settings.get("siftoolkit","startupId")){
-                if(game.messages.get(chatId).permission ==3){
+            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+                let found = false;
+                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                        found = true;
+                    }
+                }
+                if(!found){
                     console.debug("SIFT | Hijacking button: ",chatId);
                     let ancestor = $('ol[id="chat-log"]');
                     ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='damage']", function(event){
                         SIFT.utils.pushButtonHandlerDamage(event);
-                    });
-                    game.messages.get(chatId).setFlag("siftoolkit","Hijacked",game.settings.get("siftoolkit","startupId"));
+                    });                    
+                }
+                SIFT.utils.pushChatData(args[0].id);
+            }
+            
+        },
+
+        hijackSaveButton: function (...args){
+            let chatId = args[0].id;
+            if(game.messages.get(chatId).isAuthor || game.user.isGM){
+                let found = false;
+                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                        found = true;
+                    }
+                }
+                if(!found){
+                    console.debug("SIFT | Hijacking button: ",chatId);
+                    let ancestor = $('ol[id="chat-log"]');
+                    ancestor.on('click', "li[data-message-id='"+chatId+"'] button[data-action$='save']", function(event){
+                        SIFT.utils.pushButtonHandlerSave(event);
+                    });                    
+                }
+                SIFT.utils.pushChatData(args[0].id);
+            }
+            
+        },
+
+        parseUnknownMessage: function (...args){
+            let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);
+            let SIFData = SIFObj?.flags?.siftoolkit?.SIFData;
+            
+            if ((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")) {
+                AudioHelper.preloadSound(SIFData.clip);
+            }
+
+            let chatId = args[0].id;
+            let found = false;
+            for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
+                if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                    found = true;
                 }
             }
-            SIFT.utils.pushChatData(args[0].id);
+            if(game.messages.get(chatId).isAuthor || game.user?.isGM){
+                if(!found){
+                    console.debug("SIFT | Hijacking unknown chat message: ",chatId);
+                    let ancestor = $('ol[id="chat-log"]');
+                    //capture card-buttons buttons
+                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='card-buttons']",args[0].id, function(...args){
+                        SIFT.utils.pushButtonHandlerUnknown(args[0]);
+                    });
+                    //capture die-result-overlay-br buttons
+                    ancestor.on("click", "li[data-message-id='"+chatId+"'] div[class^='die-result-overlay-br']",args[0].id, function(...args){
+                        SIFT.utils.pushButtonHandlerUnknown(args[0]);
+                    });
+                }
+                SIFT.utils.pushChatData(args[0].id); 
+            }
         },
-        
-        extractSIFData: function (itemObj,actor=undefined,token=undefined){
-            let isConcentration = false;
+
+        extractSIFData: function (itemObj){
+            if(!itemObj) return undefined;
             let duration = SIFT.utils.getDuration(itemObj);
-            let isSpecial = (duration==-1);
+            let isSpecial = (duration == -1);
             let SIFData = {
-                item : itemObj.id??itemObj._id,
-                actor : actor??itemObj.actor.id,
-                token : token??itemObj.actor.token?.id,
+                item : itemObj.id,
+                actor : itemObj.actor.id,
+                token : itemObj.actor.token?.id,
                 scene : game.scenes.viewed.id,
                 player : game.userId,
                 sif : itemObj.name,
                 type : itemObj.type,
-                ignoreDuration : itemObj.flags?.siftoolkit?.SIFData?.ignoreDuration??itemObj.data.flags?.siftoolkit?.SIFData?.ignoreDuration??false,
-                duration: (itemObj !== undefined)?SIFT.utils.getDuration(itemObj):0,
-                isConcentration : isConcentration,
+                ignoreDuration : itemObj.data.flags.siftoolkit?.SIFData?.ignoreDuration??false,
+                duration: duration,
+                isConcentration : false,
                 isSpecial : isSpecial,
-                displayData : SIFT.utils.generateDisplayData(actor??itemObj.actor.id, token??itemObj.actor.token?.id, itemObj.id??itemObj._id),
-                audioData : SIFT.utils.generateAudioData(actor??itemObj.actor.id, token??itemObj.actor.token?.id, itemObj.id??itemObj._id)
+                displayData : SIFT.utils.generateDisplayData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id),
+                audioData : SIFT.utils.generateAudioData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id)
             };
             SIFT.SIFData = SIFData;
+            SIFT.mostRecentSifData = SIFData;
+            return SIFData;
         },
 
-        getFlavorTypeFromChat: function (chatMessage){
-            if(SIFT.Status.running){
-                let type;
-                if(!chatMessage?.data.flavor) return undefined;
-                let flavor = chatMessage.data.flavor;
-                let typeIndex = flavor.indexOf(' - ');
-                if(typeIndex > -1){
-                    let endIndex = flavor.indexOf(' ',typeIndex+3);
-                    if(endIndex > 1){
-                        type = flavor.substring(typeIndex+3,endIndex);
-                    }else{
-                        type = flavor.substring(typeIndex+3);
-                    }
-                    return type;
-                }else{
-                    return undefined;
+        updateTemplate: function (template,index=0,duration=undefined){
+            console.debug("SIFT | Updating Template");
+            let currentSIFData = template.data.flags.siftoolkit;
+            currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData??SIFT.SIFData;
+            if(currentSIFData == undefined){
+                currentSIFData ={
+                    concentration: false, 
+                    player: game.userId,
+                    actor: "", 
+                    duration: 0,
+                    special: false,
+                    scene: game.scenes.active,
+                    birthday: game.time.worldTime,
+                    sif: "",
+                    item: "",
+                    displayData: undefined,
+                    audioData: undefined
                 }
             }
-        }
+            let scene = game.scenes.get(currentSIFData.scene);  
+            if(scene && index < 10){
+                if(scene.data.templates.filter(i => i.id === template.id).length > 0){
+
+                    if(currentSIFData.isConcentration){
+                        SIFT.utils.clearConcentrationSpells(currentSIFData.actor);
+                    }
+                    
+                    let update =  {_id: template.id, flags: {
+                        "siftoolkit":{
+                            concentration: currentSIFData.isConcentration, 
+                            player: currentSIFData.player,
+                            actor: currentSIFData.actor, 
+                            duration: duration??currentSIFData.duration,
+                            special: currentSIFData.isSpecialSpell,
+                            scene: currentSIFData.scene,
+                            birthday: game.time.worldTime,
+                            sif: currentSIFData.sif,
+                            item: currentSIFData.item,
+                            displayData: currentSIFData.displayData,
+                            audioData: currentSIFData.audioData
+                        }
+                    }};
+        
+                    if(currentSIFData.isConcentration){
+                        update.borderColor = SIFT.Settings.concentrationTemplateColor;
+                    }else if(currentSIFData.duration>0){
+                        update.borderColor = SIFT.Settings.enduringTemplateColor;
+                    }else if(currentSIFData.isSpecialSpell){
+                        update.borderColor = SIFT.Settings.specialTemplateColor;
+                    }else{
+                        update.borderColor = SIFT.Settings.standardTemplateColor;
+                    }
+                    scene.updateEmbeddedDocuments("MeasuredTemplate", [update]);
+                    
+                }else{
+                    console.debug("SIFT | Failed to update template.  Retrying. ", index);
+                    setTimeout(utils.updateTemplate(template,index+1), 100);
+                }
+            }else{
+                console.debug("SIFT | Failed to update template.");
+            }
+            
+        },
+
+        getRollTypeFromChat: function (chatMessage){
+            if(chatMessage.isDamageRoll){
+                return "damage-roll";
+            }else if(chatMessage.isRoll){
+                return chatMessage.data.flags.pf2e.context?.type;
+            }else{
+                return "info"
+            }
+        },
+
+        getSIFObjFromChat: function (chatMessage){
+            if(SIFT.Status.running && chatMessage){
+                return chatMessage.item;
+            }else{
+                return undefined;
+            }
+        },
 
     }
-
-    
-
 
     return utils;
 }

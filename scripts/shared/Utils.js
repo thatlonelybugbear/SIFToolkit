@@ -2,7 +2,7 @@ export function loadUtils(){
     let utils = {
 
         getSIFObjFromChat: function (chatMessage){
-            if(SIFT.Status.running){
+            if(SIFT.Status.running && chatMessage){
                 let content = chatMessage.data.content;
                 let token = game.scenes.active.tokens.get(chatMessage.data.speaker.token);
                 let actor = game.actors.get(chatMessage.data.speaker.actor);
@@ -21,6 +21,8 @@ export function loadUtils(){
                 }else{
                     return undefined;
                 }                
+            }else{
+                return undefined;
             }
         },
         
@@ -230,6 +232,10 @@ export function loadUtils(){
             let playDamageAudio = foundSIF?.flags?.siftoolkit?.SIFData.playDamageAudio;
             playDamageAudio = playDamageAudio??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.playDamageAudio;
             playDamageAudio = playDamageAudio??false;
+
+            let playSaveAudio = foundSIF?.flags?.siftoolkit?.SIFData.playSaveAudio;
+            playSaveAudio = playSaveAudio??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.playSaveAudio;
+            playSaveAudio = playSaveAudio??false;
         
             let volume = foundSIF?.flags?.siftoolkit?.SIFData.volume;
             volume = volume??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.volume;
@@ -239,6 +245,7 @@ export function loadUtils(){
                 clip:originalClip,
                 playTemplateAudio:playTemplateAudio,
                 playDamageAudio:playDamageAudio,
+                playSaveAudio:playSaveAudio,
                 volume:volume
             }
         

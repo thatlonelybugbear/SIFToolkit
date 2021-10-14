@@ -150,4 +150,15 @@ v0.1.26 07/31/2021
 0.1.39 10/12/2021
 
 * Improved chat log parsing on reload
+* Added additional logic for identifying the button clicked for unknown messages, rather than just the panel that the button is on.
 * Removed debug code
+
+0.1.40 10/??/2021
+
+* corrected most recent chat message on reload
+* bug fix to present correct text for Concentration Spell Template Color in settings
+* Added option to play audio on saving throws
+* changed logic for BetterRolls to fire audio for save button based on new save setting rather than Damage Setting
+* corrected changelog documentation to correctly reflect all items in v0.1.39
+* Updated support for PF2E
+* Added support for Weapon Objects

@@ -18,13 +18,16 @@ export function setHooks(){
 
     game.settings.set("siftoolkit","startupId",randomID());
 
-    let MessageArray;
+    let MessageArray, mostRecentMessage;
     try{MessageArray = Array.from(game.messages.values());}catch{MessageArray = [];}
     let parseAttempts = 0, messageParseIntervalId = setInterval( () => {
         if(game.user && parseAttempts < 30){
             clearInterval(messageParseIntervalId);
             game.user.setFlag("siftoolkit","chatData",[]).then( ()=>{
                 for(let i = 1, j = 0; j < (SIFT.Settings.messageHistory) && i <= MessageArray.length; i++){
+                    if(SIFT.utils.getSIFObjFromChat(MessageArray[MessageArray.length - i])!=undefined){
+                        mostRecentMessage = mostRecentMessage??MessageArray[MessageArray.length - i];
+                    }
                     if(MessageArray[MessageArray.length - i].isAuthor || game.user?.isGM){
                         let identified = false;
                         if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="placeTemplate"')){
@@ -35,14 +38,21 @@ export function setHooks(){
                             SIFT.utils.hijackDamageButton(MessageArray[MessageArray.length - i]);                
                             identified = true;
                         }
+                        if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="save"')){
+                            SIFT.utils.hijackSaveButton(MessageArray[MessageArray.length - i]);                
+                            identified = true;
+                        }
                         if(SIFT.Settings.parseUnknownMessages && !identified){
                             SIFT.utils.parseUnknownMessage(MessageArray[MessageArray.length-i]);
                         }
                         j++;
                     }
                 }
+                let SIFObj = SIFT.utils.getSIFObjFromChat(mostRecentMessage);
+                let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
+                SIFT.mostRecentSIFData = SIFData;
                 clearInterval(messageParseIntervalId);
-            });
+            }).then(()=>{SIFT.utils.clearTemplateData();});
         }else{parseAttempts++;}
     },100);
     
@@ -59,39 +69,88 @@ export function setHooks(){
     }, 'MIXED' ); // optional, since this is the default type    
 
     Hooks.on("renderChatMessage",(...args) =>{
-        let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]);    
-        if(!SIFObj) return undefined;
-        let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData
-        SIFT.SIFData = SIFData;
-        //let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
-        let identified = false;
-        if(args[0].data.content.includes('button data-action="placeTemplate"')){
-            if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
-                AudioHelper.preloadSound(SIFData.clip);
+        let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]); 
+        let SIFData, identified;
+        if(!SIFObj) {
+            if(args[0].data.flags.dnd5e?.roll?.type == 'save'){
+                SIFData = SIFT.mostRecentSIFData;
+                if(!SIFT.soundHold && SIFData?.audioData?.playSaveAudio && (SIFData?.clip != "" || SIFData?.audioData?.clip != "")){
+                    SIFT.soundHold = true;
+                    AudioHelper.play({
+                        src: SIFData.audioData.clip,
+                        volume: ((SIFData.volume??100)/100)
+                    }, false);
+                    setTimeout(()=>{SIFT.soundHold = false;5},500); 
+                }
+                identified = true;
+            }else if(args[0].data.flags.dnd5e?.roll?.type == 'damage'){
+                SIFData = SIFT.mostRecentSIFData;
+                if(!SIFT.soundHold && (SIFData?.playDamageAudio??SIFData?.audioData?.playDamageAudio) && (SIFData?.clip != "" || SIFData?.audioData?.clip != "")){
+                    SIFT.soundHold = true;
+                    AudioHelper.play({
+                        src: SIFData.clip??SIFData.audioData.clip,
+                        volume: ((SIFData.volume??100)/100)
+                    }, false);
+                    setTimeout(()=>{SIFT.soundHold = false;5},500); 
+                }
+                identified = true;
+            }else{
+                return undefined;
             }
-            SIFT.utils.hijackTemplateButton(args[0]);
-            identified = true;
-        }
-        if(args[0].data.content.includes('button data-action="damage"')){
-            if((SIFData?.playTemplateAudio || SIFData?.playDamageAudio) && (SIFData?.clip != "")){
-                AudioHelper.preloadSound(SIFData.clip);
+        }else{
+            SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
+            SIFT.SIFData = SIFData;
+            SIFT.mostRecentSIFData = SIFData;
+            //let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
+            identified = false;
+            if(args[0].data.content.includes('button data-action="placeTemplate"')){
+                if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
+                    AudioHelper.preloadSound(SIFData.clip);
+                }
+                SIFT.utils.hijackTemplateButton(args[0]);
+                identified = true;
             }
-            SIFT.utils.hijackDamageButton(args[0]);
-            identified = true;
-        }
-        if(args[0]._roll?.constructor.name == "DamageRoll"){
-            if(!SIFT.soundHold && SIFData?.playDamageAudio && (SIFData?.clip != "")){
-                SIFT.soundHold = true;
-                AudioHelper.play({
-                    src: SIFData.clip,
-                    volume: ((SIFData.volume??100)/100)
-                }, false);
-                setTimeout(()=>{SIFT.soundHold = false;5},500); 
+            if(args[0].data.content.includes('button data-action="damage"')){
+                if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
+                    AudioHelper.preloadSound(SIFData.clip);
+                }
+                SIFT.utils.hijackDamageButton(args[0]);
+                identified = true;
+            }
+
+            if(args[0].data.content.includes('button data-action="save"')){
+                if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
+                    AudioHelper.preloadSound(SIFData.clip);
+                }
+                SIFT.utils.hijackDamageButton(args[0]);
+                identified = true;
+            }
+
+            if(args[0]._roll?.constructor.name == "DamageRoll"){
+                if(!SIFT.soundHold && SIFData?.playDamageAudio && (SIFData?.clip != "")){
+                    SIFT.soundHold = true;
+                    AudioHelper.play({
+                        src: SIFData.clip,
+                        volume: ((SIFData.volume??100)/100)
+                    }, false);
+                    setTimeout(()=>{SIFT.soundHold = false;5},500); 
+                } 
+                identified = true;  
+            }         
+            if(args[0].data.flavor.includes("Saving Throw")){
+                if(!SIFT.soundHold && SIFData?.playSaveAudio && (SIFData?.clip != "")){
+                    SIFT.soundHold = true;
+                    AudioHelper.play({
+                        src: SIFData.clip,
+                        volume: ((SIFData.volume??100)/100)
+                    }, false);
+                    setTimeout(()=>{SIFT.soundHold = false;5},500); 
+                } 
+                identified = true;  
             } 
-            identified = true;  
-        } 
-        if(SIFT.Settings.parseUnknownMessages && !identified){
-            SIFT.utils.parseUnknownMessage(args[0]);            
+            if(SIFT.Settings.parseUnknownMessages && !identified){
+                SIFT.utils.parseUnknownMessage(args[0]);            
+            }
         }
     });       
 
