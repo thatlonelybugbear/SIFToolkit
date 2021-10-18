@@ -99,6 +99,7 @@ export function loadUtils(){
                 console.debug("SIFT | Looking for Unmanaged Templates");
                 let scene=Combat.scene;
                 let turnActor = Combat.combatant?.actor??game.userId;
+                let turnToken = Combat.combatant?.token;
                 if(!turnActor) return;
             
                 let managing = scene.data.templates.filter(i => i.data.flags.siftoolkit === undefined && ((game.user.isGM && !game.users.get(i.data.user).active) || i.isOwner));
@@ -144,6 +145,7 @@ export function loadUtils(){
                                 "siftoolkit":{
                                     concentration: false, 
                                     actor: turnActor.id, 
+                                    token: turnToken.id,
                                     duration: duration,
                                     special: spellIsSpecial,
                                     scene: Combat.scene.id
@@ -294,6 +296,7 @@ export function loadUtils(){
                     concentration: false, 
                     player: game.userId,
                     actor: "", 
+                    token: "",
                     duration: 0,
                     special: false,
                     scene: game.scenes.active,
@@ -313,7 +316,8 @@ export function loadUtils(){
                         "siftoolkit":{
                             concentration: currentSIFData.isConcentration, 
                             player: currentSIFData.player,
-                            actor: currentSIFData.actor, 
+                            actor: currentSIFData.actor,
+                            token: currentSIFData.token,
                             duration: duration??currentSIFData.duration,
                             special: currentSIFData.isSpecialSpell,
                             scene: currentSIFData.scene,
@@ -360,7 +364,7 @@ export function loadUtils(){
         },
 
         pushChatData: function (chatId){
-            SIFT.utils.extractSIFData(SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)));
+            SIFT.utils.extractSIFDataFromChat(SIFT.utils.getSIFObjFromChat(game.messages.get(chatId)),game.messages.get(chatId));
             let pushData = SIFT.SIFData;                
             
             if(pushData!=undefined && pushData.item != undefined){
@@ -403,13 +407,14 @@ export function loadUtils(){
             });
         },
 
-        cleanupTemplates: function (actor=undefined, sceneId=undefined){
+        cleanupTemplates: function (token=undefined, sceneId=undefined){
             console.debug("SIFT | Cleaning Templates.");
             game.scenes.forEach( j => {
                 let sceneFilter = j.data.templates.filter(i => sceneId==undefined?true:j.id==sceneId);
                 let managed = sceneFilter.filter(i => i.data.flags.siftoolkit !== undefined);
                 let turnActorOwned = managed.filter(i => actor==undefined?true:i.data.flags.siftoolkit.actor == actor);
-                let templates = turnActorOwned.filter(
+                let turnTokenOwned = managed.filter(i => token==undefined?true:i.data.flags.siftoolkit.token == token);
+                let templates = turnTokenOwned.filter(
                     function(i){
                         return (
                             ((i.isOwner || !(game.user.isGM && game.users.get(i.data.flags.siftoolkit.player).active))) && //controlled by user or user is logged out and GM will handle
@@ -431,6 +436,12 @@ export function loadUtils(){
             console.debug("SIFT | Clearing Template Data");
             SIFT.templateData = {};
             SIFT.utils.pushItemData({chatId: "", SIFData: {}});
+        },
+
+        removeTokenTemplates: function(token,scene){
+            let templates = game.scenes.get(scene).templates.filter(i=> i.data.flags.siftoolkit.token == token);
+            let deletions = templates.map(i => i.id);
+            game.scenes.get(scene).deleteEmbeddedDocuments("MeasuredTemplate",deletions);
         }
     };
 

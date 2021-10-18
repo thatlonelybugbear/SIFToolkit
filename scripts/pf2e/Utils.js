@@ -1,5 +1,6 @@
 export function loadUtils(){
     let utils = {
+        /*
         clearConcentrationSpells: function (actor = undefined){
             game.scenes.forEach(scene => {
                 let filtertemplates = scene.data.templates;
@@ -14,6 +15,33 @@ export function loadUtils(){
                 );
                 filtertemplates = filtertemplates.filter(i => {
                     return ((i.data.flags.siftoolkit.actor == actor) && 
+                    (i.data.flags.siftoolkit.player == game.userId ||
+                    (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
+                });
+                if(filtertemplates !== undefined) {
+                    let deletions = filtertemplates.map(i => i.id);
+                    scene.deleteEmbeddedDocuments("MeasuredTemplate",deletions);
+                }else{
+                    console.log("SIFT | Nothing to delete!");
+                }				
+            });
+        },
+        */
+       
+        clearConcentrationSpellsByToken: function (token = undefined){
+            game.scenes.forEach(scene => {
+                let filtertemplates = scene.data.templates;
+                filtertemplates = filtertemplates.filter(i => {
+                    scene = i.parent; 
+                    return (i.data.flags.siftoolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
+                });
+                filtertemplates = filtertemplates.filter(i => {
+                        scene = i.parent;					
+                        return i.data.flags.siftoolkit?.concentration??false;
+                    }
+                );
+                filtertemplates = filtertemplates.filter(i => {
+                    return ((i.data.flags.siftoolkit.token == token) && 
                     (i.data.flags.siftoolkit.player == game.userId ||
                     (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
                 });
@@ -214,6 +242,31 @@ export function loadUtils(){
             return SIFData;
         },
 
+        extractSIFDataFromChat: function (itemObj,chatObj){
+            if(!itemObj) return undefined;
+            let token = chatObj?.data.speaker?.token;
+            let duration = SIFT.utils.getDuration(itemObj);
+            let isSpecial = (duration == -1);
+            let SIFData = {
+                item : itemObj.id,
+                actor : itemObj.actor.id,
+                token : token??itemObj.actor.token?.id,
+                scene : game.scenes.viewed.id,
+                player : game.userId,
+                sif : itemObj.name,
+                type : itemObj.type,
+                ignoreDuration : itemObj.data.flags.siftoolkit?.SIFData?.ignoreDuration??false,
+                duration: duration,
+                isConcentration : false,
+                isSpecial : isSpecial,
+                displayData : SIFT.utils.generateDisplayData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id),
+                audioData : SIFT.utils.generateAudioData(itemObj.actor.id, itemObj.actor.token?.id, itemObj.id)
+            };
+            SIFT.SIFData = SIFData;
+            SIFT.mostRecentSifData = SIFData;
+            return SIFData;
+        },
+
         updateTemplate: function (template,index=0,duration=undefined){
             console.debug("SIFT | Updating Template");
             let currentSIFData = template.data.flags.siftoolkit;
@@ -223,6 +276,7 @@ export function loadUtils(){
                     concentration: false, 
                     player: game.userId,
                     actor: "", 
+                    token: "",
                     duration: 0,
                     special: false,
                     scene: game.scenes.active,
@@ -238,7 +292,7 @@ export function loadUtils(){
                 if(scene.data.templates.filter(i => i.id === template.id).length > 0){
 
                     if(currentSIFData.isConcentration){
-                        SIFT.utils.clearConcentrationSpells(currentSIFData.actor);
+                        SIFT.utils.clearConcentrationSpellsByToken(currentSIFData.token);
                     }
                     
                     let update =  {_id: template.id, flags: {
@@ -246,6 +300,7 @@ export function loadUtils(){
                             concentration: currentSIFData.isConcentration, 
                             player: currentSIFData.player,
                             actor: currentSIFData.actor, 
+                            token: currentSIFData.token,
                             duration: duration??currentSIFData.duration,
                             special: currentSIFData.isSpecialSpell,
                             scene: currentSIFData.scene,

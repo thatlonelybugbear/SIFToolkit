@@ -172,3 +172,8 @@ v0.1.26 07/31/2021
 
 * removed test code
 * tested with Foundry v9.226
+
+0.2.1 10/18/2021
+
+* Added support for removing templates of tokens when removed from combat and/or scene.
+* SIFT logic is now based on tokens, rather than actors, allowing multiple tokens with the same actor to have separate concentration templates.
