@@ -167,3 +167,8 @@ v0.1.26 07/31/2021
 0.1.41 10/18/2021
 
 * Corrected bug preventing parsing of unknown messages in DND5E when no flavor text was present. 
+
+0.1.42 10/18/2021
+
+* removed test code
+* tested with Foundry v9.1.226

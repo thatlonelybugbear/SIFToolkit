@@ -3,8 +3,6 @@ export function setHooks(){
     //      Init Hooks start here           //
     //////////////////////////////////////////
 
-    CONFIG.MeasuredTemplate.objectClass.prototype.highlightGrid = ()=>{return undefined;}
-
     //Load in message history
     game.settings.register(
 		"siftoolkit", "startupId", {
