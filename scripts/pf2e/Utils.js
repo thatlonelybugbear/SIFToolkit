@@ -282,7 +282,7 @@ export function loadUtils(){
             if(chatMessage.isDamageRoll){
                 return "damage-roll";
             }else if(chatMessage.isRoll){
-                return chatMessage.data.flags.pf2e.context?.type;
+                return chatMessage.data.flags.pf2e?.context?.type;
             }else{
                 return "info"
             }

@@ -163,3 +163,7 @@ v0.1.26 07/31/2021
 * Updated support for PF2E
 * Added support for Weapon Objects
 * Removed Debug Code
+
+0.1.41 10/18/2021
+
+* Corrected bug preventing parsing of unknown messages in DND5E when no flavor text was present. 

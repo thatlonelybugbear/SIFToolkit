@@ -3,6 +3,7 @@ export function setHooks(){
     //      Init Hooks start here           //
     //////////////////////////////////////////
 
+    CONFIG.MeasuredTemplate.objectClass.prototype.highlightGrid = ()=>{return undefined;}
 
     //Load in message history
     game.settings.register(
@@ -103,14 +104,14 @@ export function setHooks(){
             SIFT.mostRecentSIFData = SIFData;
             //let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
             identified = false;
-            if(args[0].data.content.includes('button data-action="placeTemplate"')){
+            if(args[0].data.content?.includes('button data-action="placeTemplate"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
                 SIFT.utils.hijackTemplateButton(args[0]);
                 identified = true;
             }
-            if(args[0].data.content.includes('button data-action="damage"')){
+            if(args[0].data.content?.includes('button data-action="damage"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
@@ -118,7 +119,7 @@ export function setHooks(){
                 identified = true;
             }
 
-            if(args[0].data.content.includes('button data-action="save"')){
+            if(args[0].data.content?.includes('button data-action="save"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
@@ -137,7 +138,7 @@ export function setHooks(){
                 } 
                 identified = true;  
             }         
-            if(args[0].data.flavor.includes("Saving Throw")){
+            if(args[0].data.flavor?.includes("Saving Throw")){
                 if(!SIFT.soundHold && SIFData?.playSaveAudio && (SIFData?.clip != "")){
                     SIFT.soundHold = true;
                     AudioHelper.play({

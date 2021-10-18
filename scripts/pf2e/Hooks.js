@@ -91,7 +91,7 @@ export function setHooks(){
             SIFT.mostRecentSIFData = SIFData;
             
             identified = false;
-            if(args[0].data.content.includes('<button type="button" data-action="spellTemplate"')){
+            if(args[0].data.content?.includes('<button type="button" data-action="spellTemplate"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
@@ -99,9 +99,9 @@ export function setHooks(){
                 identified = true;
             }
             if(
-                    args[0].data.content.includes('<button type="button" data-action="spellDamage"') ||
-                    args[0].data.content.includes('<button data-action="strikeDamage">') ||
-                    args[0].data.content.includes('<button data-action="strikeCritical">')
+                    args[0].data.content?.includes('<button type="button" data-action="spellDamage"') ||
+                    args[0].data.content?.includes('<button data-action="strikeDamage">') ||
+                    args[0].data.content?.includes('<button data-action="strikeCritical">')
                 ){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
@@ -110,7 +110,7 @@ export function setHooks(){
                 identified = true;
             }
 
-            if(args[0].data.content.includes('<button type="button" data-action="save"')){
+            if(args[0].data.content?.includes('<button type="button" data-action="save"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
