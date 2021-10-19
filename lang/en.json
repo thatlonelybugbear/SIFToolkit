@@ -8,7 +8,7 @@
     "siftoolkit.specialTemplateColor.name": "Special Spell Template Border Color",
     "siftoolkit.specialTemplateColor.hint": "Template border color for spells with a special duration (typically a trigger), that do not require concentration, as a hex string (rrggbb)",
     "siftoolkit.unmanagedTemplateAction.name": "Unmanaged Template Action",
-    "siftoolkit.unmanagedTemplateAction.hint": "What should Spell Template Manager do for unmanaged spell templates?",
+    "siftoolkit.unmanagedTemplateAction.hint": "What should SIFT do for unmanaged spell templates?",
     "siftoolkit.unmanagedTemplateAction.prompt": "Prompt me every time",
     "siftoolkit.unmanagedTemplateAction.skip": "Skip - leave in place",
     "siftoolkit.unmanagedTemplateAction.delete": "Delete",
@@ -28,5 +28,10 @@
     "siftoolkit.messageHistory.name": "Message History Count",
     "siftoolkit.messageHistory.hint": "Select the number of actionable chat messages that SIFToolkit will keep track of",
     "siftoolkit.parseUnknownMessages.name": "Parse Unknown Messages",
-    "siftoolkit.parseUnknownMessages.hint": "Will cause unkown messages to be parsed, utilizing message history but increasing compatibility with some modules"
+    "siftoolkit.parseUnknownMessages.hint": "Will cause unkown messages to be parsed, utilizing message history but increasing compatibility with some modules",
+    "siftoolkit.removedCombatantTemplateAction.name": "Removed Combatant Template Action",
+    "siftoolkit.removedCombatantTemplateAction.hint": "What should SIFT do with templates when a combatant is removed?",
+    "siftoolkit.removedCombatantTemplateAction.prompt": "Prompt me every time",
+    "siftoolkit.removedCombatantTemplateAction.keep": "Keep",
+    "siftoolkit.removedCombatantTemplateAction.delete": "Delete"
 }

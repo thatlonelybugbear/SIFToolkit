@@ -203,5 +203,23 @@ export function registerSettings(){
 	);
 	SIFSettings.parseUnknownMessages = game.settings.get("siftoolkit","parseUnknownMessages");
 
+	game.settings.register(
+		"siftoolkit", "removedCombatantTemplateAction", {
+  			name: game.i18n.localize("siftoolkit.removedCombatantTemplateAction.name"),
+			hint: game.i18n.localize("siftoolkit.removedCombatantTemplateAction.hint"),
+			scope: "client",
+			config: true,
+			type: String,
+			choices: {
+				"prompt": game.i18n.localize("siftoolkit.removedCombatantTemplateAction.prompt"),
+				"keep": game.i18n.localize("siftoolkit.removedCombatantTemplateAction.keep"),
+				"delete": game.i18n.localize("siftoolkit.removedCombatantTemplateAction.delete")
+			},
+			default: game.i18n.localize("siftoolkit.removedCombatantTemplateAction.prompt"),
+			onChange: (value) => { SIFT.Settings.removedCombatantTemplateAction = value; }
+		}
+	);
+	SIFSettings.removedCombatantTemplateAction = game.settings.get("siftoolkit","removedCombatantTemplateAction");
+
     return SIFSettings;	
 }

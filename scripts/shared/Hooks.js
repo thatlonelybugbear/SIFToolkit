@@ -141,20 +141,70 @@ export function setHooks(){
     });
 
     Hooks.on("deleteCombatant", async function(...args) {        
-        let response = await SIFT.UI.promptRemoveCombatant(args);
         let scene = args[0].combat.scene.id;
         let token = args[0].token?.id;
-        if(response == "Remove"){
-            SIFT.utils.removeTokenTemplates(token,scene);
+
+        let templates = game.scenes.get(scene).templates.filter(i=>i.data.flags.siftoolkit?.token == token);
+        if(templates.length > 0){
+            let option = SIFT.Settings.removedCombatantTemplateAction;
+            let action = "keep";
+            switch(option){
+                case "prompt":
+                    let response = await SIFT.UI.promptRemoveCombatant(args);
+                    if(response == game.i18n.localize("siftoolkit.removedCombatantTemplateAction.delete")){
+                        action = "delete";                    
+                    }
+                    break;
+                case "delete":
+                    action = "delete";
+                    break;
+                case "keep":
+                default:
+                    action = "keep";
+                    break;
+            }
+            switch(action){
+                case "delete":
+                    SIFT.utils.removeTokenTemplates(token,scene);
+                    break;
+                case "keep":
+                default:
+                    break;
+            }
         }
     });
 
     Hooks.on("deleteToken", async function(...args) {
-        let response = await SIFT.UI.promptRemoveCombatant(args);
         let token = args[0].id;
         let scene = args[0].parent?.id;
-        if(response == "Remove"){
-            SIFT.utils.removeTokenTemplates(token,scene);
+        
+        let templates = game.scenes.get(scene).templates.filter(i=>i.data.flags.siftoolkit?.token == token);
+        if(templates.length > 0){
+            let option = SIFT.Settings.removedCombatantTemplateAction;
+            let action = "keep";
+            switch(option){
+                case "prompt":
+                    let response = await SIFT.UI.promptRemoveCombatant(args);
+                    if(response == game.i18n.localize("siftoolkit.removedCombatantTemplateAction.delete")){
+                        action = "delete";                    
+                    }
+                    break;
+                case "delete":
+                    action = "delete";
+                    break;
+                case "keep":
+                default:
+                    action = "keep";
+                    break;
+            }
+            switch(action){
+                case "delete":
+                    SIFT.utils.removeTokenTemplates(token,scene);
+                    break;
+                case "keep":
+                default:
+                    break;
+            }
         }
     });
     

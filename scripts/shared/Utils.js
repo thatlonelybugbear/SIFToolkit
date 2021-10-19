@@ -440,7 +440,8 @@ export function loadUtils(){
 
         removeTokenTemplates: function(token,scene){
             let templates = game.scenes.get(scene).templates.filter(i=> i.data.flags.siftoolkit.token == token);
-            let deletions = templates.map(i => i.id);
+            let myTemplates = templates.filter(i=>(i.isOwner || (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
+            let deletions = myTemplates.map(i => i.id);
             game.scenes.get(scene).deleteEmbeddedDocuments("MeasuredTemplate",deletions);
         }
     };

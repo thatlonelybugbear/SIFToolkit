@@ -120,7 +120,7 @@ export function loadUI(){
         promptRemoveCombatant: async function (...args){
             return new Promise(decision => {
                 let combatantName = args[0].name;
-                let options = [{label:"Remove",callback:() => decision("Remove")},{label:"Keep",callback:() => decision("Keep")}];
+                let options = [{label:"Delete",callback:() => decision("Delete")},{label:"Keep",callback:() => decision("Keep")}];
                 new Dialog({
                     title: "Remove templates for " + combatantName + "?",
                     content: "<p>What would you like to do with Templates for "+combatantName+"?</p>",

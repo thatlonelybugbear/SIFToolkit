@@ -28,5 +28,10 @@
     "siftoolkit.messageHistory.name": "Recuento del historial de mensajes",
     "siftoolkit.messageHistory.hint": "Seleccione la cantidad de mensajes de chat procesables de los que SIFToolkit realizará un seguimiento",
     "siftoolkit.parseUnknownMessages.name": "Analizar mensajes desconocidos",
-    "siftoolkit.parseUnknownMessages.hint": "Esto hará que se analicen los mensajes desconocidos, utilizando el historial de mensajes pero aumentando la compatibilidad con algunos módulos"
+    "siftoolkit.parseUnknownMessages.hint": "Esto hará que se analicen los mensajes desconocidos, utilizando el historial de mensajes pero aumentando la compatibilidad con algunos módulos",
+    "siftoolkit.removedCombatantTemplateAction.name": "Acción de plantilla de combatiente eliminada",
+    "siftoolkit.removedCombatantTemplateAction.hint": "¿Qué debe hacer SIFT con las plantillas cuando se elimina a un combatiente?",
+    "siftoolkit.removedCombatantTemplateAction.prompt": "Avisarme cada vez",
+    "siftoolkit.removedCombatantTemplateAction.keep": "Guardar",
+    "siftoolkit.removedCombatantTemplateAction.delete": "Borrar"
 }

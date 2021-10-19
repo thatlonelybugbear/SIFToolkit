@@ -177,3 +177,8 @@ v0.1.26 07/31/2021
 
 * Added support for removing templates of tokens when removed from combat and/or scene.
 * SIFT logic is now based on tokens, rather than actors, allowing multiple tokens with the same actor to have separate concentration templates.
+* Removed Debug Code
+
+0.2.2 10/19/2021
+
+* Added setting for default option when a combatant/token is removed.
