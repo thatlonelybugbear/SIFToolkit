@@ -187,3 +187,4 @@ v0.1.26 07/31/2021
 
 * Fixed "Forge" breaking bugs
 * Fixed default setting bug for combatant/token removal
+* Fixed tooltip failover when token has been deleted
