@@ -58,7 +58,7 @@ export function setHooks(){
         let my = e.y;
         mx += 30;
         my -= 30;
-        let ttplayer = game.scenes.viewed.tokens.get(sourceTemplate.data.flags.siftoolkit?.token).name??game.actors.get(sourceTemplate.data.flags.siftoolkit?.actor)?.name??(game.users.get(sourceTemplate.data.user)?.name??"Unknown");
+        let ttplayer = game.scenes.viewed.tokens.get(sourceTemplate.data.flags.siftoolkit?.token)?.name??game.actors.get(sourceTemplate.data.flags.siftoolkit?.actor)?.name??(game.users.get(sourceTemplate.data.user)?.name??"Unknown");
         let ttspell = sourceTemplate.data.flags.siftoolkit?.sif??"???"
         let ttduration = "";
         

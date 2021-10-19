@@ -215,7 +215,7 @@ export function registerSettings(){
 				"keep": game.i18n.localize("siftoolkit.removedCombatantTemplateAction.keep"),
 				"delete": game.i18n.localize("siftoolkit.removedCombatantTemplateAction.delete")
 			},
-			default: game.i18n.localize("siftoolkit.removedCombatantTemplateAction.prompt"),
+			default: "prompt",
 			onChange: (value) => { SIFT.Settings.removedCombatantTemplateAction = value; }
 		}
 	);

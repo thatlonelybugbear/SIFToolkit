@@ -412,7 +412,7 @@ export function loadUtils(){
             game.scenes.forEach( j => {
                 let sceneFilter = j.data.templates.filter(i => sceneId==undefined?true:j.id==sceneId);
                 let managed = sceneFilter.filter(i => i.data.flags.siftoolkit !== undefined);
-                let turnActorOwned = managed.filter(i => actor==undefined?true:i.data.flags.siftoolkit.actor == actor);
+                //let turnActorOwned = managed.filter(i => actor==undefined?true:i.data.flags.siftoolkit.actor == actor);
                 let turnTokenOwned = managed.filter(i => token==undefined?true:i.data.flags.siftoolkit.token == token);
                 let templates = turnTokenOwned.filter(
                     function(i){

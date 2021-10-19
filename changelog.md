@@ -182,3 +182,8 @@ v0.1.26 07/31/2021
 0.2.2 10/19/2021
 
 * Added setting for default option when a combatant/token is removed.
+
+0.2.3 10/19/2021
+
+* Fixed "Forge" breaking bugs
+* Fixed default setting bug for combatant/token removal
