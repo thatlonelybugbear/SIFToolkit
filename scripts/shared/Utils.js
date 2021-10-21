@@ -443,7 +443,20 @@ export function loadUtils(){
             let myTemplates = templates.filter(i=>(i.isOwner || (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
             let deletions = myTemplates.map(i => i.id);
             game.scenes.get(scene).deleteEmbeddedDocuments("MeasuredTemplate",deletions);
+        },
+
+        hideTemplateGridHighlights: function(templateId){
+            if(SIFT.Settings.disableHighlighting){
+                canvas.grid.getHighlightLayer(`Template.${templateId}`).visible = false;
+            }
+        },
+
+        showTemplateGridHighlights: function(templateId){
+            if(SIFT.Settings.disableHighlighting){
+                canvas.grid.getHighlightLayer(`Template.${templateId}`).visible = true;
+            }
         }
+
     };
 
     

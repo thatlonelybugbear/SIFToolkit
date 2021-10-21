@@ -198,3 +198,9 @@ v0.1.26 07/31/2021
 * Fixed item-sheet CSS Style bleed
 * Updated dnd5e item-sheet look and feel to use consistent file select buttons
 * Fixed bug in migration script that could halt migration for some templates.
+
+0.3.1 10/21/2021
+
+* Fixed checkbox alignment issue on default dnd5e item-sheet
+* Fixed bug preventing reload of textures on scene change
+* NEW FEATURE: Disable Grid Highlights.  Highlight reappears when user hovers over template's control icon.

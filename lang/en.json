@@ -33,5 +33,7 @@
     "siftoolkit.removedCombatantTemplateAction.hint": "What should SIFT do with templates when a combatant is removed?",
     "siftoolkit.removedCombatantTemplateAction.prompt": "Prompt me every time",
     "siftoolkit.removedCombatantTemplateAction.keep": "Keep",
-    "siftoolkit.removedCombatantTemplateAction.delete": "Delete"
+    "siftoolkit.removedCombatantTemplateAction.delete": "Delete",
+    "siftoolkit.disableHighlighting.name": "Disable grid highlights for templates",
+    "siftoolkit.disableHighlighting.hint": "Will remove colored grid highlights for templates"
 }

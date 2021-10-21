@@ -18,6 +18,7 @@ export function setHooks(){
                         if(placeables[i].data.flags.siftoolkit != undefined){
                             SIFT.textures.reapplyTexture(placeables[i]);		
                         }
+                        SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
                     }
                 }else{
                     console.debug("SIFT | Placeables not ready");
@@ -83,9 +84,10 @@ export function setHooks(){
             SIFT.currentTT.style.left = (placeable.worldTransform.tx+(placeable.controlIcon.width*scale/2)+10+"px");
             SIFT.currentTT.style.top = (placeable.worldTransform.ty-(placeable.controlIcon.width*scale/2)+"px");
             document.body.appendChild(SIFT.currentTT);
-            
+            SIFT.utils.showTemplateGridHighlights(sourceTemplate.id);
         }else{
             SIFT.currentTT?.remove();
+            SIFT.utils.hideTemplateGridHighlights(sourceTemplate.id);
         }
     });
     
@@ -97,6 +99,22 @@ export function setHooks(){
             let placeable = SIFT.utils.getPlaceableTemplate(e.id);
             SIFT.textures.reapplyTexture(placeable);		
         }
+    });
+
+    Hooks.on("canvasReady",async (...args) => {
+        let placeables = game.canvas.templates?.placeables;
+            try{
+                if(placeables){
+                    for(let i = 0; i < placeables.length; i++){
+                        if(placeables[i].data.flags.siftoolkit != undefined){
+                            SIFT.textures.reapplyTexture(placeables[i]);		
+                        }
+                        SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
+                    }
+                }else{
+                    console.debug("SIFT | Placeables not ready");
+                }
+            }catch (e){}
     });
 
     Hooks.on("createMeasuredTemplate", (...args) => {
@@ -122,6 +140,7 @@ export function setHooks(){
         if(SIFData.audioData?.playTemplateAudio && SIFData.audioData?.clip != ""){
             SIFT.utils.playAudio(template);
         }
+        SIFT.utils.hideTemplateGridHighlights(template.id);
     });
 
     Hooks.on("getSceneControlButtons", (controls) => {

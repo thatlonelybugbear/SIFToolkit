@@ -221,5 +221,18 @@ export function registerSettings(){
 	);
 	SIFSettings.removedCombatantTemplateAction = game.settings.get("siftoolkit","removedCombatantTemplateAction");
 
+	game.settings.register(
+		"siftoolkit", "disableHighlighting", {
+  			name: game.i18n.localize("siftoolkit.disableHighlighting.name"),
+			hint: game.i18n.localize("siftoolkit.disableHighlighting.hint"),
+			scope: "world",
+			config: true,
+			type: Boolean,
+			default: false,
+			onChange: (value) => { SIFT.Settings.disableHighlighting = value; }
+		}
+	);
+	SIFSettings.disableHighlighting = game.settings.get("siftoolkit","disableHighlighting");
+
     return SIFSettings;	
 }
