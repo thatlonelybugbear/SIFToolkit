@@ -234,5 +234,44 @@ export function registerSettings(){
 	);
 	SIFSettings.disableHighlighting = game.settings.get("siftoolkit","disableHighlighting");
 
+	game.settings.register(
+		"siftoolkit", "disableBorder", {
+  			name: game.i18n.localize("siftoolkit.disableBorder.name"),
+			hint: game.i18n.localize("siftoolkit.disableBorder.hint"),
+			scope: "world",
+			config: true,
+			type: Boolean,
+			default: false,
+			onChange: (value) => { SIFT.Settings.disableHighlighting = value; }
+		}
+	);
+	SIFSettings.disableBorder = game.settings.get("siftoolkit","disableBorder");
+	
+	game.settings.register(
+		"siftoolkit", "disableText", {
+  			name: game.i18n.localize("siftoolkit.disableText.name"),
+			hint: game.i18n.localize("siftoolkit.disableText.hint"),
+			scope: "world",
+			config: true,
+			type: Boolean,
+			default: false,
+			onChange: (value) => { SIFT.Settings.disableText = value; }
+		}
+	);
+	SIFSettings.disableText = game.settings.get("siftoolkit","disableText");
+
+	game.settings.register(
+		"siftoolkit", "showToolTip", {
+  			name: game.i18n.localize("siftoolkit.showToolTip.name"),
+			hint: game.i18n.localize("siftoolkit.showToolTip.hint"),
+			scope: "world",
+			config: true,
+			type: Boolean,
+			default: true,
+			onChange: (value) => { SIFT.Settings.showToolTip = value; }
+		}
+	);
+	SIFSettings.showToolTip = game.settings.get("siftoolkit","showToolTip");
+		
     return SIFSettings;	
 }

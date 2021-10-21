@@ -35,5 +35,11 @@
     "siftoolkit.removedCombatantTemplateAction.keep": "Guardar",
     "siftoolkit.removedCombatantTemplateAction.delete": "Borrar",
     "siftoolkit.disableHighlighting.name": "Deshabilitar los aspectos destacados de la cuadrícula para las plantillas",
-    "siftoolkit.disableHighlighting.hint": "Eliminará los resaltados de la cuadrícula de colores para las plantillas"
+    "siftoolkit.disableHighlighting.hint": "Eliminará los resaltados de la cuadrícula de colores para las plantillas",
+    "siftoolkit.disableBorder.name": "Deshabilitar bordes para plantillas",
+    "siftoolkit.disableBorder.hint": "Eliminará los bordes de las plantillas",
+    "siftoolkit.disableText.name": "Deshabilitar texto de medición para plantillas",
+    "siftoolkit.disableText.hint": "Eliminará el texto de medición de las plantillas",
+    "siftoolkit.showToolTip.name": "Mostrar información sobre herramientas al desplazar la plantilla",
+    "siftoolkit.showToolTip.hint": "Mostrará una información sobre herramientas cuando un jugador pase el mouse sobre el ícono de una plantilla"
 }

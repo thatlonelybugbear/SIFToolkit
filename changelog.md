@@ -204,3 +204,9 @@ v0.1.26 07/31/2021
 * Fixed checkbox alignment issue on default dnd5e item-sheet
 * Fixed bug preventing reload of textures on scene change
 * NEW FEATURE: Disable Grid Highlights.  Highlight reappears when user hovers over template's control icon.
+
+0.4.1 10/21/2021
+
+* NEW FEATURE: Disable Template Borders.  Borders reappear when user hovers over a template's control icon.
+* New FEATURE: Disable Measurement Text.  Text reappears when user hovers over a template's control icon.
+* New Option: Disable ToolTip.  The existing Template tooltip can now be disabled in settings.  

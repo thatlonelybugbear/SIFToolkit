@@ -455,6 +455,50 @@ export function loadUtils(){
             if(SIFT.Settings.disableHighlighting){
                 canvas.grid.getHighlightLayer(`Template.${templateId}`).visible = true;
             }
+        },
+
+        hideTemplateText: function(templateId){
+            if(SIFT.Settings.disableText){
+                console.debug("SIFT | Hiding Text!");
+                game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{
+                    console.debug(Object(i).constructor.name); 
+                    if(["PreciseText"].includes(Object(i).constructor.name)){
+                        i.visible = false;
+                    }
+                });
+            }
+        },
+
+        showTemplateText: function(templateId){
+            if(SIFT.Settings.disableText){
+                game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{ 
+                    if(["PreciseText"].includes(Object(i).constructor.name)){
+                        i.visible = true;
+                    }
+                });
+            }
+        },
+
+        hideTemplateBorder: function(templateId){
+            if(SIFT.Settings.disableBorder){
+                console.debug("SIFT | Hiding Text!");
+                game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{
+                    console.debug(Object(i).constructor.name); 
+                    if(!["PreciseText","ControlIcon"].includes(Object(i).constructor.name) && i.zIndex == 0){
+                        i.visible = false;
+                    }
+                });
+            }
+        },
+
+        showTemplateBorder: function(templateId){
+            if(SIFT.Settings.disableBorder){
+                game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{ 
+                    if(!["PreciseText","ControlIcon"].includes(Object(i).constructor.name) && i.zIndex == 0){
+                        i.visible = true;
+                    }
+                });
+            }
         }
 
     };

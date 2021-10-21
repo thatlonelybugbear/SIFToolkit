@@ -35,5 +35,11 @@
     "siftoolkit.removedCombatantTemplateAction.keep": "Keep",
     "siftoolkit.removedCombatantTemplateAction.delete": "Delete",
     "siftoolkit.disableHighlighting.name": "Disable grid highlights for templates",
-    "siftoolkit.disableHighlighting.hint": "Will remove colored grid highlights for templates"
+    "siftoolkit.disableHighlighting.hint": "Will remove colored grid highlights for templates",
+    "siftoolkit.disableBorder.name": "Disable borders for templates",
+    "siftoolkit.disableBorder.hint": "Will remove borders for templates",
+    "siftoolkit.disableText.name": "Disable measurement text for templates",
+    "siftoolkit.disableText.hint": "Will remove measurement text for templates",
+    "siftoolkit.showToolTip.name": "Show tooltip on template hover",
+    "siftoolkit.showToolTip.hint": "Will display a tooltip when a player hovers over a template's icon"
 }

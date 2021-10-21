@@ -19,6 +19,8 @@ export function setHooks(){
                             SIFT.textures.reapplyTexture(placeables[i]);		
                         }
                         SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
+                        SIFT.utils.hideTemplateText(placeables[i].id);
+                        SIFT.utils.hideTemplateBorder(placeables[i].id);
                     }
                 }else{
                     console.debug("SIFT | Placeables not ready");
@@ -83,11 +85,17 @@ export function setHooks(){
             SIFT.currentTT.style.visibility = "visible";
             SIFT.currentTT.style.left = (placeable.worldTransform.tx+(placeable.controlIcon.width*scale/2)+10+"px");
             SIFT.currentTT.style.top = (placeable.worldTransform.ty-(placeable.controlIcon.width*scale/2)+"px");
-            document.body.appendChild(SIFT.currentTT);
+            if(SIFT.Settings.showToolTip){
+                document.body.appendChild(SIFT.currentTT);
+            }
             SIFT.utils.showTemplateGridHighlights(sourceTemplate.id);
+            SIFT.utils.showTemplateText(sourceTemplate.id);
+            SIFT.utils.showTemplateBorder(sourceTemplate.id);
         }else{
             SIFT.currentTT?.remove();
             SIFT.utils.hideTemplateGridHighlights(sourceTemplate.id);
+            SIFT.utils.hideTemplateText(sourceTemplate.id);
+            SIFT.utils.hideTemplateBorder(sourceTemplate.id);
         }
     });
     
@@ -101,6 +109,18 @@ export function setHooks(){
         }
     });
 
+    Hooks.on("renderSceneControls",async (...args) =>{
+        if(args[0].activeControl=="measure" && SIFT.Settings.disableText){
+            game.scenes.active.templates.forEach(j=>{
+                j._object.children.forEach(i=>{ console.log(i);
+                    if(["PreciseText"].includes(Object(i).constructor.name)){
+                        i.visible = false;
+                    }
+                });
+            });
+        }
+    });
+
     Hooks.on("canvasReady",async (...args) => {
         let placeables = game.canvas.templates?.placeables;
             try{
@@ -110,6 +130,8 @@ export function setHooks(){
                             SIFT.textures.reapplyTexture(placeables[i]);		
                         }
                         SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
+                        SIFT.utils.hideTemplateText(placeables[i].id);
+                        SIFT.utils.hideTemplateBorder(placeables[i].id);
                     }
                 }else{
                     console.debug("SIFT | Placeables not ready");
@@ -141,6 +163,8 @@ export function setHooks(){
             SIFT.utils.playAudio(template);
         }
         SIFT.utils.hideTemplateGridHighlights(template.id);
+        SIFT.utils.hideTemplateText(template.id);
+        SIFT.utils.hideTemplateBorder(template.id);
     });
 
     Hooks.on("getSceneControlButtons", (controls) => {
