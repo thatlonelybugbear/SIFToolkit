@@ -192,3 +192,9 @@ v0.1.26 07/31/2021
 0.2.4 10/19/2021
 
 * Fixed version control bug
+
+0.2.5 10/21/2021
+
+* Fixed item-sheet CSS Style bleed
+* Updated dnd5e item-sheet look and feel to use consistent file select buttons
+* Fixed bug in migration script that could halt migration for some templates.

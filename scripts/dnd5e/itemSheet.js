@@ -133,7 +133,7 @@ export function loadUtils(){
                     allowUpload:true
                 };
             
-                $("div[id$='" + app.object.id + "'] input[name='siftoolkit.template.texture.bttn']")[0].onclick = (event) => {
+                $("div[id$='" + app.object.id + "'] button[name='siftoolkit.template.texture.bttn']")[0].onclick = (event) => {
                     let mfp = new FilePicker(mfpoptions);
                     mfp.render();
                 }
@@ -201,7 +201,7 @@ export function loadUtils(){
                 allowUpload:true
             };
         
-            $("div[id$='" + app.object.id + "'] input[name='siftoolkit.audio.clip.bttn']")[0].onclick = (event) => {
+            $("div[id$='" + app.object.id + "'] button[name='siftoolkit.audio.clip.bttn']")[0].onclick = (event) => {
                 let mfpAudio = new FilePicker(mfpAudioOptions);
                 mfpAudio.render();
             }

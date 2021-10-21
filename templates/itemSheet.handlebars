@@ -1,33 +1,88 @@
-        <style type="text/css">
-            h3 {
+        <style >
+            .tidy5eDark div.tidy5e h3.siftoolkit {
                 color: var(--primary-font);
                 border-top: 1px solid var(--header-border);
                 border-bottom: 1px solid var(--header-border);
                 background-color: var(--header-background);
             }
+            
+            .tidy5e div.tidy5e h3.siftoolkit {
+                color: var(--primary-font);
+                border-top: 1px solid var(--header-border);
+                border-bottom: 1px solid var(--header-border);
+                background-color: var(--header-background);
+            }
+
+            h3.siftoolkit {
+                color: var(--primary-font);
+                border-top: 1px solid var(--header-border);
+                border-bottom: 1px solid var(--header-border);
+                background-color: var(--header-background);
+            }            
+
+            .tidy5eDark.sheet.item button.siftoolkit {
+                border: 1px solid;
+                float: right;
+                width: 5ch;
+                max-width: 5ch;
+            }
+
+            .tidy5e.sheet.item button.siftoolkit {
+                border: 1px solid #7a7971;
+                float: right;
+                width: 5ch;
+                max-width: 5ch;
+            }
+
+            button.siftoolkit{
+                border: 1px solid #7a7971;
+                width: 5ch;
+                max-width: 5ch;
+            }
+            
+            .tidy5eDark.sheet.item input[type="text"].siftoolkit {
+                border: 1px solid;
+                float: right;
+            }
+
+            .tidy5e.sheet.item input[type="text"].siftoolkit {
+                border: 1px solid #7a7971;
+                float: right;
+            }
+
+            .dnd5e.sheet input[type="text"].siftoolkit{
+                border: 1px solid #7a7971;
+            }            
         </style>
         <div class="tab specialeffects" data-tab="specialeffects" style="overflow:scroll">
+
             {{#if isArea}}
-            <h3 class="form-header.tidy5eDark.tidy5e">Template Removal</h3>
+            <h3 class="form-header siftoolkit">Template Removal</h3>
 
                     <div class="form-group">
                         <label>
                             Ignore Spell Duration (Remove Immediately)				
                         </label>
+                        <div class="form-fields">
                         <input type="checkbox" style="float:right;" name="siftoolkit.template.removal" {{#if ignoreDuration}}checked{{/if}} {{#unless isEditable}}disabled{{/unless}}>
                     </div>
-                    <h3 class="form-header.tidy5eDark.tidy5e">Animations</h3>
+                    </div>
+                    <h3 class="form-header siftoolkit">Animations</h3>
 
                     <div class="form-group">
                         <label>
                         Use Texture				
                         </label>
-                        <input type="checkbox" style="float:right;" name="siftoolkit.template.useTexture" {{#if useTexture}}checked{{/if}} {{#unless isEditable}}disabled{{/unless}}>
+                        <input class="siftoolkit" type="checkbox" style="float:right;" name="siftoolkit.template.useTexture" {{#if useTexture}}checked{{/if}} {{#unless isEditable}}disabled{{/unless}}>
                     </div>
                     <div class="form-group">
-                        <label class="textureSelect" style="float:left;">Texture <input type="text" size="10" style="width: 65%;" name="siftoolkit.template.texture.text" {{#unless isEditable}}disabled="disabled"{{/unless}} value={{texture}}   >
-                            <input type="button" name="siftoolkit.template.texture.bttn" value="Select" style="float:right;width: 20%; text-align: center;" {{#unless isEditable}}disabled="disabled"{{/unless}}>
-                        </label>
+                        <label class="textureSelect" style="float:right;max-width:none;">Texture</label>
+                        <div class="form-fields">
+                            <input type="text" class="siftoolkit" name="siftoolkit.template.texture.text" placeholder="File Path" {{#unless isEditable}}disabled="disabled"{{/unless}} value={{texture}}>
+                            <button type="button" class="siftoolkit" data-type="imagevideo" title="Browse Files" tabindex="-1" name="siftoolkit.template.texture.bttn" {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                                <i class="fas fa-file-import fa-fw"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>
@@ -55,7 +110,7 @@
                     </div>
                     {{/if}}
                 {{/if}}
-                <h3 class="form-header.tidy5eDark.tidy5e">Audio</h3>
+                <h3 class="form-header siftoolkit">Audio</h3>
                     
                     <div class="form-group">
                         <label>
@@ -77,11 +132,19 @@
                         </label>
                         <input type="checkbox" style="float:right;" name="siftoolkit.audio.playSaveAudio" {{#if playSaveAudio}}checked{{/if}} {{#unless isEditable}}disabled="disabled"{{/unless}}>
                     </div>
+
                     <div class="form-group">
-                        <label class="audioSelect" style="float:left;">Clip <input type="text" size="10" style="width: 65%;" name="siftoolkit.audio.clip.text" {{#unless isEditable}}disabled="disabled"{{/unless}} value={{clip}}   >
-                            <input type="button" name="siftoolkit.audio.clip.bttn" value="Select" style="float:right;width: 20%; text-align: center;" {{#unless isEditable}}disabled="disabled"{{/unless}}>
-                        </label>
+                        <label class="audioSelect" style="float:right;max-width:none;">Clip</label>
+                        <div class="form-fields">
+                            <input class="siftoolkit" type="text" name="siftoolkit.audio.clip.text" placeholder="File Path" {{#unless isEditable}}disabled="disabled"{{/unless}} value={{clip}}>
+                            <button type="button" class="siftoolkit" data-type="audio" title="Browse Files" tabindex="-1" name="siftoolkit.audio.clip.bttn" {{#unless isEditable}}disabled="disabled"{{/unless}}>
+                                <i class="fas fa-file-import fa-fw"></i>
+                            </button>
+                        </div>
                     </div>
+
+
+
                     <div class="form-group">
                         <label>
                         Volume%				

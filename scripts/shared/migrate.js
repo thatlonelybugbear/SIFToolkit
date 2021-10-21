@@ -75,7 +75,7 @@ export function migrate(){
             let templates = i.templates;
             templates.forEach( j =>{
                 if(j.data.flags.siftoolkit?.token == undefined && game.user.isGM){
-                    j.setFlag("siftoolkit","token", i.tokens.filter(k=>k.actor.id == (j.data.flags.siftoolkit?.actor))[0].id??undefined);
+                    j.setFlag("siftoolkit","token", i.tokens.filter(k=>k.actor.id == (j.data.flags.siftoolkit?.actor))[0]?.id??undefined);
                 }
             });
         });
