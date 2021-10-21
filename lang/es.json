@@ -34,6 +34,6 @@
     "siftoolkit.removedCombatantTemplateAction.prompt": "Avisarme cada vez",
     "siftoolkit.removedCombatantTemplateAction.keep": "Guardar",
     "siftoolkit.removedCombatantTemplateAction.delete": "Borrar",
-    "siftoolkit.disableHighlighting.name": "Disable grid highlights for templates",
-    "siftoolkit.disableHighlighting.hint": "Will remove colored grid highlights for templates"
+    "siftoolkit.disableHighlighting.name": "Deshabilitar los aspectos destacados de la cuadrícula para las plantillas",
+    "siftoolkit.disableHighlighting.hint": "Eliminará los resaltados de la cuadrícula de colores para las plantillas"
 }
