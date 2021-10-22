@@ -242,7 +242,7 @@ export function registerSettings(){
 			config: true,
 			type: Boolean,
 			default: false,
-			onChange: (value) => { SIFT.Settings.disableHighlighting = value; }
+			onChange: (value) => { SIFT.Settings.disableBorder = value; }
 		}
 	);
 	SIFSettings.disableBorder = game.settings.get("siftoolkit","disableBorder");

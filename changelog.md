@@ -210,3 +210,8 @@ v0.1.26 07/31/2021
 * NEW FEATURE: Disable Template Borders.  Borders reappear when user hovers over a template's control icon.
 * New FEATURE: Disable Measurement Text.  Text reappears when user hovers over a template's control icon.
 * New Option: Disable ToolTip.  The existing Template tooltip can now be disabled in settings.  
+
+0.4.2 10/22/2021
+
+* Corrected bug preventing Disable Borders from working on first setup.
+* Removed Debug Code

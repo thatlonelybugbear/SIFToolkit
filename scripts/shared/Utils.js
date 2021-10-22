@@ -481,9 +481,7 @@ export function loadUtils(){
 
         hideTemplateBorder: function(templateId){
             if(SIFT.Settings.disableBorder){
-                console.debug("SIFT | Hiding Text!");
                 game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{
-                    console.debug(Object(i).constructor.name); 
                     if(!["PreciseText","ControlIcon"].includes(Object(i).constructor.name) && i.zIndex == 0){
                         i.visible = false;
                     }
