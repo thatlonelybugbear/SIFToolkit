@@ -20,7 +20,7 @@ export function setHooks(){
                         }
                         SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
                         SIFT.utils.hideTemplateText(placeables[i].id);
-                        SIFT.utils.hideTemplateBorder(placeables[i].id);
+                        //setTimeout(async function () {SIFT.utils.hideTemplateBorder(placeables[i].id)},1000);
                     }
                 }else{
                     console.debug("SIFT | Placeables not ready");
@@ -112,7 +112,7 @@ export function setHooks(){
     Hooks.on("renderSceneControls",async (...args) =>{
         if(args[0].activeControl=="measure" && SIFT.Settings.disableText){
             game.scenes.active.templates.forEach(j=>{
-                j._object.children.forEach(i=>{ console.log(i);
+                j._object.children.forEach(i=>{ 
                     if(["PreciseText"].includes(Object(i).constructor.name)){
                         i.visible = false;
                     }
@@ -131,7 +131,7 @@ export function setHooks(){
                         }
                         SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
                         SIFT.utils.hideTemplateText(placeables[i].id);
-                        SIFT.utils.hideTemplateBorder(placeables[i].id);
+                        setTimeout(async function () {SIFT.utils.hideTemplateBorder(placeables[i].id)},1000);
                     }
                 }else{
                     console.debug("SIFT | Placeables not ready");
@@ -143,7 +143,6 @@ export function setHooks(){
         let template = args[0];
         let userId = args[2];
         let SIFData = game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
-
         if(game.userId == userId){
             SIFT.utils.updateTemplate(template);
             if(SIFData?.displayData?.useTexture && (SIFData?.displayData?.spellTexture != "")){
@@ -164,7 +163,7 @@ export function setHooks(){
         }
         SIFT.utils.hideTemplateGridHighlights(template.id);
         SIFT.utils.hideTemplateText(template.id);
-        SIFT.utils.hideTemplateBorder(template.id);
+        setTimeout(async function () {SIFT.utils.hideTemplateBorder(template.id)},1000);
     });
 
     Hooks.on("getSceneControlButtons", (controls) => {

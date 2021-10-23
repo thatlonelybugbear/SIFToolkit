@@ -459,9 +459,7 @@ export function loadUtils(){
 
         hideTemplateText: function(templateId){
             if(SIFT.Settings.disableText){
-                console.debug("SIFT | Hiding Text!");
                 game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{
-                    console.debug(Object(i).constructor.name); 
                     if(["PreciseText"].includes(Object(i).constructor.name)){
                         i.visible = false;
                     }
@@ -479,10 +477,10 @@ export function loadUtils(){
             }
         },
 
-        hideTemplateBorder: function(templateId){
+        hideTemplateBorder:async function(templateId){
             if(SIFT.Settings.disableBorder){
                 game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{
-                    if(!["PreciseText","ControlIcon"].includes(Object(i).constructor.name) && i.zIndex == 0){
+                    if(!(["texture","textureMask"].includes(i.name) || ["PreciseText","ControlIcon"].includes(Object(i).constructor.name))){
                         i.visible = false;
                     }
                 });
@@ -492,7 +490,7 @@ export function loadUtils(){
         showTemplateBorder: function(templateId){
             if(SIFT.Settings.disableBorder){
                 game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{ 
-                    if(!["PreciseText","ControlIcon"].includes(Object(i).constructor.name) && i.zIndex == 0){
+                    if(!(["texture","textureMask"].includes(i.name) || ["PreciseText","ControlIcon"].includes(Object(i).constructor.name))){
                         i.visible = true;
                     }
                 });

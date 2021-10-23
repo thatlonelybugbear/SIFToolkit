@@ -215,3 +215,8 @@ v0.1.26 07/31/2021
 
 * Corrected bug preventing Disable Borders from working on first setup.
 * Removed Debug Code
+
+0.4.3 10/22/2021
+
+* Removed Debug Code
+* Fixed bug causing Disable Borders to prevent initial load of textures

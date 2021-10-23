@@ -13,7 +13,7 @@ class  siftoolkit{
 	static SIFData = {};
 	static mostRecentSIFData = {};
 	static soundHold = true;
-	static version = "0.4.2";
+	static version = "0.4.3";
 	static openItems = {};
 }
 globalThis.SIFT = siftoolkit;

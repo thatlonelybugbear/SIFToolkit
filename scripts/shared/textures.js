@@ -29,7 +29,6 @@ applyTexture: async function (args,mysi){
 
 writeTexture: async function (placeable,animationData){
     if(("" != (animationData.useTexture??"")) && "" != (animationData.texture??"")){
-
         let SIFtexture = undefined;	
         let textureSize = undefined;
         let sprite = undefined;
@@ -48,6 +47,7 @@ writeTexture: async function (placeable,animationData){
                     SIFtexture.orig = { height: (textureSize * scale), width: textureSize * scale, x: -textureSize, y: -textureSize };
                 }
                 sprite = new PIXI.Sprite(SIFtexture);
+                sprite.name = "texture";
                 sprite.anchor.set(0.5);
                 sprite.alpha = animationData.alpha/100
                 icon = await placeable.addChild(sprite);
@@ -58,6 +58,7 @@ writeTexture: async function (placeable,animationData){
                 }
                 icon.zIndex = -1000;
                 masker = new PIXI.Graphics();
+                masker.name = "textureMask";
                 masker.beginFill(0xFF0000, 1);
                 masker.lineStyle(0);
                 masker.drawCircle(0, 0, placeable.ray.distance);
