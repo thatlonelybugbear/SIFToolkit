@@ -1,16 +1,32 @@
 {
-  "name": "siftoolkit",
+  "id": "siftoolkit",
   "title": "Spells, Items, and Features Toolkit",
   "description": "A toolkit for managing spells items and features.  Adds animation capabilities, as well as template managment and tooltips.",
-  "author": "bitkiller0",
-  "authors": [],
+  "authors": [{ "name":"bitkiller0"}],
   "url": "https://github.com/bitkiller0/SIFToolkit",
   "readme": "https://raw.githubusercontent.com/bitkiller0/SIFToolkit/master/README.md",
   "flags": {},
   "version": "0.4.3",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "9.226",
-  "scripts": [],
+  "compatibility": {
+        "minimum": 10,
+        "verified": 10
+   },
+   "relationships": {
+        "systems": [{
+            "id": "dnd5e",
+            "type": "system"
+        }],
+     "requires": [
+            {
+                "id": "lib-wrapper",
+                "type": "module"
+            },
+            {
+                "id": "colorsettings",
+                "type": "module"
+            }
+        ]
+   },
   "esmodules": [
     "scripts/SIFToolkit.js"
   ],
@@ -28,20 +44,6 @@
     }
   ],
   "packs": [],
-  "system": [
-    "dnd5e",
-    "pf2e"
-  ],
-  "dependencies": [
-    {
-      "name": "colorsettings",
-      "type": "module"
-    },
-    {
-      "name": "lib-wrapper",
-      "type": "module"
-    }
-  ],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/bitkiller0/SIFToolkit/main/module.json",
   "download": "https://github.com/bitkiller0/SIFToolkit/archive/0.4.3.zip",
