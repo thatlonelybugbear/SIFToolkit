@@ -3,10 +3,10 @@
   "title": "Spells, Items, and Features Toolkit",
   "description": "A toolkit for managing spells items and features.  Adds animation capabilities, as well as template managment and tooltips.",
   "authors": [{ "name":"bitkiller0"}],
-  "url": "https://github.com/bitkiller0/SIFToolkit",
-  "readme": "https://raw.githubusercontent.com/bitkiller0/SIFToolkit/master/README.md",
+  "url": "https://github.com/thatlonelybugbear/SIFToolkit",
+  "readme": "https://raw.githubusercontent.com/thatlonelybugbear/SIFToolkit/master/README.md",
   "flags": {},
-  "version": "0.4.3",
+  "version": "10.0.1",
   "compatibility": {
         "minimum": 10,
         "verified": 10
