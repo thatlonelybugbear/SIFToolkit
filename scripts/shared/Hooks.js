@@ -55,11 +55,8 @@ export function setHooks(){
     Hooks.on("deleteMeasuredTemplate",(e)=>{SIFT.currentTT?.remove();});
 
     Hooks.on("hoverMeasuredTemplate",(e)=>{
-        console.log(e)
         let sourceTemplate = SIFT.utils.getSourceTemplate(e.id);
         let placeable = SIFT.utils.getPlaceableTemplate(e.id);
-        console.log(sourceTemplate)
-        console.log(placeable)
         let mx = e.x;
         let my = e.y;
         mx += 30;
