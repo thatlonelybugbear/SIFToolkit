@@ -446,7 +446,6 @@ export function loadUtils(){
         },
 
         hideTemplateGridHighlights: function(templateId){
-                console.log(templateId)
             if(SIFT.Settings.disableHighlighting && !!canvas.grid.getHighlightLayer(`MeasuredTemplate.${templateId}`)){
                 canvas.grid.getHighlightLayer(`MeasuredTemplate.${templateId}`).visible = false;
             }
