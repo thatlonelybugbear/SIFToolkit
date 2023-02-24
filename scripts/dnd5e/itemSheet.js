@@ -20,7 +20,7 @@ export function loadUtils(){
             let volume = itemData?.volume??100;
 
             let isArea = app.object.hasAreaTarget;
-            let isCone = app.object.data.data?.target?.type == "cone";
+            let isCone = app.object.system?.target?.type == "cone";
         
             if(!["spell","feat","consumable","weapon"].includes(app.object.type)) return;
 
@@ -138,7 +138,7 @@ export function loadUtils(){
                     mfp.render();
                 }
             
-                if(app.object.data.data?.target?.type == "cone" || app.object.data.spellInfo?.area?.areaType == "cone"){
+                if(app.object.system?.target?.type == "cone" || app.object.spellInfo?.area?.areaType == "cone"){
                     $("div[id$='" + app.object.id + "'] select[name='siftoolkit.template.cone.origin']")[0].onchange = (event) => {
                         coneOrigin = event.target.selectedIndex;
                         app.object.setFlag("siftoolkit", "SIFData", {...app.object.getFlag("siftoolkit","SIFData"),...{coneOrigin:coneOrigin}});
@@ -207,4 +207,5 @@ export function loadUtils(){
             }
         }
     }
-    return utils;}
+    return utils;
+}
