@@ -82,9 +82,9 @@ export function loadUtils(){
                 let update = {};
                 if(j.flags.siftoolkit?.concentration){
                     update = {_id: j.id, borderColor: SIFT.Settings.concentrationTemplateColor};
-                }else if(j.document.flags.siftoolkit?.duration > 0){
+                }else if(j.flags.siftoolkit?.duration > 0){
                     update = {_id: j.id, borderColor: SIFT.Settings.enduringTemplateColor};
-                }else if(j.document.flags.siftoolkit?.special){
+                }else if(j.flags.siftoolkit?.special){
                     update = {_id: j.id, borderColor: SIFT.Settings.specialTemplateColor};
                 }else {
                     update = {_id: j.id, borderColor: SIFT.Settings.standardTemplateColor};
