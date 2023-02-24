@@ -290,7 +290,6 @@ writeTexture: async function (placeable,animationData){
 },
 
 reapplyTexture: async function (placeable){
-    console.log(placeable)
     placeable.sortDirty=true;
     placeable.sortChildren();
     let child = placeable.children[0];
