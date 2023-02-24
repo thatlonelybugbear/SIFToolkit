@@ -48,7 +48,7 @@ export function setHooks(){
                     }
                 }
                 let SIFObj = SIFT.utils.getSIFObjFromChat(mostRecentMessage);
-                let SIFData = SIFObj?.flags?.siftoolkit?.SIFData;
+                let SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
                 SIFT.mostRecentSIFData = SIFData;
                 clearInterval(messageParseIntervalId);
             }).then(()=>{SIFT.utils.clearTemplateData();});
@@ -154,12 +154,11 @@ export function setHooks(){
     });       
 
     Hooks.on("preUpdateCombat",(...args) => {
-		//console.log(args)
         let advanceTime = args[2].advanceTime;
-		if (!advanceTime) return SIFT.utils.manageUnmanaged();
-        //if(advanceTime != 0 && !(SIFT.Settings.timeProcessor=="SimpleCalendar")) SIFT.utils.ageTemplates(advanceTime);
-		else if(advanceTime != 0 && !(SIFT.Settings.timeProcessor=="SimpleCalendar")) SIFT.utils.ageTemplates(advanceTime);
-		SIFT.utils.cleanupTemplates(args[0].combatant.tokenId);
-		SIFT.utils.manageUnmanaged();		
-    });          
+        if(!advanceTime) return //SIFT.utils.manageUnmanaged();
+        if(advanceTime != 0 && !(SIFT.Settings.timeProcessor=="SimpleCalendar")) SIFT.utils.ageTemplates(advanceTime);
+        SIFT.utils.cleanupTemplates(args[0].combatant.tokenId);
+	    SIFT.utils.manageUnmanaged();
+    });   
+        
 }
