@@ -15,7 +15,7 @@ export function setHooks(){
                     clearInterval(mysi);
                     console.debug("SIFT | Applying textures post-reload")
                     for(let i = 0; i < placeables.length; i++){
-                        if(placeables[i].data.flags.siftoolkit != undefined){
+                        if(placeables[i].document.flags.siftoolkit != undefined){
                             SIFT.textures.reapplyTexture(placeables[i]);		
                         }
                         SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
@@ -52,20 +52,23 @@ export function setHooks(){
         }
     });
         
-    Hooks.on("deleteMeasuredTemplate",e=>{SIFT.currentTT?.remove();});
+    Hooks.on("deleteMeasuredTemplate",(e)=>{SIFT.currentTT?.remove();});
 
-    Hooks.on("hoverMeasuredTemplate",e=>{
-        let sourceTemplate = SIFT.utils.getSourceTemplate(e.data._id);
-        let placeable = SIFT.utils.getPlaceableTemplate(e.data._id);
+    Hooks.on("hoverMeasuredTemplate",(e)=>{
+        console.log(e)
+        let sourceTemplate = SIFT.utils.getSourceTemplate(e.id);
+        let placeable = SIFT.utils.getPlaceableTemplate(e.id);
+        console.log(sourceTemplate)
+        console.log(placeable)
         let mx = e.x;
         let my = e.y;
         mx += 30;
         my -= 30;
-        let ttplayer = game.scenes.viewed.tokens.get(sourceTemplate.data.flags.siftoolkit?.token)?.name??game.actors.get(sourceTemplate.data.flags.siftoolkit?.actor)?.name??(game.users.get(sourceTemplate.data.user)?.name??"Unknown");
-        let ttspell = sourceTemplate.data.flags.siftoolkit?.sif??"???"
+        let ttplayer = game.scenes.viewed.tokens.get(sourceTemplate.flags.siftoolkit?.token)?.name??game.actors.get(sourceTemplate.flags.siftoolkit?.actor)?.name??(sourceTemplate.user?.name??"Unknown");
+        let ttspell = sourceTemplate.flags.siftoolkit?.sif??"???"
         let ttduration = "";
         
-        ttduration = '<span style="font-weight:500;">Remaining: </span>' + ((sourceTemplate.data.flags.siftoolkit?.duration)??"Unknown") + " seconds";
+        ttduration = '<span style="font-weight:500;">Remaining: </span>' + ((sourceTemplate.flags.siftoolkit?.duration)??"Unknown") + " seconds";
         
         let scale = document.getElementById("hud").style.transform.substring(6,document.getElementById("hud").style.transform.length-1);
         if(e._hover){
@@ -83,8 +86,8 @@ export function setHooks(){
             SIFT.currentTT.style.padding = "5px";
             SIFT.currentTT.style.left = (mx+"px");
             SIFT.currentTT.style.visibility = "visible";
-            SIFT.currentTT.style.left = (placeable.worldTransform.tx+(placeable.controlIcon.width*scale/2)+10+"px");
-            SIFT.currentTT.style.top = (placeable.worldTransform.ty-(placeable.controlIcon.width*scale/2)+"px");
+            SIFT.currentTT.style.left = (sourceTemplate.worldTransform.tx+(sourceTemplate.controlIcon.width*scale/2)+10+"px");
+            SIFT.currentTT.style.top = (sourceTemplate.worldTransform.ty-(sourceTemplate.controlIcon.width*scale/2)+"px");
             if(SIFT.Settings.showToolTip){
                 document.body.appendChild(SIFT.currentTT);
             }
@@ -103,7 +106,7 @@ export function setHooks(){
 
     Hooks.on("updateMeasuredTemplate",async (e)=> {
         console.debug("SIFT | updating template",e);
-        if(e.data.flags.siftoolkit?.displayData?.useTexture){
+        if(e.flags.siftoolkit?.displayData?.useTexture){
             let placeable = SIFT.utils.getPlaceableTemplate(e.id);
             SIFT.textures.reapplyTexture(placeable);		
         }
@@ -111,7 +114,7 @@ export function setHooks(){
 
     Hooks.on("renderSceneControls",async (...args) =>{
         if(args[0].activeControl=="measure" && SIFT.Settings.disableText){
-            game.scenes.active.templates.forEach(j=>{
+            game.scenes.current.templates.forEach(j=>{
                 j._object.children.forEach(i=>{ 
                     if(["PreciseText"].includes(Object(i).constructor.name)){
                         i.visible = false;
@@ -126,7 +129,7 @@ export function setHooks(){
             try{
                 if(placeables){
                     for(let i = 0; i < placeables.length; i++){
-                        if(placeables[i].data.flags.siftoolkit != undefined){
+                        if(placeables[i].document.flags.siftoolkit != undefined){
                             SIFT.textures.reapplyTexture(placeables[i]);		
                         }
                         SIFT.utils.hideTemplateGridHighlights(placeables[i].id);
@@ -186,7 +189,7 @@ export function setHooks(){
         let scene = args[0].combat.scene.id;
         let token = args[0].token?.id;
 
-        let templates = game.scenes.get(scene).templates.filter(i=>i.data.flags.siftoolkit?.token == token);
+        let templates = game.scenes.get(scene).templates.filter(i=>i.flags.siftoolkit?.token == token);
         if(templates.length > 0){
             let option = SIFT.Settings.removedCombatantTemplateAction;
             let action = "keep";
@@ -220,7 +223,7 @@ export function setHooks(){
         let token = args[0].id;
         let scene = args[0].parent?.id;
         
-        let templates = game.scenes.get(scene).templates.filter(i=>i.data.flags.siftoolkit?.token == token);
+        let templates = game.scenes.get(scene).templates.filter(i=>i.flags.siftoolkit?.token == token);
         if(templates.length > 0){
             let option = SIFT.Settings.removedCombatantTemplateAction;
             let action = "keep";

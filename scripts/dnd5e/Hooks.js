@@ -29,15 +29,15 @@ export function setHooks(){
                     }
                     if(MessageArray[MessageArray.length - i].isAuthor || game.user?.isGM){
                         let identified = false;
-                        if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="placeTemplate"')){
+                        if(MessageArray[MessageArray.length - i].content.includes('button data-action="placeTemplate"')){
                             SIFT.utils.hijackTemplateButton(MessageArray[MessageArray.length - i]);                
                             identified = true;
                         }
-                        if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="damage"')){
+                        if(MessageArray[MessageArray.length - i].content.includes('button data-action="damage"')){
                             SIFT.utils.hijackDamageButton(MessageArray[MessageArray.length - i]);                
                             identified = true;
                         }
-                        if(MessageArray[MessageArray.length - i].data.content.includes('button data-action="save"')){
+                        if(MessageArray[MessageArray.length - i].content.includes('button data-action="save"')){
                             SIFT.utils.hijackSaveButton(MessageArray[MessageArray.length - i]);                
                             identified = true;
                         }
@@ -71,7 +71,7 @@ export function setHooks(){
         let SIFObj = SIFT.utils.getSIFObjFromChat(args[0]); 
         let SIFData, identified;
         if(!SIFObj) {
-            if(args[0].data.flags.dnd5e?.roll?.type == 'save'){
+            if(args[0].flags.dnd5e?.roll?.type == 'save'){
                 SIFData = SIFT.mostRecentSIFData;
                 if(!SIFT.soundHold && SIFData?.audioData?.playSaveAudio && (SIFData?.clip != "" || SIFData?.audioData?.clip != "")){
                     SIFT.soundHold = true;
@@ -82,7 +82,7 @@ export function setHooks(){
                     setTimeout(()=>{SIFT.soundHold = false;5},500); 
                 }
                 identified = true;
-            }else if(args[0].data.flags.dnd5e?.roll?.type == 'damage'){
+            }else if(args[0].flags.dnd5e?.roll?.type == 'damage'){
                 SIFData = SIFT.mostRecentSIFData;
                 if(!SIFT.soundHold && (SIFData?.playDamageAudio??SIFData?.audioData?.playDamageAudio) && (SIFData?.clip != "" || SIFData?.audioData?.clip != "")){
                     SIFT.soundHold = true;
@@ -97,19 +97,19 @@ export function setHooks(){
                 return undefined;
             }
         }else{
-            SIFData = SIFObj?.data?.flags?.siftoolkit?.SIFData;
+            SIFData = SIFObj?.flags?.siftoolkit?.SIFData;
             SIFT.SIFData = SIFData;
             SIFT.mostRecentSIFData = SIFData;
             //let hijackFlag = args[0].getFlag("siftoolkit","Hijacked");
             identified = false;
-            if(args[0].data.content?.includes('button data-action="placeTemplate"')){
+            if(args[0].content?.includes('button data-action="placeTemplate"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
                 SIFT.utils.hijackTemplateButton(args[0]);
                 identified = true;
             }
-            if(args[0].data.content?.includes('button data-action="damage"')){
+            if(args[0].content?.includes('button data-action="damage"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
@@ -117,7 +117,7 @@ export function setHooks(){
                 identified = true;
             }
 
-            if(args[0].data.content?.includes('button data-action="save"')){
+            if(args[0].content?.includes('button data-action="save"')){
                 if((SIFData?.playSaveAudio || SIFData?.playDamageAudio || SIFData?.playSaveAudio) && (SIFData?.clip != "")){
                     AudioHelper.preloadSound(SIFData.clip);
                 }
@@ -136,7 +136,7 @@ export function setHooks(){
                 } 
                 identified = true;  
             }         
-            if(args[0].data.flavor?.includes("Saving Throw")){
+            if(args[0].flavor?.includes("Saving Throw")){
                 if(!SIFT.soundHold && SIFData?.playSaveAudio && (SIFData?.clip != "")){
                     SIFT.soundHold = true;
                     AudioHelper.play({
@@ -154,9 +154,10 @@ export function setHooks(){
     });       
 
     Hooks.on("preUpdateCombat",(...args) => {
-       let advanceTime = args[2].advanceTime;
+        let advanceTime = args[2].advanceTime;
+        if(!advanceTime) return //SIFT.utils.manageUnmanaged();
         if(advanceTime != 0 && !(SIFT.Settings.timeProcessor=="SimpleCalendar")) SIFT.utils.ageTemplates(advanceTime);
-        SIFT.utils.cleanupTemplates(args[0].combatant.token.id);
+        SIFT.utils.cleanupTemplates(args[0].combatant.tokenId);
 	    SIFT.utils.manageUnmanaged();
     });   
         

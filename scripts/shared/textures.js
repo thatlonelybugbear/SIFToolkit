@@ -4,7 +4,7 @@ export function loadTextures(){
 
 
 applyTexture: async function (args,mysi){
-    if(args[0].data.flags.siftoolkit != undefined){
+    if(args[0].flags.siftoolkit != undefined){
         let placeable = SIFT.utils.getPlaceableTemplate(args[0].id);
         if(placeable != undefined){
             try{
@@ -13,12 +13,12 @@ applyTexture: async function (args,mysi){
             
             let originalActor,originalItem,originalDisplayData;
             
-            if(placeable.data.flags.siftoolkit?.displayData == undefined){
-                originalActor = game.actors.get(args[0].data.flags.siftoolkit?.actor);
-                originalItem = args[0].data.flags.siftoolkit.item;
+            if(placeable.document.flags.siftoolkit?.displayData == undefined){
+                originalActor = game.actors.get(args[0].flags.siftoolkit?.actor);
+                originalItem = args[0].flags.siftoolkit.item;
                 originalDisplayData = SIFT.utils.generateDisplayData(originalActor,originalItem);
             }else{
-                originalDisplayData = placeable.data.flags.siftoolkit.displayData;
+                originalDisplayData = placeable.document.flags.siftoolkit.displayData;
             }
             SIFT.textures.writeTexture(placeable,originalDisplayData);        
 
@@ -39,7 +39,7 @@ writeTexture: async function (placeable,animationData){
         let workingWidth = undefined;
         let container = undefined;
         let scale = 1;
-        switch(placeable.data.t){
+        switch(placeable.document.t){
             case "circle":
                 if(SIFtexture == undefined){
                     SIFtexture = await loadTexture(animationData.texture+"?id="+placeable.id);
@@ -81,7 +81,7 @@ writeTexture: async function (placeable,animationData){
                             sprite = new PIXI.Sprite(SIFtexture);
                             sprite.anchor.set(0.5);
                             sprite.alpha = animationData.alpha/100
-                            sprite.angle = placeable.data.direction;
+                            sprite.angle = placeable.document.direction;
                             icon = await placeable.addChild(sprite);
                             source = getProperty(icon._texture, "baseTexture.resource.source");
                             if (source && (source.tagName === "VIDEO")) {
@@ -93,7 +93,7 @@ writeTexture: async function (placeable,animationData){
                             masker.beginFill(0x00FF00);
                             masker.lineStyle(1, 0xFFFF00);
                             masker.moveTo(0, 0);
-                            masker.arc(0, 0, workingWidth, (Math.PI/180*placeable.data.direction) - Math.PI/180/2*placeable.data.angle, (Math.PI/180*placeable.data.direction) + Math.PI/180/2*placeable.data.angle, false);
+                            masker.arc(0, 0, workingWidth, (Math.PI/180*placeable.document.direction) - Math.PI/180/2*placeable.document.angle, (Math.PI/180*placeable.document.direction) + Math.PI/180/2*placeable.document.angle, false);
                             masker.lineTo(0, 0);
                             masker.endFill();
                             masker.zIndex = -1000;
@@ -105,13 +105,13 @@ writeTexture: async function (placeable,animationData){
                                 SIFtexture = await loadTexture(animationData.texture+"?id="+placeable.id);
                             }
                             workingWidth =  placeable.ray._distance;
-                            textureSize = placeable.data.height * canvas.grid.size;
+                            textureSize = placeable.height * canvas.grid.size;
                             sprite = new PIXI.Sprite(SIFtexture)
                             sprite.anchor.set(0,0.5)
                             sprite.width=workingWidth;
                             sprite.height=Math.sqrt((workingWidth**2)+(workingWidth**2));
                             sprite.alpha = animationData.alpha/100;
-                            sprite.angle = placeable.data.direction;
+                            sprite.angle = placeable.document.direction;
                             icon = await placeable.addChild(sprite)
                             source = getProperty(icon._texture, "baseTexture.resource.source");
                             if (source && (source.tagName === "VIDEO")) {
@@ -123,7 +123,7 @@ writeTexture: async function (placeable,animationData){
                             masker.beginFill(0x00FF00);
                             masker.lineStyle(1, 0xFFFF00);
                             masker.moveTo(0, 0);
-                            masker.arc(0, 0, workingWidth, (Math.PI/180*placeable.data.direction) - Math.PI/180/2*placeable.data.angle, (Math.PI/180*placeable.data.direction) + Math.PI/180/2*placeable.data.angle, false);
+                            masker.arc(0, 0, workingWidth, (Math.PI/180*placeable.document.direction) - Math.PI/180/2*placeable.document.angle, (Math.PI/180*placeable.document.direction) + Math.PI/180/2*placeable.document.angle, false);
                             masker.lineTo(0, 0);
                             masker.endFill();
                             masker.zIndex = -1000;
@@ -135,13 +135,13 @@ writeTexture: async function (placeable,animationData){
                                 SIFtexture = await loadTexture(animationData.texture+"?id="+placeable.id);
                             }
                             workingWidth =  placeable.ray._distance;
-                            textureSize = placeable.data.height * canvas.grid.size;
+                            textureSize = placeable.height * canvas.grid.size;
                             sprite = new PIXI.Sprite(SIFtexture)
                             sprite.anchor.set(1,0.5)
                             sprite.width=workingWidth*-1;
                             sprite.height=Math.sqrt((workingWidth**2)+(workingWidth**2));
                             sprite.alpha = animationData.alpha/100;
-                            sprite.angle = placeable.data.direction;
+                            sprite.angle = placeable.document.direction;
                             icon = await placeable.addChild(sprite)
                             source = getProperty(icon._texture, "baseTexture.resource.source");
                             if (source && (source.tagName === "VIDEO")) {
@@ -153,7 +153,7 @@ writeTexture: async function (placeable,animationData){
                                 masker.beginFill(0x00FF00);
                                 masker.lineStyle(1, 0xFFFF00);
                                 masker.moveTo(0, 0);
-                                masker.arc(0, 0, workingWidth, (Math.PI/180*placeable.data.direction) - Math.PI/180/2*placeable.data.angle, (Math.PI/180*placeable.data.direction) + Math.PI/180/2*placeable.data.angle, false);
+                                masker.arc(0, 0, workingWidth, (Math.PI/180*placeable.document.direction) - Math.PI/180/2*placeable.document.angle, (Math.PI/180*placeable.document.direction) + Math.PI/180/2*placeable.document.angle, false);
                                 masker.lineTo(0, 0);
                                 masker.endFill();
                                 masker.zIndex = -1000;
@@ -165,7 +165,7 @@ writeTexture: async function (placeable,animationData){
                                 SIFtexture = await loadTexture(animationData.texture+"?id="+placeable.id);
                             }
                             workingWidth =  placeable.ray._distance;
-                            textureSize = placeable.data.height * canvas.grid.size;
+                            textureSize = placeable.height * canvas.grid.size;
                             container = new PIXI.Container;
                             container.zIndex = -1000;
                             sprite = new PIXI.Sprite(SIFtexture)
@@ -177,7 +177,7 @@ writeTexture: async function (placeable,animationData){
                             sprite.height=workingWidth;
                             sprite.alpha = animationData.alpha/100;
                             sprite.x=sprite.height/2;
-                            container.angle = placeable.data.direction;
+                            container.angle = placeable.document.direction;
                             icon = await container.addChild(sprite)
                             await placeable.addChild(container);
                             
@@ -191,7 +191,7 @@ writeTexture: async function (placeable,animationData){
                             masker.beginFill(0x00FF00);
                             masker.lineStyle(1, 0xFFFF00);
                             masker.moveTo(0, 0);
-                            masker.arc(0, 0, workingWidth, 0 - Math.PI/180/2*placeable.data.angle, 0 + Math.PI/180/2*placeable.data.angle, false);
+                            masker.arc(0, 0, workingWidth, 0 - Math.PI/180/2*placeable.document.angle, 0 + Math.PI/180/2*placeable.document.angle, false);
                             masker.lineTo(0, 0);
                             masker.endFill();
                             masker.zIndex = -1000;
@@ -203,7 +203,7 @@ writeTexture: async function (placeable,animationData){
                                     SIFtexture = await loadTexture(animationData.texture+"?id="+placeable.id);
                                 }
                                 workingWidth =  placeable.ray._distance;
-                                textureSize = placeable.data.height * canvas.grid.size;
+                                textureSize = placeable.height * canvas.grid.size;
                                 container = new PIXI.Container;
                                 container.zIndex = -1000;
                                 sprite = new PIXI.Sprite(SIFtexture)
@@ -215,7 +215,7 @@ writeTexture: async function (placeable,animationData){
                                 sprite.height=workingWidth;
                                 sprite.alpha = animationData.alpha/100;
                                 sprite.x=sprite.height/2;
-                                container.angle = placeable.data.direction;
+                                container.angle = placeable.document.direction;
                                 icon = await container.addChild(sprite)
                                 await placeable.addChild(container);
                                 
@@ -229,7 +229,7 @@ writeTexture: async function (placeable,animationData){
                                 masker.beginFill(0x00FF00);
                                 masker.lineStyle(1, 0xFFFF00);
                                 masker.moveTo(0, 0);
-                                masker.arc(0, 0, workingWidth, 0 - Math.PI/180/2*placeable.data.angle, 0 + Math.PI/180/2*placeable.data.angle, false);
+                                masker.arc(0, 0, workingWidth, 0 - Math.PI/180/2*placeable.document.angle, 0 + Math.PI/180/2*placeable.document.angle, false);
                                 masker.lineTo(0, 0);
                                 masker.endFill();
                                 masker.zIndex = -1000;
@@ -268,8 +268,8 @@ writeTexture: async function (placeable,animationData){
                     SIFtexture = await loadTexture(animationData.texture+"?id="+placeable.id);
                 }
                 sprite = new PIXI.Sprite(SIFtexture)
-                sprite.height=placeable.data.width*game.canvas.grid.size/placeable.scene.dimensions.distance;
-                sprite.width=placeable.data.distance*game.canvas.grid.size/placeable.scene.dimensions.distance;
+                sprite.height=placeable.width*game.canvas.grid.size/placeable.scene.dimensions.distance;
+                sprite.width=placeable.document.distance*game.canvas.grid.size/placeable.scene.dimensions.distance;
                 sprite.y=0;
                 sprite.anchor.set(0,0.5);
                 sprite.rotation=placeable.ray.normAngle;
@@ -290,6 +290,7 @@ writeTexture: async function (placeable,animationData){
 },
 
 reapplyTexture: async function (placeable){
+    console.log(placeable)
     placeable.sortDirty=true;
     placeable.sortChildren();
     let child = placeable.children[0];
@@ -297,7 +298,7 @@ reapplyTexture: async function (placeable){
         placeable.removeChild(child);
         child = placeable.children[0];
     }
-    let originalDisplayData = placeable.data.flags.siftoolkit?.displayData;
+    let originalDisplayData = placeable.document.flags.siftoolkit?.displayData;
     if(("" != (originalDisplayData?.useTexture??"")) && "" != (originalDisplayData?.texture??"")){
         SIFT.textures.writeTexture(placeable,originalDisplayData);
     }        

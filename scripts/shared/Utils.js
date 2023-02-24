@@ -3,13 +3,13 @@ export function loadUtils(){
 
         getSIFObjFromChat: function (chatMessage){
             if(SIFT.Status.running && chatMessage){
-                let content = chatMessage.data.content;
-                let token = game.scenes.active.tokens.get(chatMessage.data.speaker.token);
-                let actor = game.actors.get(chatMessage.data.speaker.actor);
+                let content = chatMessage.content;
+                let token = game.scenes.active.tokens.get(chatMessage.speaker.token);
+                let actor = game.actors.get(chatMessage.speaker.actor);
                 let itemIndex = content.indexOf('data-item-id=');
                 let itemID = content.substring(itemIndex+14,itemIndex+14+16);
 
-                let tokenItems = token?.data?.actorData?.items;
+                let tokenItems = token?.actor?.items;
                 if(tokenItems != undefined){
                     for(let i = 0; i < tokenItems.length; i++){
                         if(tokenItems[i]._id == itemID) return tokenItems[i];
@@ -17,7 +17,7 @@ export function loadUtils(){
                 }
                 
                 if(actor != undefined){
-                    return actor.data.items.get(itemID);                    
+                    return actor.items.get(itemID);                    
                 }else{
                     return undefined;
                 }                
@@ -47,7 +47,7 @@ export function loadUtils(){
             let scenes = game.scenes;
             scenes.forEach(scene => {
                 let templates = undefined;
-                templates = scene.data.templates;
+                templates = scene.templates;
                 if(templates !== undefined) {
                     let deletions = templates.map(i => i.id);
                     scene.deleteEmbeddedDocuments("MeasuredTemplate",deletions);					
@@ -60,7 +60,7 @@ export function loadUtils(){
         getPlaceableTemplate: function (templateID){
             let placeable = undefined;
             for(let i = game.canvas.templates.placeables.length -1; i > -1; i--){
-                if (game.canvas.templates.placeables[i].data.flags.siftoolkit?.originalTemplateID == templateID || game.canvas.templates.placeables[i].data._id == templateID){
+                if (game.canvas.templates.placeables[i].document.flags.siftoolkit?.originalTemplateID == templateID || game.canvas.templates.placeables[i].document._id == templateID){
                     placeable = game.canvas.templates.placeables[i];
                     return placeable;
                 }
@@ -71,20 +71,20 @@ export function loadUtils(){
         deleteTemplate: async function (templateId){
             console.debug("SIFT | Deleting Template: ", templateId);
             game.scenes.forEach(scene => {
-                let templates = scene.data.templates.filter(i => (i.id == templateId && game.userId == i.author.id));
+                let templates = scene.templates.filter(i => (i.id == templateId && game.userId == i.author.id));
                 let deletions = templates.map(i => i.id);
                 scene.deleteEmbeddedDocuments("MeasuredTemplate",deletions);                
             });
         },
 
         resetTemplateBorders: async function (){		
-            game.scenes.forEach(i => {i.data.templates.forEach(j => {
+            game.scenes.forEach(i => {i.templates.forEach(j => {
                 let update = {};
-                if(j.data.flags.siftoolkit?.concentration){
+                if(j.flags.siftoolkit?.concentration){
                     update = {_id: j.id, borderColor: SIFT.Settings.concentrationTemplateColor};
-                }else if(j.data.flags.siftoolkit?.duration > 0){
+                }else if(j.flags.siftoolkit?.duration > 0){
                     update = {_id: j.id, borderColor: SIFT.Settings.enduringTemplateColor};
-                }else if(j.data.flags.siftoolkit?.special){
+                }else if(j.flags.siftoolkit?.special){
                     update = {_id: j.id, borderColor: SIFT.Settings.specialTemplateColor};
                 }else {
                     update = {_id: j.id, borderColor: SIFT.Settings.standardTemplateColor};
@@ -102,19 +102,19 @@ export function loadUtils(){
                 let turnToken = Combat.combatant?.token;
                 if(!turnActor) return;
             
-                let managing = scene.data.templates.filter(i => i.data.flags.siftoolkit === undefined && ((game.user.isGM && !game.users.get(i.data.user).active) || i.isOwner));
+                let managing = scene.templates.filter(i => i.flags.siftoolkit === undefined && ((game.user.isGM && !i.user.active) || i.isOwner));
                 for(let i = 0; i < managing.length; i++){
                     let action = SIFT.Settings.unmanagedTemplateAction;			
                     let response = null;
                     if(action === "prompt"){
-                        await canvas.animatePan({x : managing[i].data.x, y : managing[i].data.y, duration : 250});
+                        await canvas.animatePan({x : managing[i].x, y : managing[i].y, duration : 250});
                         response = await SIFT.UI.promptForAction(turnActor.name);
                     }
                     if(action === "delete" || (action==="prompt" && response?.action === "delete")){
                         await scene.deleteEmbeddedDocuments("MeasuredTemplate",[managing[i].id]);
                     }
                     if(action === "claim"){
-                        await canvas.animatePan({x : managing[i].data.x, y : managing[i].data.y, duration : 250});
+                        await canvas.animatePan({x : managing[i].x, y : managing[i].y, duration : 250});
                         response = await SIFT.UI.promptForUnits();
                     }
                     if(action === "claim" || (action === "prompt" && response?.action === "claim")){
@@ -164,7 +164,7 @@ export function loadUtils(){
         generateDisplayData: function (actorId,tokenId,itemId){
             let originalActor = game.actors.get(actorId);
             let originalToken = game.scenes.active.tokens.get(tokenId);
-            let itemArray = (originalToken?.data.actorData.items??undefined);
+            let itemArray = (originalToken?.actor.items??undefined);
             let foundSIF = undefined;
             if(itemArray != undefined){
                 for (let i = 0; i < itemArray.length; i++){
@@ -175,27 +175,27 @@ export function loadUtils(){
                 }
             }
             let originalSpellTexture = foundSIF?.flags?.siftoolkit?.SIFData.texture;//check token for non-linked token compatibility
-            originalSpellTexture = originalSpellTexture??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.texture;//check actor for linked token compatibility
+            originalSpellTexture = originalSpellTexture??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.texture;//check actor for linked token compatibility
             originalSpellTexture = originalSpellTexture??""//default
            
             let useTexture = foundSIF?.flags?.siftoolkit?.SIFData.useTexture;
-            useTexture = useTexture??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.useTexture;
+            useTexture = useTexture??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.useTexture;
             useTexture = useTexture??false;
         
             let alpha = foundSIF?.flags?.siftoolkit?.SIFData.alpha;
-            alpha = alpha??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.alpha;
+            alpha = alpha??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.alpha;
             alpha = alpha??50;
         
             let coneOrigin = foundSIF?.flags?.siftoolkit?.SIFData.coneOrigin;
-            coneOrigin = coneOrigin??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.coneOrigin;
+            coneOrigin = coneOrigin??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.coneOrigin;
             coneOrigin = coneOrigin??1;
         
             let loopAnimations = foundSIF?.flags?.siftoolkit?.SIFData.loopAnimations;
-            loopAnimations = loopAnimations??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.loopAnimations;
+            loopAnimations = loopAnimations??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.loopAnimations;
             loopAnimations = loopAnimations??true;
         
             let ignoreDuration = foundSIF?.flags?.siftoolkit?.SIFData.ignoreDuration;
-            ignoreDuration = ignoreDuration??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.ignoreDuration;
+            ignoreDuration = ignoreDuration??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.ignoreDuration;
             ignoreDuration = ignoreDuration??false;
         
             let SIFData = {
@@ -213,7 +213,7 @@ export function loadUtils(){
         generateAudioData: function (actorId,tokenId,itemId){
             let originalActor = game.actors.get(actorId);
             let originalToken = game.scenes.active.tokens.get(tokenId);
-            let itemArray = (originalToken?.data.actorData.items??undefined);
+            let itemArray = (originalToken?.actor.items??undefined);
             let foundSIF = undefined;
             if(itemArray != undefined){
                 for (let i = 0; i < itemArray.length; i++){
@@ -224,23 +224,23 @@ export function loadUtils(){
                 }
             }
             let originalClip = foundSIF?.flags?.siftoolkit?.SIFData.clip;//check token for non-linked token compatibility
-            originalClip = originalClip??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.clip;//check actor for linked token compatibility
+            originalClip = originalClip??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.clip;//check actor for linked token compatibility
             originalClip = originalClip??""//default
            
             let playTemplateAudio = foundSIF?.flags?.siftoolkit?.SIFData.playTemplateAudio;
-            playTemplateAudio = playTemplateAudio??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.playTemplateAudio;
+            playTemplateAudio = playTemplateAudio??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.playTemplateAudio;
             playTemplateAudio = playTemplateAudio??false;
 
             let playDamageAudio = foundSIF?.flags?.siftoolkit?.SIFData.playDamageAudio;
-            playDamageAudio = playDamageAudio??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.playDamageAudio;
+            playDamageAudio = playDamageAudio??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.playDamageAudio;
             playDamageAudio = playDamageAudio??false;
 
             let playSaveAudio = foundSIF?.flags?.siftoolkit?.SIFData.playSaveAudio;
-            playSaveAudio = playSaveAudio??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.playSaveAudio;
+            playSaveAudio = playSaveAudio??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.playSaveAudio;
             playSaveAudio = playSaveAudio??false;
         
             let volume = foundSIF?.flags?.siftoolkit?.SIFData.volume;
-            volume = volume??originalActor.items.get(itemId)?.data.flags.siftoolkit?.SIFData?.volume;
+            volume = volume??originalActor.items.get(itemId)?.flags.siftoolkit?.SIFData?.volume;
             volume = volume??100;
         
             let SIFData = {
@@ -257,7 +257,7 @@ export function loadUtils(){
         getItemFromActorToken: function (actorId,tokenId,itemId){
             let originalActor = game.actors.get(actorId);
             let originalToken = game.scenes.active.tokens.get(tokenId);
-            let itemArray = (originalToken?.data.actorData.items??undefined);
+            let itemArray = (originalToken?.actor.items??undefined);
             let foundSIF = undefined;
             if(itemArray != undefined){
                 for (let i = 0; i < itemArray.length; i++){
@@ -274,7 +274,7 @@ export function loadUtils(){
         playAudio: function(template=undefined){
             let currentSIFData = undefined;
             if(template != undefined){
-                currentSIFData = template.data.flags.siftoolkit;
+                currentSIFData = template.flags.siftoolkit;
             }
             currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
             let clip = currentSIFData?.audioData?.clip??"";
@@ -289,7 +289,7 @@ export function loadUtils(){
 
         updateTemplate: function (template,index=0,duration=undefined){
             console.debug("SIFT | Updating Template");
-            let currentSIFData = template.data.flags.siftoolkit;
+            let currentSIFData = template.flags.siftoolkit;
             currentSIFData = currentSIFData??SIFT.SIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData;
             if(currentSIFData == undefined){
                 currentSIFData ={
@@ -310,7 +310,7 @@ export function loadUtils(){
             let scene = game.scenes.get(currentSIFData.scene);  
             if(scene && index < 10){
                 
-                if(scene.data.templates.filter(i => i.id === template.id).length > 0){
+                if(scene.templates.filter(i => i.id === template.id).length > 0){
 
                     let update =  {_id: template.id, flags: {
                         "siftoolkit":{
@@ -398,10 +398,10 @@ export function loadUtils(){
             console.debug("SIFT | Aging templates.");
             game.scenes.forEach( i => {
                 let sceneFilter = i.templates.filter(j => SceneId==undefined?true:i.id==SceneId);
-                let managing = sceneFilter.filter(j => j.data.flags.siftoolkit !== undefined);
+                let managing = sceneFilter.filter(j => j.flags.siftoolkit !== undefined);
                 let playerOwned = managing.filter(j => {return j.isOwner});
                 for(let j = 0; j < playerOwned.length; j++){
-                        let update = {_id: playerOwned[j].id, flags: {"siftoolkit":{duration: playerOwned[j].data.flags.siftoolkit.duration-delta}}};
+                        let update = {_id: playerOwned[j].id, flags: {"siftoolkit":{duration: playerOwned[j].flags.siftoolkit.duration-delta}}};
                         i.updateEmbeddedDocuments("MeasuredTemplate",[update]);
                 }                
             });
@@ -410,17 +410,17 @@ export function loadUtils(){
         cleanupTemplates: function (token=undefined, sceneId=undefined){
             console.debug("SIFT | Cleaning Templates.");
             game.scenes.forEach( j => {
-                let sceneFilter = j.data.templates.filter(i => sceneId==undefined?true:j.id==sceneId);
-                let managed = sceneFilter.filter(i => i.data.flags.siftoolkit !== undefined);
-                //let turnActorOwned = managed.filter(i => actor==undefined?true:i.data.flags.siftoolkit.actor == actor);
-                let turnTokenOwned = managed.filter(i => token==undefined?true:i.data.flags.siftoolkit.token == token);
+                let sceneFilter = j.templates.filter(i => sceneId==undefined?true:j.id==sceneId);
+                let managed = sceneFilter.filter(i => i.flags.siftoolkit !== undefined);
+                //let turnActorOwned = managed.filter(i => actor==undefined?true:i.flags.siftoolkit.actor == actor);
+                let turnTokenOwned = managed.filter(i => token==undefined?true:i.flags.siftoolkit.token == token);
                 let templates = turnTokenOwned.filter(
                     function(i){
                         return (
-                            ((i.isOwner || !(game.user.isGM && game.users.get(i.data.flags.siftoolkit.player).active))) && //controlled by user or user is logged out and GM will handle
-                            ((i.data.flags.siftoolkit.duration - SIFT.Settings.roundSeconds) < 1 || i.data.flags.siftoolkit?.duration === undefined || //expired or unassigned duration
-                            ( i.data.flags.siftoolkit?.displayData?.ignoreDuration && (i.data.flags.siftoolkit?.birthday + SIFT.Settings.roundSeconds * SIFT.Settings.instantaneousSpellFade) < game.time.worldTime) ) && 
-                            (!i.data.flags.siftoolkit.special || i.data.flags.siftoolkit.special === undefined)  //not special
+                            ((i.isOwner || !(game.user.isGM && game.users.get(i.flags.siftoolkit.player).active))) && //controlled by user or user is logged out and GM will handle
+                            ((i.flags.siftoolkit.duration - SIFT.Settings.roundSeconds) < 1 || i.flags.siftoolkit?.duration === undefined || //expired or unassigned duration
+                            ( i.flags.siftoolkit?.displayData?.ignoreDuration && (i.flags.siftoolkit?.birthday + SIFT.Settings.roundSeconds * SIFT.Settings.instantaneousSpellFade) < game.time.worldTime) ) && 
+                            (!i.flags.siftoolkit.special || i.flags.siftoolkit.special === undefined)  //not special
                         );
                     }
                 );
@@ -439,27 +439,28 @@ export function loadUtils(){
         },
 
         removeTokenTemplates: function(token,scene){
-            let templates = game.scenes.get(scene).templates.filter(i=> i.data.flags.siftoolkit.token == token);
-            let myTemplates = templates.filter(i=>(i.isOwner || (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
+            let templates = game.scenes.get(scene).templates.filter(i=> i.flags.siftoolkit.token == token);
+            let myTemplates = templates.filter(i=>(i.isOwner || (game.user.isGM && !game.users.get(i.flags.siftoolkit.player).active)));
             let deletions = myTemplates.map(i => i.id);
             game.scenes.get(scene).deleteEmbeddedDocuments("MeasuredTemplate",deletions);
         },
 
         hideTemplateGridHighlights: function(templateId){
-            if(SIFT.Settings.disableHighlighting){
-                canvas.grid.getHighlightLayer(`Template.${templateId}`).visible = false;
+                console.log(templateId)
+            if(SIFT.Settings.disableHighlighting && !!canvas.grid.getHighlightLayer(`MeasuredTemplate.${templateId}`)){
+                canvas.grid.getHighlightLayer(`MeasuredTemplate.${templateId}`).visible = false;
             }
         },
 
         showTemplateGridHighlights: function(templateId){
-            if(SIFT.Settings.disableHighlighting){
-                canvas.grid.getHighlightLayer(`Template.${templateId}`).visible = true;
+            if(SIFT.Settings.disableHighlighting && !!canvas.grid.getHighlightLayer(`MeasuredTemplate.${templateId}`)){
+                canvas.grid.getHighlightLayer(`MeasuredTemplate.${templateId}`).visible = true;
             }
         },
 
         hideTemplateText: function(templateId){
             if(SIFT.Settings.disableText){
-                game.scenes.active.templates.get(templateId)._object.children.forEach(i=>{
+                game.scenes.current.templates.get(templateId)._object.children.forEach(i=>{
                     if(["PreciseText"].includes(Object(i).constructor.name)){
                         i.visible = false;
                     }

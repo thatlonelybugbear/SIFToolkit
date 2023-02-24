@@ -3,20 +3,20 @@ export function loadUtils(){
         /*
         clearConcentrationSpells: function (actor = undefined){
             game.scenes.forEach(scene => {
-                let filtertemplates = scene.data.templates;
+                let filtertemplates = scene.templates;
                 filtertemplates = filtertemplates.filter(i => {
                     scene = i.parent; 
-                    return (i.data.flags.siftoolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
+                    return (i.flags.siftoolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
                 });
                 filtertemplates = filtertemplates.filter(i => {
                         scene = i.parent;					
-                        return i.data.flags.siftoolkit?.concentration??false;
+                        return i.flags.siftoolkit?.concentration??false;
                     }
                 );
                 filtertemplates = filtertemplates.filter(i => {
-                    return ((i.data.flags.siftoolkit.actor == actor) && 
-                    (i.data.flags.siftoolkit.player == game.userId ||
-                    (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
+                    return ((i.flags.siftoolkit.actor == actor) && 
+                    (i.flags.siftoolkit.player == game.userId ||
+                    (game.user.isGM && !game.users.get(i.flags.siftoolkit.player).active)));
                 });
                 if(filtertemplates !== undefined) {
                     let deletions = filtertemplates.map(i => i.id);
@@ -29,20 +29,20 @@ export function loadUtils(){
         */
         clearConcentrationSpellsByToken: function (token = undefined){
             game.scenes.forEach(scene => {
-                let filtertemplates = scene.data.templates;
+                let filtertemplates = scene.templates;
                 filtertemplates = filtertemplates.filter(i => {
                     scene = i.parent; 
-                    return (i.data.flags.siftoolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
+                    return (i.flags.siftoolkit !== undefined)?(SIFT.Settings.worldConcentration?true:(scene.id == game.scenes.viewed.id)):false;
                 });
                 filtertemplates = filtertemplates.filter(i => {
                         scene = i.parent;					
-                        return i.data.flags.siftoolkit?.concentration??false;
+                        return i.flags.siftoolkit?.concentration??false;
                     }
                 );
                 filtertemplates = filtertemplates.filter(i => {
-                    return ((i.data.flags.siftoolkit.token == token) && 
-                    (i.data.flags.siftoolkit.player == game.userId ||
-                    (game.user.isGM && !game.users.get(i.data.flags.siftoolkit.player).active)));
+                    return ((i.flags.siftoolkit.token == token) && 
+                    (i.flags.siftoolkit.player == game.userId ||
+                    (game.user.isGM && !game.users.get(i.flags.siftoolkit.player).active)));
                 });
                 if(filtertemplates !== undefined) {
                     let deletions = filtertemplates.map(i => i.id);
@@ -54,8 +54,8 @@ export function loadUtils(){
         },
 
         getDuration: function (SIF){
-            let value = SIF.data.data.duration?.value;
-            let units = SIF.data.data.duration?.units;
+            let value = SIF.system.duration?.value;
+            let units = SIF.system.duration?.units;
             let duration = 0;
             switch(units?.toLowerCase()) {
                 case "day":
@@ -126,8 +126,8 @@ export function loadUtils(){
             let chatId = args[0].id;
             if(game.messages.get(chatId).isAuthor || game.user.isGM){
                 let found = false;
-                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
-                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                for (let i = 0; i < game.user.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.flags.siftoolkit.chatData[i].chatId == chatId){
                         found = true;
                     }
                 }
@@ -147,8 +147,8 @@ export function loadUtils(){
             let chatId = args[0].id;
             if(game.messages.get(chatId).isAuthor || game.user.isGM){
                 let found = false;
-                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
-                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                for (let i = 0; i < game.user.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.flags.siftoolkit.chatData[i].chatId == chatId){
                         found = true;
                     }
                 }
@@ -168,8 +168,8 @@ export function loadUtils(){
             let chatId = args[0].id;
             if(game.messages.get(chatId).isAuthor || game.user.isGM){
                 let found = false;
-                for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
-                    if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+                for (let i = 0; i < game.user.flags.siftoolkit.chatData.length;i++){
+                    if(game.user.flags.siftoolkit.chatData[i].chatId == chatId){
                         found = true;
                     }
                 }
@@ -195,8 +195,8 @@ export function loadUtils(){
 
             let chatId = args[0].id;
             let found = false;
-            for (let i = 0; i < game.user.data.flags.siftoolkit.chatData.length;i++){
-                if(game.user.data.flags.siftoolkit.chatData[i].chatId == chatId){
+            for (let i = 0; i < game.user.flags.siftoolkit.chatData.length;i++){
+                if(game.user.flags.siftoolkit.chatData[i].chatId == chatId){
                     found = true;
                 }
             }
@@ -219,8 +219,8 @@ export function loadUtils(){
 
         extractSIFData: function (itemObj){
             if(!itemObj) return undefined;
-            let isConcentration = (itemObj?.data?.data?.components)?itemObj.data.data.components.concentration:false;
-            let isSpecial = (itemObj.data.data.duration?.units == "unti" || itemObj.data.data.duration?.units == "spec");
+            let isConcentration = (itemObj?.system?.components)?itemObj.system.components.concentration:false;
+            let isSpecial = (itemObj.system.duration?.units == "unti" || itemObj.system.duration?.units == "spec");
             let SIFData = {
                 item : itemObj.id,
                 actor : itemObj.actor.id,
@@ -229,7 +229,7 @@ export function loadUtils(){
                 player : game.userId,
                 sif : itemObj.name,
                 type : itemObj.type,
-                ignoreDuration : itemObj.data.flags.siftoolkit?.SIFData?.ignoreDuration??false,
+                ignoreDuration : itemObj.flags.siftoolkit?.SIFData?.ignoreDuration??false,
                 duration: (itemObj !== undefined)?utils.getDuration(itemObj):0,
                 isConcentration : isConcentration,
                 isSpecial : isSpecial,
@@ -242,9 +242,9 @@ export function loadUtils(){
 
         extractSIFDataFromChat: function (itemObj,chatObj){
             if(!itemObj) return undefined;
-            let token = chatObj?.data.speaker?.token;
-            let isConcentration = (itemObj?.data?.data?.components)?itemObj.data.data.components.concentration:false;
-            let isSpecial = (itemObj.data.data?.duration?.units == "unti" || itemObj.data.data?.duration?.units == "spec");
+            let token = chatObj?.speaker?.token;
+            let isConcentration = (itemObj?.system?.components)?itemObj.system.components.concentration:false;
+            let isSpecial = (itemObj.system?.duration?.units == "unti" || itemObj.system?.duration?.units == "spec");
             let SIFData = {
                 item : itemObj.id,
                 actor : itemObj.actor.id,
@@ -253,7 +253,7 @@ export function loadUtils(){
                 player : game.userId,
                 sif : itemObj.name,
                 type : itemObj.type,
-                ignoreDuration : itemObj.data.flags.siftoolkit?.SIFData?.ignoreDuration??false,
+                ignoreDuration : itemObj.flags.siftoolkit?.SIFData?.ignoreDuration??false,
                 duration: (itemObj !== undefined)?utils.getDuration(itemObj):0,
                 isConcentration : isConcentration,
                 isSpecial : isSpecial,
@@ -266,7 +266,7 @@ export function loadUtils(){
 
         updateTemplate: function (template,index=0,duration=undefined){
             console.debug("SIFT | Updating Template");
-            let currentSIFData = template.data.flags.siftoolkit;
+            let currentSIFData = template.flags.siftoolkit;
             currentSIFData = currentSIFData??game.user.getFlag("siftoolkit","chatData")[game.user.getFlag("siftoolkit","chatData").length-1].SIFData??SIFT.SIFData;
             if(currentSIFData == undefined){
                 currentSIFData ={
@@ -286,7 +286,7 @@ export function loadUtils(){
             }
             let scene = game.scenes.get(currentSIFData.scene);  
             if(scene && index < 10){
-                if(scene.data.templates.filter(i => i.id === template.id).length > 0){
+                if(scene.templates.filter(i => i.id === template.id).length > 0){
 
                     if(currentSIFData.isConcentration){
                         SIFT.utils.clearConcentrationSpellsByToken(currentSIFData.token);
@@ -334,4 +334,3 @@ export function loadUtils(){
 
     return utils;
 }
-
