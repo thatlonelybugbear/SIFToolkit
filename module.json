@@ -49,8 +49,8 @@
   ],
   "packs": [],
   "socket": false,
-  "manifest": "https://github.com/thatlonelybugbear/SIFToolkit/releases/latest/download/module.json",
-  "download": "https://github.com/thatlonelybugbear/SIFToolkit/releases/download/10.0.2/module.zip",
+  "manifest": "https://raw.githubusercontent.com/thatlonelybugbear/SIFToolkit/main/module.json",
+  "download": "https://github.com/thatlonelybugbear/SIFToolkit/archive/refs/heads/main.zip",
   "protected": false,
   "coreTranslation": false,
   "library": false
