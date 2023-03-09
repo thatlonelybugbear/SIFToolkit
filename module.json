@@ -2,7 +2,10 @@
   "id": "siftoolkit",
   "title": "Spells, Items, and Features Toolkit",
   "description": "A toolkit for managing spells items and features.  Adds animation capabilities, as well as template managment and tooltips.",
-  "authors": [{ "name":"bitkiller0"}],
+  "authors": [
+    { "name":"bitkiller0"},
+    { "name": "thatlonelybugbear", "url": "https://github.com/thatlonelybugbear", "discord": "thatlonelybugbear#4394", "ko-fi": "https://ko-fi.com/thatlonelybugbear" }
+  ],
   "url": "https://github.com/thatlonelybugbear/SIFToolkit",
   "readme": "https://raw.githubusercontent.com/thatlonelybugbear/SIFToolkit/master/README.md",
   "flags": {},
